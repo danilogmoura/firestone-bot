@@ -55,6 +55,7 @@
         <Compile Include="Utils\BotConstants.cs" />
         <Compile Include="Utils\LogManager.cs" />
         <Compile Include="Utils\Paths.cs" />
+        <Compile Include="Utils\StringUtils.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Include="App.config" />

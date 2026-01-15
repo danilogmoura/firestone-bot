@@ -7,7 +7,7 @@ namespace FireBot.Bot.Component
 {
     internal class ButtonWrapper : ComponentWrapper<Button>
     {
-        public ButtonWrapper(params string[] path) : base(string.Join("/", path))
+        public ButtonWrapper(string path) : base(path)
         {
         }
 

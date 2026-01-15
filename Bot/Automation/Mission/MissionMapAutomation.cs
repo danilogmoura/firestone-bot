@@ -6,6 +6,7 @@ using FireBot.Utils;
 using UnityEngine;
 using static FireBot.Utils.BotConstants;
 using static FireBot.Utils.Paths.Missions;
+using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Mission
 {
@@ -87,14 +88,15 @@ namespace FireBot.Bot.Automation.Mission
                 Region = missionRegion;
                 Name = missionName;
 
-                _activeIconWrapper = new SpriteRendererWrapper(MissionRegion, Region, Name, "missionActiveIcon");
+                _activeIconWrapper =
+                    new SpriteRendererWrapper(JoinPath(MissionRegion, Region, Name, "missionActiveIcon"));
 
                 _completedTickWrapper =
-                    new SpriteRendererWrapper(MissionRegion, Region, Name, "missionBg/completedTick");
+                    new SpriteRendererWrapper(JoinPath(MissionRegion, Region, Name, "missionBg/completedTick"));
 
-                _missionInteractionWrapper = new MapMissionInteractionWrapper(MissionRegion, Region, Name);
+                _missionInteractionWrapper = new MapMissionInteractionWrapper(JoinPath(MissionRegion, Region, Name));
 
-                Time = new TimeDisplay(MissionRegion, Region, Name, "missionBg/missionTimeBg/missionTimeReq")
+                Time = new TimeDisplay(JoinPath(MissionRegion, Region, Name, "missionBg/missionTimeBg/missionTimeReq"))
                     .ParseToSeconds();
             }
 

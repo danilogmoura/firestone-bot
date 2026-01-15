@@ -4,7 +4,7 @@ namespace FireBot.Bot.Component
 {
     internal class TextMeshProUGUIWrapper : ComponentWrapper<TextMeshProUGUI>
     {
-        public TextMeshProUGUIWrapper(params string[] path) : base(string.Join("/", path))
+        public TextMeshProUGUIWrapper(string path) : base(path)
         {
         }
 

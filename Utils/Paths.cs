@@ -2,28 +2,31 @@
 {
     public abstract class Paths
     {
+        private const string BattleUI = "battleRoot/battleMain/battleCanvas/SafeArea/leftSideUI";
+        private const string NotificationsGrid = BattleUI + "/notifications/Viewport/grid";
+
+        private const string MenuBase = "menusRoot/menuCanvasParent/SafeArea/menuCanvas";
+        private const string Menus = MenuBase + "/menus";
+        private const string Popups = MenuBase + "/popups";
+
         internal static class Engineer
         {
-            public const string GridNotification =
-                "battleRoot/battleMain/battleCanvas/SafeArea/leftSideUI/notifications/Viewport/grid/Engineer";
-
-            public const string CloseButton =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Engineer/closeButton";
+            public const string GridNotification = NotificationsGrid + "/Engineer";
 
             public const string ClaimToolsButton =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Engineer/submenus/bg/engineerSubmenu/toolsProductionSection/claimToolsButton";
+                Menus + "/Engineer/submenus/bg/engineerSubmenu/toolsProductionSection/claimToolsButton";
+
+            public const string CloseButton = Menus + "/Engineer/closeButton";
         }
 
         internal static class WarfrontCampaign
         {
-            public const string GridWarfrontCampaign =
-                "battleRoot/battleMain/battleCanvas/SafeArea/leftSideUI/notifications/Viewport/grid/WarfrontCampaign";
+            public const string GridNotification = NotificationsGrid + "/WarfrontCampaign";
 
             public const string ClaimToolsButton =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/WorldMap/submenus/warfrontCampaignSubmenu/loot/claimButton";
+                Menus + "/WorldMap/submenus/warfrontCampaignSubmenu/loot/claimButton";
 
-            public const string CloseButton =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/WorldMap/closeButton";
+            public const string CloseButton = Menus + "/WorldMap/closeButton";
         }
 
         internal static class Missions

@@ -4,7 +4,7 @@ namespace FireBot.Bot.Component
 {
     internal class SpriteRendererWrapper : ComponentWrapper<SpriteRenderer>
     {
-        public SpriteRendererWrapper(params string[] path) : base(string.Join("/", path))
+        public SpriteRendererWrapper(string path) : base(path)
         {
         }
 

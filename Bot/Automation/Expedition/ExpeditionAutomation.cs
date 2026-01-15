@@ -2,6 +2,7 @@
 using FireBot.Bot.Component;
 using FireBot.Utils;
 using static FireBot.Utils.Paths.Expedition;
+using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Expedition
 {
@@ -14,15 +15,17 @@ namespace FireBot.Bot.Automation.Expedition
             LogManager.SubHeader("Expedition");
             yield return Buttons.Notification.Click();
 
-            if (Expeditions.CurrentExpedition.IsActive() && CurrentExpedition.IsCompleted())
-                yield return CurrentExpedition.CollectRewards();
+            if (Expeditions.CurrentExpeditionSection.IsCompleted())
+                LogManager.Info("Expedition completed");
+            // yield return Expeditions.CurrentExpeditionSection.CollectRewards();
 
-            if (!Expeditions.CurrentExpedition.IsActive() && Expeditions.PendingExpedition.IsActive())
-                yield return PendingExpedition.StartExpedition();
-
+            if (!Expeditions.CurrentExpeditionSection.IsActive() && Expeditions.PendingExpeditionSection.IsActive())
             {
-                yield return Buttons.Close.Click();
+                LogManager.Info("$No active expedition. Starting a new one.");
+                yield return Expeditions.PendingExpeditionSection.StartExpedition();
             }
+
+            yield return Buttons.Close.Click();
         }
 
         private static class Buttons
@@ -33,45 +36,47 @@ namespace FireBot.Bot.Automation.Expedition
 
         private static class Expeditions
         {
-            public static CurrentExpedition CurrentExpedition => new CurrentExpedition();
-            public static PendingExpedition PendingExpedition => new PendingExpedition();
+            public static CurrentExpeditionSection CurrentExpeditionSection => new CurrentExpeditionSection();
+            public static PendingExpeditionSection PendingExpeditionSection => new PendingExpeditionSection();
         }
 
-        private class CurrentExpedition : ObjectWrapper
+        private class CurrentExpeditionSection : ObjectWrapper
         {
-            public CurrentExpedition() : base(CurrenteExpedition)
+            public CurrentExpeditionSection() : base(CurrenteExpedition)
             {
             }
 
-            private static TextMeshProUGUIWrapper TimeLabel =>
-                new TextMeshProUGUIWrapper(CurrenteExpedition, "expeditionProgressBg/timeLeftText");
+            private ButtonWrapper ClaimButton => new ButtonWrapper(JoinPath(CurrenteExpedition, "claimButton"));
 
-            private static ButtonWrapper ClaimButton => new ButtonWrapper(CurrenteExpedition, "claimButton");
-
-            public static bool IsCompleted()
+            public bool IsCompleted()
             {
-                var text = TimeLabel.GetParsedText();
+                var timeLabel =
+                    new TextMeshProUGUIWrapper(JoinPath(CurrenteExpedition, "expeditionProgressBg/timeLeftText"));
+
+                if (!IsActiveSelf() && !timeLabel.Exists()) return false;
+
+                var text = timeLabel.GetParsedText();
                 return text.Contains("Completed");
             }
 
-            public static IEnumerator CollectRewards()
+            public IEnumerator CollectRewards()
             {
                 if (ClaimButton.IsInteractable()) yield return ClaimButton.Click();
             }
         }
 
-        private class PendingExpedition : ObjectWrapper
+        private class PendingExpeditionSection : ObjectWrapper
         {
-            public PendingExpedition() : base(Paths.Expedition.PendingExpedition)
+            public PendingExpeditionSection() : base(PendingExpedition)
             {
             }
 
-            private static ButtonWrapper StartButton =>
-                new ButtonWrapper(Paths.Expedition.PendingExpedition, "startButton");
+            private ButtonWrapper StartButton => new ButtonWrapper(JoinPath(PendingExpedition, "startButton"));
 
-            public static IEnumerator StartExpedition()
+            public IEnumerator StartExpedition()
             {
-                if (StartButton.IsInteractable()) yield return StartButton.Click();
+                if (StartButton.IsInteractable())
+                    yield return StartButton.Click();
             }
         }
     }

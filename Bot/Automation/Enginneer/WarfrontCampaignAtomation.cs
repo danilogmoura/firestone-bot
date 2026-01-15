@@ -9,7 +9,7 @@ namespace FireBot.Bot.Automation.Enginneer
     {
         public static IEnumerator Process()
         {
-            var componentNotification = new ButtonWrapper(GridWarfrontCampaign);
+            var componentNotification = new ButtonWrapper(GridNotification);
             if (!componentNotification.IsActive()) yield break;
 
             LogManager.SubHeader("Warfront Campaign Scrolls");

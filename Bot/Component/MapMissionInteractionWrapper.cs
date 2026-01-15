@@ -5,7 +5,7 @@ namespace FireBot.Bot.Component
 {
     internal class MapMissionInteractionWrapper : ComponentWrapper<MapMissionInteraction>
     {
-        public MapMissionInteractionWrapper(params string[] path) : base(string.Join("/", path))
+        public MapMissionInteractionWrapper(string path) : base(path)
         {
         }
 

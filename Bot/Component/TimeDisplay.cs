@@ -5,7 +5,7 @@ namespace FireBot.Bot.Component
 {
     internal class TimeDisplay : TextMeshProWrapper
     {
-        public TimeDisplay(params string[] path) : base(path)
+        public TimeDisplay(string path) : base(path)
         {
         }
 

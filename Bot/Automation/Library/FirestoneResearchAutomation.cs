@@ -4,6 +4,7 @@ using FireBot.Utils;
 using Il2CppTMPro;
 using UnityEngine;
 using static FireBot.Utils.Paths.FirestoneResearch;
+using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Library
 {
@@ -35,7 +36,7 @@ namespace FireBot.Bot.Automation.Library
                 {
                     var slot = new ResearchSlotWrapper(tree.GetChild(j));
                     if (!slot.IsValid() || !ResearchPanel.SelectResearch.IsActiveSelf()) continue;
-                    yield return OpenPopup(SubmenusTree, tree.name, slot.Name);
+                    yield return OpenPopup(JoinPath(SubmenusTree, tree.name, slot.Name));
 
                     if (ResearchPanel.SubmenusWrapper.IsActiveSelf() && Buttons.StartResearch.IsInteractable())
                         yield return Buttons.StartResearch.Click();
@@ -45,7 +46,7 @@ namespace FireBot.Bot.Automation.Library
             yield return Buttons.Close.Click();
         }
 
-        private static IEnumerator OpenPopup(params string[] paths)
+        private static IEnumerator OpenPopup(string paths)
         {
             var button = new ButtonWrapper(paths);
             if (!button.IsInteractable()) yield break;
@@ -94,10 +95,10 @@ namespace FireBot.Bot.Automation.Library
         private static class Buttons
         {
             public static readonly ButtonWrapper ButtonClainSlot0 =
-                new ButtonWrapper(ResearchPanelDown, "researchSlot0/container/claimButton");
+                new ButtonWrapper(JoinPath(ResearchPanelDown, "researchSlot0/container/claimButton"));
 
             public static readonly ButtonWrapper ButtonClainSlot1 =
-                new ButtonWrapper(ResearchPanelDown, "researchSlot1/container/claimButton");
+                new ButtonWrapper(JoinPath(ResearchPanelDown, "researchSlot1/container/claimButton"));
 
             public static ButtonWrapper Notification => new ButtonWrapper(Paths.FirestoneResearch.Notification);
             public static ButtonWrapper Close => new ButtonWrapper(MissionCloseButton);
