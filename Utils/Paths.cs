@@ -3,10 +3,13 @@
     public abstract class Paths
     {
         private const string BattleUI = "battleRoot/battleMain/battleCanvas/SafeArea/leftSideUI";
+
         private const string NotificationsGrid = BattleUI + "/notifications/Viewport/grid";
 
         private const string MenuBase = "menusRoot/menuCanvasParent/SafeArea/menuCanvas";
+
         private const string Menus = MenuBase + "/menus";
+
         private const string Popups = MenuBase + "/popups";
 
         internal static class Engineer
@@ -31,58 +34,56 @@
 
         internal static class Missions
         {
+            public const string MenuWorldMap = Menus + "/WorldMap";
+
             public const string MissionRegion = "menusRoot/mapRoot/mapElements/missions";
 
-            public const string SquadsQuantity =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/WorldMap/counters/squads/quantity";
+            public const string SquadsQuantity = MenuWorldMap + "/counters/squads/quantity";
 
             public const string StartMissionButton =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/PreviewMission/bg/managementBg/container/startMissionButton";
+                Popups + "/PreviewMission/bg/managementBg/container/startMissionButton";
 
             public const string MissionRefreshTime =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/WorldMap/submenus/mapMissionsSubmenu/bottomLeftUI/missionRefreshCanvas/missionRefreshBg/missionRefreshText";
+                MenuWorldMap +
+                "/submenus/mapMissionsSubmenu/bottomLeftUI/missionRefreshCanvas/missionRefreshBg/missionRefreshText";
 
-            public const string MissionCloseButton =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/WorldMap/closeButton";
+            public const string MissionCloseButton = MenuWorldMap + "/closeButton";
 
-            public const string GridMissionButton =
-                "battleRoot/battleMain/battleCanvas/SafeArea/leftSideUI/notifications/Viewport/grid/MapMissions";
+            public const string GridMissionButton = BattleUI + "/notifications/Viewport/grid/MapMissions";
         }
 
         internal static class Expedition
         {
-            public const string ExpeditionNotification =
-                "battleRoot/battleMain/battleCanvas/SafeArea/leftSideUI/notifications/Viewport/grid/Expeditions";
+            public const string ExpeditionNotification = BattleUI + "/notifications/Viewport/grid/Expeditions";
 
-            public const string ExpeditionCloseButton =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/Expeditions/bg/closeButton";
+            public const string ExpeditionsParents = Popups + "/Expeditions/bg/expeditionsParent";
 
-            public const string CurrenteExpedition =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/Expeditions/bg/expeditionsParent/activeExpeditionParent/activeExpedition";
+            public const string CurrenteExpedition = ExpeditionsParents + "/activeExpeditionParent/activeExpedition";
 
             public const string PendingExpedition =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/Expeditions/bg/expeditionsParent/pendingExpeditionsParent/expeditionsScroll/Viewport/grid/expeditionPending0";
+                ExpeditionsParents + "/pendingExpeditionsParent/expeditionsScroll/Viewport/grid/expeditionPending0";
+
+            public const string ExpeditionCloseButton = Popups + "/Expeditions/bg/closeButton";
         }
 
         internal static class FirestoneResearch
         {
-            public const string Notification =
-                "battleRoot/battleMain/battleCanvas/SafeArea/leftSideUI/notifications/Viewport/grid/FirestoneResearch";
+            public const string LibrarySubmenus = Menus + "/Library/submenus";
 
-            public const string MissionCloseButton =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Library/closeButton";
+            public const string Notification = NotificationsGrid + "/FirestoneResearch";
 
-            public const string ResearchPanelDown =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Library/submenus/firestoneResearch/researchPanel";
+            public const string MissionCloseButton = Menus + "/Library/closeButton";
 
-            public const string SubmenusTree =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Library/submenus/firestoneResearch/researchScrollView/viewport/content/submenus";
-
-            public const string PopupActivateButton =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/FirestoneResearchPreview/bg/innerBg/unlocked/buttonHolder/researchActivateButton";
+            public const string ResearchPanelDown = LibrarySubmenus + "/firestoneResearch/researchPanel";
 
             public const string SelectResearchTable =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Library/submenus/firestoneResearch/researchPanel/selectResearchTable";
+                LibrarySubmenus + "/firestoneResearch/researchPanel/selectResearchTable";
+
+            public const string SubmenusTree =
+                LibrarySubmenus + "/firestoneResearch/researchScrollView/viewport/content/submenus";
+
+            public const string PopupActivateButton =
+                Popups + "/FirestoneResearchPreview/bg/innerBg/unlocked/buttonHolder/researchActivateButton";
         }
     }
 }
