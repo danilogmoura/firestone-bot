@@ -15,15 +15,11 @@ namespace FireBot.Bot.Automation.Expedition
             LogManager.SubHeader("Expedition");
             yield return Buttons.Notification.Click();
 
-            if (Expeditions.CurrentExpeditionSection.IsCompleted())
-                LogManager.Info("Expedition completed");
-            // yield return Expeditions.CurrentExpeditionSection.CollectRewards();
+            if (Expeditions.CurrentExpedition.IsCompleted())
+                yield return Expeditions.CurrentExpedition.CollectRewards();
 
-            if (!Expeditions.CurrentExpeditionSection.IsActive() && Expeditions.PendingExpeditionSection.IsActive())
-            {
-                LogManager.Info("$No active expedition. Starting a new one.");
-                yield return Expeditions.PendingExpeditionSection.StartExpedition();
-            }
+            if (!Expeditions.CurrentExpedition.IsActive() && Expeditions.PendingExpedition.IsActive())
+                yield return Expeditions.PendingExpedition.StartExpedition();
 
             yield return Buttons.Close.Click();
         }
@@ -36,8 +32,8 @@ namespace FireBot.Bot.Automation.Expedition
 
         private static class Expeditions
         {
-            public static CurrentExpeditionSection CurrentExpeditionSection => new CurrentExpeditionSection();
-            public static PendingExpeditionSection PendingExpeditionSection => new PendingExpeditionSection();
+            public static CurrentExpeditionSection CurrentExpedition => new CurrentExpeditionSection();
+            public static PendingExpeditionSection PendingExpedition => new PendingExpeditionSection();
         }
 
         private class CurrentExpeditionSection : ObjectWrapper
