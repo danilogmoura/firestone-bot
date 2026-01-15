@@ -33,7 +33,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <PropertyGroup>
-        <PostBuildEvent>move FireBot.dll "E:\Games\Steam\steamapps\common\Firestone\Mods"</PostBuildEvent>
+        <PostBuildEvent>move FireBot.dll "$(FirestoneGamePath)\Mods"</PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
         <Compile Include="Bot\Automation\Enginneer\ToolsProductionAutomation.cs"/>
@@ -63,40 +63,40 @@
     </ItemGroup>
     <ItemGroup>
         <Reference Include="0Harmony">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\net6\0Harmony.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\net6\0Harmony.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
         </Reference>
         <Reference Include="Il2CppACTk.Runtime">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\Il2CppACTk.Runtime.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\Il2CppACTk.Runtime.dll</HintPath>
         </Reference>
         <Reference Include="Il2CppInterop.Runtime">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
         </Reference>
         <Reference Include="Il2Cppmscorlib">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
         </Reference>
         <Reference Include="MelonLoader">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\net6\MelonLoader.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\net6\MelonLoader.dll</HintPath>
         </Reference>
         <Reference Include="Unity.TextMeshPro">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.CoreModule">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.IMGUIModule">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.IMGUIModule.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.IMGUIModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.InputLegacyModule">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.InputLegacyModule.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.InputLegacyModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.UI">
-            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
+            <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
         </Reference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
