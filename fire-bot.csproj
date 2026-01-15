@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
+            Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{7F318A28-3DE4-4B0D-96E5-AC6F2282CE8F}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>FireBot</RootNamespace>
+        <AssemblyName>FireBot</AssemblyName>
+        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>x64</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>x64</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup>
+        <PostBuildEvent>move FireBot.dll "E:\Games\Steam\steamapps\common\Firestone\Mods"</PostBuildEvent>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="Bot\Automation\Enginneer\ToolsProductionAutomation.cs"/>
+        <Compile Include="Bot\Automation\Enginneer\WarfrontCampaignAtomation.cs"/>
+        <Compile Include="Bot\Automation\Expedition\ExpeditionAutomation.cs"/>
+        <Compile Include="Bot\Automation\Mission\MissionMapAutomation.cs"/>
+        <Compile Include="Bot\Component\ComponentWrapper.cs"/>
+        <Compile Include="Bot\Component\MapMissionInteractionWrapper.cs"/>
+        <Compile Include="Bot\Component\ObjectWrapper.cs"/>
+        <Compile Include="Bot\Component\SpriteRendererWrapper.cs"/>
+        <Compile Include="Bot\Component\TextMeshProWrapper.cs"/>
+        <Compile Include="Bot\Component\ButtonWrapper.cs"/>
+        <Compile Include="Bot\Component\MappedObjectBase.cs"/>
+        <Compile Include="Bot\Component\TextMeshProWrapperUGUI.cs"/>
+        <Compile Include="Bot\Component\TimeDisplay.cs"/>
+        <Compile Include="Bot\Paths.cs"/>
+        <Compile Include="Main.cs"/>
+        <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Utils\LogManager.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="App.config"/>
+        <None Include="packages.config"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="0Harmony">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\net6\0Harmony.dll</HintPath>
+        </Reference>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="Il2CppACTk.Runtime">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\Il2CppACTk.Runtime.dll</HintPath>
+        </Reference>
+        <Reference Include="Il2CppInterop.Runtime">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+        </Reference>
+        <Reference Include="Il2Cppmscorlib">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
+        </Reference>
+        <Reference Include="MelonLoader">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\net6\MelonLoader.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\Unity.TextMeshPro.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.IMGUIModule">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.IMGUIModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.InputLegacyModule">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.InputLegacyModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+</Project>
