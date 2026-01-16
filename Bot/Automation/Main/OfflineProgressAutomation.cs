@@ -9,9 +9,9 @@ namespace FireBot.Bot.Automation.Main
         public static IEnumerator Process()
         {
             var popup = new ObjectWrapper(OfflineProgressPopup);
-            if (!popup.IsActiveSelf()) yield break;
+            if (!popup.IsActive()) yield break;
 
-            yield return new ButtonWrapper(OfflineProgressPopupClaimButton)?.Click();
+            yield return new ButtonWrapper(OfflineProgressPopupClaimButton).Click();
         }
     }
 }

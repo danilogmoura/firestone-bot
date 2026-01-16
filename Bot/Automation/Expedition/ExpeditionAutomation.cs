@@ -49,7 +49,7 @@ namespace FireBot.Bot.Automation.Expedition
                 var timeLabel =
                     new TextMeshProUGUIWrapper(JoinPath(CurrentExpedition, "expeditionProgressBg/timeLeftText"));
 
-                if (!IsActiveSelf() && !timeLabel.Exists()) return false;
+                if (!IsActive() && !timeLabel.Exists()) return false;
 
                 var text = timeLabel.GetParsedText();
                 return text.Contains("Completed");

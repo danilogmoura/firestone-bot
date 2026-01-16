@@ -15,11 +15,11 @@ namespace FireBot.Bot.Automation.MagicQuarters
 
             yield return Button.GuardianTrainingNotification?.Click();
 
-            if (!Object.Panel.IsActiveSelf()) yield break;
+            if (!Object.Panel.IsActive()) yield break;
 
             LogManager.SubHeader("Guardian Training");
 
-            if (Object.CooldownOn == null || Object.CooldownOn.IsActiveSelf())
+            if (Object.CooldownOn == null || Object.CooldownOn.IsActive())
             {
                 yield return Button.Close?.Click();
                 yield break;
@@ -31,7 +31,7 @@ namespace FireBot.Bot.Automation.MagicQuarters
                 var guardianRoot = guardianList.GetChild(i);
                 var starsParent = guardianRoot.Find("starsParent");
 
-                if (Object.CooldownOn.IsActiveSelf()) break;
+                if (Object.CooldownOn.IsActive()) break;
 
                 if (Button.Training != null &&
                     (!starsParent.gameObject.activeSelf || !Button.Training.IsInteractable())) continue;

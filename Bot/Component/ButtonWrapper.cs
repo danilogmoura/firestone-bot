@@ -13,14 +13,13 @@ namespace FireBot.Bot.Component
 
         public bool IsInteractable()
         {
-            return IsActive()
-                   && (ComponentCached?.enabled ?? false)
-                   && (ComponentCached?.interactable ?? false);
+            return IsActive() && HasComponent() && ComponentCached.enabled && ComponentCached.interactable;
         }
 
         public IEnumerator Click(float delay = InteractionDelay)
         {
-            if (!IsInteractable()) yield break;
+            if (!IsInteractable())
+                yield break;
 
             ComponentCached.Select();
             ComponentCached.onClick.Invoke();

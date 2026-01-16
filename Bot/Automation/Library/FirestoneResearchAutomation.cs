@@ -13,16 +13,18 @@ namespace FireBot.Bot.Automation.Library
         public static IEnumerator Process()
         {
             if (!Buttons.Notification.IsInteractable()) yield break;
+
             yield return Buttons.Notification.Click();
+
             LogManager.SubHeader("Firestone Research");
 
-            if (!Panel.SubmenusWrapper.IsActiveSelf() && Panel.SelectResearch.IsActiveSelf())
+            if (!Panel.SubmenusWrapper.IsActive() && Panel.SelectResearch.IsActive())
                 yield break;
 
-            if (Panel.Slot0.IsActiveSelf() && Buttons.ButtonClainSlot0.IsActiveSelf())
+            if (Panel.Slot0.IsActive() && Buttons.ButtonClainSlot0.IsInteractable())
                 yield return Buttons.ButtonClainSlot0.Click();
 
-            if (Panel.Slot1.IsActiveSelf() && Buttons.ButtonClainSlot1.IsActiveSelf())
+            if (Panel.Slot1.IsActive() && Buttons.ButtonClainSlot1.IsInteractable())
                 yield return Buttons.ButtonClainSlot1.Click();
 
             var submenusTransform = Panel.SubmenusWrapper.Transform;
@@ -30,15 +32,15 @@ namespace FireBot.Bot.Automation.Library
             for (var i = 0; i < submenusTransform.childCount; i++)
             {
                 var tree = submenusTransform.GetChild(i);
-                if (!tree.name.StartsWith("tree") || !tree.gameObject.activeSelf) continue;
+                if (!tree.name.StartsWith("tree") || !tree.gameObject.activeInHierarchy) continue;
 
                 for (var j = 0; j < tree.childCount; j++)
                 {
                     var slot = new ResearchSlotWrapper(tree.GetChild(j));
-                    if (!slot.IsValid() || !Panel.SelectResearch.IsActiveSelf()) continue;
+                    if (!slot.IsValid() || !Panel.SelectResearch.IsActive()) continue;
                     yield return OpenPopup(JoinPath(SubmenusTree, tree.name, slot.Name));
 
-                    if (Panel.SubmenusWrapper.IsActiveSelf() && Buttons.StartResearch.IsInteractable())
+                    if (Panel.SubmenusWrapper.IsActive() && Buttons.StartResearch.IsInteractable())
                         yield return Buttons.StartResearch.Click();
                 }
             }
@@ -66,12 +68,13 @@ namespace FireBot.Bot.Automation.Library
 
             public bool IsValid()
             {
-                if (_root == null || !_root.gameObject.activeSelf) return false;
+                if (_root == null || !_root.gameObject.activeInHierarchy) return false;
                 if (!Name.StartsWith("firestoneResearch")) return false;
 
                 var bar = _root.Find("progressBarBg");
                 var glow = _root.Find("glow");
-                return bar != null && bar.gameObject.activeSelf && (glow == null || !glow.gameObject.activeSelf);
+                return bar != null && bar.gameObject.activeInHierarchy &&
+                       (glow == null || !glow.gameObject.activeInHierarchy);
             }
 
             public string GetTitle()

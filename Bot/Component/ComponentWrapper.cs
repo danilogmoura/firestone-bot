@@ -12,17 +12,26 @@
         {
             get
             {
-                if (_componentCached != null && (object)_componentCached != null) return _componentCached;
-
+                if (_componentCached != null) return _componentCached;
                 if (CachedTransform != null) _componentCached = CachedTransform.GetComponent<T>();
-
                 return _componentCached;
             }
+        }
+
+        public new void InvalidateCache()
+        {
+            base.InvalidateCache();
+            _componentCached = null;
         }
 
         public bool HasComponent()
         {
             return ComponentCached != null;
+        }
+
+        public T Get()
+        {
+            return ComponentCached;
         }
     }
 }

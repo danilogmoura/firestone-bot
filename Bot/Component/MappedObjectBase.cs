@@ -17,9 +17,9 @@ namespace FireBot.Bot.Component
         {
             get
             {
-                if (_cachedTransform != null) return _cachedTransform;
+                if (_cachedTransform == null)
+                    FindAndCacheTransform();
 
-                FindAndCacheTransform();
                 return _cachedTransform;
             }
         }
@@ -31,12 +31,11 @@ namespace FireBot.Bot.Component
             var firstSlashIndex = _path.IndexOf('/');
 
             UnityGameObject rootObj;
-            Transform targetTrans = null;
 
             if (firstSlashIndex == -1)
             {
                 rootObj = UnityGameObject.Find(_path);
-                if (rootObj != null) targetTrans = rootObj.transform;
+                if (rootObj != null) _cachedTransform = rootObj.transform;
             }
             else
             {
@@ -44,10 +43,15 @@ namespace FireBot.Bot.Component
                 var childPath = _path.Substring(firstSlashIndex + 1);
 
                 rootObj = UnityGameObject.Find(rootName);
-                if (rootObj != null) targetTrans = rootObj.transform.Find(childPath);
-            }
 
-            _cachedTransform = targetTrans;
+                if (rootObj != null)
+                    _cachedTransform = rootObj.transform.Find(childPath);
+            }
+        }
+
+        public void InvalidateCache()
+        {
+            _cachedTransform = null;
         }
 
         public bool Exists()
@@ -57,12 +61,7 @@ namespace FireBot.Bot.Component
 
         public bool IsActive()
         {
-            return CachedTransform?.gameObject.activeInHierarchy ?? false;
-        }
-
-        public bool IsActiveSelf()
-        {
-            return CachedTransform?.gameObject.activeSelf ?? false;
+            return CachedTransform != null && CachedTransform.gameObject.activeInHierarchy;
         }
     }
 }
