@@ -7,7 +7,7 @@ using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Oracle
 {
-    public static class OracleRituals
+    public static class OracleRitualsAutomation
     {
         private static readonly List<Ritual> RitualsCache = new List<Ritual>();
 

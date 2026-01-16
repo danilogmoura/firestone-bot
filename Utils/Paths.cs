@@ -49,12 +49,12 @@
 
             public const string MissionCloseButton = MenuWorldMap + "/closeButton";
 
-            public const string GridMissionButton = BattleUI + "/notifications/Viewport/grid/MapMissions";
+            public const string GridMissionButton = NotificationsGrid + "/MapMissions";
         }
 
         internal static class Expedition
         {
-            public const string ExpeditionNotification = BattleUI + "/notifications/Viewport/grid/Expeditions";
+            public const string ExpeditionNotification = NotificationsGrid + "/Expeditions";
 
             public const string ExpeditionsParents = Popups + "/Expeditions/bg/expeditionsParent";
 
@@ -95,6 +95,23 @@
             public const string CloseButton = MenuOracle + "/closeButton";
 
             public const string RitualGrid = MenuOracle + "/submenus/bg/ritualSubmenu/ritualsGrid";
+        }
+
+        internal static class BattleRoot
+        {
+            public const string OfflineProgressPopup =
+                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/OfflineProgress";
+
+            public const string OfflineProgressPopupClaimButton = OfflineProgressPopup + "/bg/collectButton";
+        }
+
+        internal static class GuardianTraining
+        {
+            public const string Notification = NotificationsGrid + "/GuardianTraining";
+
+            public const string MenuMagicQuarters = Menus + "/MagicQuarters";
+
+            public const string GuardianList = MenuMagicQuarters + "/guardianList";
         }
     }
 }

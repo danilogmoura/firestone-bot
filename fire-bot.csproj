@@ -40,9 +40,9 @@
         <Compile Include="Bot\Automation\Enginneer\WarfrontCampaignAtomation.cs"/>
         <Compile Include="Bot\Automation\Expedition\ExpeditionAutomation.cs"/>
         <Compile Include="Bot\Automation\Library\FirestoneResearchAutomation.cs" />
-        <Compile Include="Bot\Automation\Main\OfflineProgress.cs" />
+        <Compile Include="Bot\Automation\Main\OfflineProgressAutomation.cs" />
         <Compile Include="Bot\Automation\Mission\MissionMapAutomation.cs" />
-        <Compile Include="Bot\Automation\Oracle\OracleRituals.cs" />
+        <Compile Include="Bot\Automation\Oracle\OracleRitualsAutomation.cs" />
         <Compile Include="Bot\Component\ComponentWrapper.cs" />
         <Compile Include="Bot\Component\MapMissionInteractionWrapper.cs" />
         <Compile Include="Bot\Component\ObjectWrapper.cs" />

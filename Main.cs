@@ -32,7 +32,6 @@ namespace FireBot
         public override void OnLateInitializeMelon()
         {
             LogManager.Initialize(LoggerInstance);
-
             _nextExecutionTime = DateTime.Now.AddSeconds(MissionLogIntervalSeconds);
         }
 
@@ -51,13 +50,13 @@ namespace FireBot
         {
             LogManager.Header($"Starting automations - {DateTime.Now:HH:mm:ss}");
 
-            yield return OfflineProgress.Process();
+            yield return OfflineProgressAutomation.Process();
             yield return ToolsProductionAutomation.Process();
             yield return WarfrontCampaignAtomation.Process();
             yield return MissionMapAutomation.Process();
             yield return ExpeditionAutomation.Process();
             yield return FirestoneResearchAutomation.Process();
-            yield return OracleRituals.Process();
+            yield return OracleRitualsAutomation.Process();
 
             LogManager.WriteLine();
         }
