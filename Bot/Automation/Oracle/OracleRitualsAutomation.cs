@@ -13,8 +13,10 @@ namespace FireBot.Bot.Automation.Oracle
 
         public static IEnumerator Process()
         {
-            if (Buttons.RitualNotification.IsInteractable())
-                yield return Buttons.RitualNotification.Click();
+            if (!Buttons.RitualNotification.IsInteractable())
+                yield break;
+
+            yield return Buttons.RitualNotification.Click();
 
             if (!Panel.OraclePanel.IsActive()) yield break;
             LogManager.SubHeader("Oracle Rituals");
@@ -42,23 +44,23 @@ namespace FireBot.Bot.Automation.Oracle
                 if (ritual == null || !ritual.gameObject.activeSelf || ritual.Find("locked").gameObject.activeSelf ||
                     ritual.Find("claimedObj").gameObject.activeSelf) continue;
 
-                var name = ritual.name;
+                var nodeName = ritual.name;
                 var ready = ritual.Find("startButton").gameObject.activeSelf;
                 var claimable = ritual.Find("claimButton").gameObject.activeSelf;
 
-                RitualsCache.Add(new Ritual(name, ready, claimable));
+                RitualsCache.Add(new Ritual(nodeName, ready, claimable));
             }
         }
 
         private class Ritual
         {
-            public Ritual(string name, bool ready, bool claimable)
+            public Ritual(string nodeName, bool ready, bool claimable)
             {
                 IsReady = ready;
                 IsClaimable = claimable;
 
-                ClaimButton = new ButtonWrapper(JoinPath(RitualGrid, name, "claimButton"));
-                StartButton = new ButtonWrapper(JoinPath(RitualGrid, name, "startButton"));
+                ClaimButton = new ButtonWrapper(JoinPath(RitualGrid, nodeName, "claimButton"));
+                StartButton = new ButtonWrapper(JoinPath(RitualGrid, nodeName, "startButton"));
             }
 
             public bool IsReady { get; }

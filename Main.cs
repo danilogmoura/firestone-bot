@@ -3,6 +3,7 @@ using System.Collections;
 using FireBot.Bot.Automation.Enginneer;
 using FireBot.Bot.Automation.Expedition;
 using FireBot.Bot.Automation.Library;
+using FireBot.Bot.Automation.MagicQuarters;
 using FireBot.Bot.Automation.Main;
 using FireBot.Bot.Automation.Mission;
 using FireBot.Bot.Automation.Oracle;
@@ -57,6 +58,7 @@ namespace FireBot
             yield return ExpeditionAutomation.Process();
             yield return FirestoneResearchAutomation.Process();
             yield return OracleRitualsAutomation.Process();
+            yield return GuardianTrainingAutomation.Process();
 
             LogManager.WriteLine();
         }

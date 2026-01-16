@@ -99,8 +99,7 @@
 
         internal static class BattleRoot
         {
-            public const string OfflineProgressPopup =
-                "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/OfflineProgress";
+            public const string OfflineProgressPopup = MenuBase + "/popups/OfflineProgress";
 
             public const string OfflineProgressPopupClaimButton = OfflineProgressPopup + "/bg/collectButton";
         }
@@ -112,6 +111,11 @@
             public const string MenuMagicQuarters = Menus + "/MagicQuarters";
 
             public const string GuardianList = MenuMagicQuarters + "/guardianList";
+
+            public const string CloseButton = MenuMagicQuarters + "/closeButton";
+
+            public const string TrainingButton =
+                MenuMagicQuarters + "/submenus/bg/infoSubmenu/activities/unlocked/train/trainButton";
         }
     }
 }
