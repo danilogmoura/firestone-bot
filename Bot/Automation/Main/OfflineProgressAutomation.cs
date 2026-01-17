@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
+using FireBot.Utils;
 using static FireBot.Utils.Paths.BattleRoot;
 
 namespace FireBot.Bot.Automation.Main
@@ -17,6 +18,7 @@ namespace FireBot.Bot.Automation.Main
 
         public override IEnumerator OnNotificationTriggered()
         {
+            LogManager.SubHeader("Offline Progress");
             yield return ClaimButton.Click();
         }
     }
