@@ -26,6 +26,12 @@ This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https
    ```
 3. Build the project using your preferred method (e.g., Visual Studio, command line).
 
+## Configuration
+The bot configuration file can be found at `Firestone\UserData\fire-bot.cfg`.
+
+For now, all configuration must be done directly through this file. A configuration display interface will be implemented in the future.
+
+
 ## Contributing
 Contributions are welcome! Please submit a pull request or open an issue for any suggestions or improvements.
 
