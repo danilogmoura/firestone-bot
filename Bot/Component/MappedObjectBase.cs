@@ -50,5 +50,20 @@ namespace FireBot.Bot.Component
         {
             return CachedTransform != null && CachedTransform.gameObject.activeInHierarchy;
         }
+
+        public bool HasChilden()
+        {
+            return IsActive() && CachedTransform?.childCount > 0;
+        }
+
+        public int? ChildCount()
+        {
+            return CachedTransform?.childCount;
+        }
+
+        public Transform GetChild(int level)
+        {
+            return CachedTransform?.GetChild(level);
+        }
     }
 }

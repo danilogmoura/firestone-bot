@@ -12,6 +12,8 @@
 
         private const string Popups = MenuBase + "/popups";
 
+        public const string EventsPopupPath = MenuBase + "/events";
+
         internal static class Engineer
         {
             public const string EngineerGridNotification = NotificationsGrid + "/Engineer";

@@ -44,6 +44,7 @@
         <Compile Include="Bot\Automation\GuildShop\FreePickaxesAutomation.cs" />
         <Compile Include="Bot\Automation\Library\FirestoneResearchAutomation.cs" />
         <Compile Include="Bot\Automation\MagicQuarters\GuardianTrainingAutomation.cs" />
+        <Compile Include="Bot\Automation\Main\CloseEventsAutomation.cs" />
         <Compile Include="Bot\Automation\Main\OfflineProgressAutomation.cs" />
         <Compile Include="Bot\Automation\Mission\MissionMapAutomation.cs" />
         <Compile Include="Bot\Automation\Oracle\OracleRitualsAutomation.cs" />
@@ -91,6 +92,9 @@
         </Reference>
         <Reference Include="UnityEngine">
             <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.AssetBundleModule">
+          <HintPath>E:\Games\Steam\steamapps\common\Firestone\MelonLoader\Dependencies\Il2CppAssemblyGenerator\Cpp2IL\cpp2il_out\UnityEngine.AssetBundleModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.CoreModule">
             <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
