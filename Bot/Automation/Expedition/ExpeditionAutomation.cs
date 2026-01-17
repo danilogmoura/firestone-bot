@@ -32,53 +32,60 @@ namespace FireBot.Bot.Automation.Expedition
 
         private static class Button
         {
-            public static ButtonWrapper Notification => new ButtonWrapper(ExpeditionNotification);
-            public static ButtonWrapper Close => new ButtonWrapper(CloseButton);
+            public static readonly ButtonWrapper Notification = new ButtonWrapper(ExpeditionNotification);
+            public static readonly ButtonWrapper Close = new ButtonWrapper(CloseButton);
         }
 
         private static class Expeditions
         {
-            public static CurrentExpeditionSection CurrentExpedition => new CurrentExpeditionSection();
-            public static PendingExpeditionSection PendingExpedition => new PendingExpeditionSection();
+            public static readonly CurrentExpeditionSection CurrentExpedition = new CurrentExpeditionSection();
+            public static readonly PendingExpeditionSection PendingExpedition = new PendingExpeditionSection();
+
+            public static readonly ObjectWrapper Temp =
+                new ObjectWrapper(JoinPath(CurrentExpeditionPath, "claimButton"));
         }
 
         private class CurrentExpeditionSection : ObjectWrapper
         {
-            public CurrentExpeditionSection() : base(CurrentExpedition)
+            private readonly ButtonWrapper _claimButton =
+                new ButtonWrapper(JoinPath(CurrentExpeditionPath, "claimButton"));
+
+            public CurrentExpeditionSection() : base(CurrentExpeditionPath)
             {
             }
-
-            private ButtonWrapper ClaimButton => new ButtonWrapper(JoinPath(CurrentExpedition, "claimButton"));
 
             public bool IsCompleted()
             {
                 var timeLabel =
-                    new TextMeshProUGUIWrapper(JoinPath(CurrentExpedition, "expeditionProgressBg/timeLeftText"));
+                    new TextMeshProUGUIWrapper(JoinPath(CurrentExpeditionPath, "expeditionProgressBg/timeLeftText"));
 
                 if (!IsActive() && !timeLabel.Exists()) return false;
 
                 var text = timeLabel.GetParsedText();
+                
+                //TODO: find better way to check completion
                 return text.Contains("Completed");
             }
 
             public IEnumerator CollectRewards()
             {
-                if (ClaimButton.IsInteractable()) yield return ClaimButton.Click();
+                if (_claimButton.IsInteractable()) yield return _claimButton.Click();
             }
         }
 
         private class PendingExpeditionSection : ObjectWrapper
         {
-            public PendingExpeditionSection() : base(PendingExpedition)
+            private readonly ButtonWrapper _startButton =
+                new ButtonWrapper(JoinPath(PendingExpeditionPath, "startButton"));
+
+            public PendingExpeditionSection() : base(PendingExpeditionPath)
             {
             }
 
-            private ButtonWrapper StartButton => new ButtonWrapper(JoinPath(PendingExpedition, "startButton"));
-
             public IEnumerator StartExpedition()
             {
-                if (StartButton.IsInteractable())
-                    yield return StartButton.Click();
+                if (_startButton.IsInteractable())
+                    yield return _startButton.Click();
             }
         }
     }

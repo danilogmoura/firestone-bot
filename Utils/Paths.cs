@@ -58,9 +58,9 @@
 
             public const string ExpeditionsParents = Popups + "/Expeditions/bg/expeditionsParent";
 
-            public const string CurrentExpedition = ExpeditionsParents + "/activeExpeditionParent/activeExpedition";
+            public const string CurrentExpeditionPath = ExpeditionsParents + "/activeExpeditionParent/activeExpedition";
 
-            public const string PendingExpedition =
+            public const string PendingExpeditionPath =
                 ExpeditionsParents + "/pendingExpeditionsParent/expeditionsScroll/Viewport/grid/expeditionPending0";
 
             public const string CloseButton = Popups + "/Expeditions/bg/closeButton";
