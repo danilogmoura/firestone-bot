@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
 using FireBot.Utils;
 using static FireBot.Utils.Paths.Expedition;
@@ -6,14 +7,19 @@ using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Expedition
 {
-    public abstract class ExpeditionAutomation
+    public class ExpeditionAutomation : IAutomationObserver
     {
-        public static IEnumerator Process()
+        public bool ToogleCondition()
         {
-            if (!Buttons.Notification.IsActive()) yield break;
+            return Button.Notification.IsActive();
+        }
+
+        public IEnumerator OnNotificationTriggered()
+        {
+            if (!Button.Notification.IsActive()) yield break;
 
             LogManager.SubHeader("Expedition");
-            yield return Buttons.Notification.Click();
+            yield return Button.Notification.Click();
 
             if (Expeditions.CurrentExpedition.IsCompleted())
                 yield return Expeditions.CurrentExpedition.CollectRewards();
@@ -21,10 +27,10 @@ namespace FireBot.Bot.Automation.Expedition
             if (!Expeditions.CurrentExpedition.IsActive() && Expeditions.PendingExpedition.IsActive())
                 yield return Expeditions.PendingExpedition.StartExpedition();
 
-            yield return Buttons.Close.Click();
+            yield return Button.Close.Click();
         }
 
-        private static class Buttons
+        private static class Button
         {
             public static ButtonWrapper Notification => new ButtonWrapper(ExpeditionNotification);
             public static ButtonWrapper Close => new ButtonWrapper(CloseButton);

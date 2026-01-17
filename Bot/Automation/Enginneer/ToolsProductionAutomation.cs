@@ -1,19 +1,24 @@
 using System.Collections;
+using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
 using FireBot.Utils;
 using static FireBot.Utils.Paths.Engineer;
 
 namespace FireBot.Bot.Automation.Enginneer
 {
-    public static class ToolsProductionAutomation
+    public class ToolsProductionAutomation : IAutomationObserver
     {
-        public static IEnumerator Process()
+        public bool ToogleCondition()
         {
-            var engineerNotif = new ButtonWrapper(GridNotification);
-            if (!engineerNotif.IsActive()) yield break;
+            return Button.notification.IsActive();
+        }
+
+        public IEnumerator OnNotificationTriggered()
+        {
+            if (!Button.notification.IsActive()) yield break;
 
             LogManager.SubHeader("Tools Production");
-            yield return engineerNotif.Click();
+            yield return Button.notification.Click();
 
             var caimToolsButton = new ButtonWrapper(ClaimToolsButton);
 
@@ -21,6 +26,11 @@ namespace FireBot.Bot.Automation.Enginneer
 
             var closeButton = new ButtonWrapper(CloseButton);
             yield return closeButton.Click();
+        }
+
+        private class Button
+        {
+            public static readonly ButtonWrapper notification = new ButtonWrapper(EngineerGridNotification);
         }
     }
 }

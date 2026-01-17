@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
 using FireBot.Utils;
 using Il2CppTMPro;
@@ -8,9 +9,14 @@ using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Library
 {
-    internal static class FirestoneResearchAutomation
+    internal class FirestoneResearchAutomation : IAutomationObserver
     {
-        public static IEnumerator Process()
+        public bool ToogleCondition()
+        {
+            return Buttons.Notification.IsActive();
+        }
+
+        public IEnumerator OnNotificationTriggered()
         {
             if (!Buttons.Notification.IsInteractable()) yield break;
 
@@ -97,13 +103,14 @@ namespace FireBot.Bot.Automation.Library
 
         private static class Buttons
         {
+            public static readonly ButtonWrapper Notification = new ButtonWrapper(FirestoneResearchNotification);
+
             public static ButtonWrapper ButtonClainSlot0 =>
                 new ButtonWrapper(JoinPath(ResearchPanelDown, "researchSlot0/container/claimButton"));
 
             public static ButtonWrapper ButtonClainSlot1 =>
                 new ButtonWrapper(JoinPath(ResearchPanelDown, "researchSlot1/container/claimButton"));
 
-            public static ButtonWrapper Notification => new ButtonWrapper(Paths.FirestoneResearch.Notification);
             public static ButtonWrapper Close => new ButtonWrapper(MissionCloseButton);
             public static ButtonWrapper StartResearch => new ButtonWrapper(PopupActivateButton);
         }

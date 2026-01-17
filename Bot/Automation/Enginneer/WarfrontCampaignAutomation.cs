@@ -1,19 +1,24 @@
 ﻿using System.Collections;
+using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
 using FireBot.Utils;
 using static FireBot.Utils.Paths.WarfrontCampaign;
 
 namespace FireBot.Bot.Automation.Enginneer
 {
-    public static class WarfrontCampaignAtomation
+    public class WarfrontCampaignAutomation : IAutomationObserver
     {
-        public static IEnumerator Process()
+        public bool ToogleCondition()
         {
-            var componentNotification = new ButtonWrapper(GridNotification);
-            if (!componentNotification.IsActive()) yield break;
+            return Button.notification.IsActive();
+        }
+
+        public IEnumerator OnNotificationTriggered()
+        {
+            if (!Button.notification.IsActive()) yield break;
 
             LogManager.SubHeader("Warfront Campaign Scrolls");
-            yield return componentNotification.Click();
+            yield return Button.notification.Click();
 
             var claimToolsButton = new ButtonWrapper(ClaimToolsButton);
             var closeButton = new ButtonWrapper(CloseButton);
@@ -21,6 +26,11 @@ namespace FireBot.Bot.Automation.Enginneer
             if (claimToolsButton.IsInteractable()) yield return claimToolsButton.Click();
 
             yield return closeButton.Click();
+        }
+
+        private class Button
+        {
+            public static readonly ButtonWrapper notification = new ButtonWrapper(WarfrontCampaignNotification);
         }
     }
 }

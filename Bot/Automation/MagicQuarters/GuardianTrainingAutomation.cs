@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
 using FireBot.Utils;
 using static FireBot.Utils.Paths.GuardianTraining;
@@ -6,14 +7,19 @@ using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.MagicQuarters
 {
-    public static class GuardianTrainingAutomation
+    public class GuardianTrainingAutomation : IAutomationObserver
     {
-        public static IEnumerator Process()
+        public bool ToogleCondition()
         {
-            if (!Button.GuardianTrainingNotification.IsInteractable())
+            return Button.Notification.IsActive();
+        }
+
+        public IEnumerator OnNotificationTriggered()
+        {
+            if (!Button.Notification.IsInteractable())
                 yield break;
 
-            yield return Button.GuardianTrainingNotification?.Click();
+            yield return Button.Notification?.Click();
 
             if (!Object.Panel.IsActive()) yield break;
 
@@ -44,9 +50,9 @@ namespace FireBot.Bot.Automation.MagicQuarters
             yield return Button.Close?.Click();
         }
 
-        private readonly struct Button
+        private static class Button
         {
-            public static ButtonWrapper GuardianTrainingNotification => new ButtonWrapper(Notification);
+            public static readonly ButtonWrapper Notification = new ButtonWrapper(GuardianTrainingNotification);
 
             public static ButtonWrapper Close => new ButtonWrapper(CloseButton);
 

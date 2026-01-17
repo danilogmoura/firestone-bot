@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
 using FireBot.Utils;
 using static FireBot.Utils.Paths.OracleRituals;
@@ -7,16 +8,21 @@ using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Oracle
 {
-    public static class OracleRitualsAutomation
+    public class OracleRitualsAutomation : IAutomationObserver
     {
         private static readonly List<Ritual> RitualsCache = new List<Ritual>();
 
-        public static IEnumerator Process()
+        public bool ToogleCondition()
         {
-            if (!Buttons.RitualNotification.IsInteractable())
+            return Buttons.Notification.IsActive();
+        }
+
+        public IEnumerator OnNotificationTriggered()
+        {
+            if (!Buttons.Notification.IsInteractable())
                 yield break;
 
-            yield return Buttons.RitualNotification.Click();
+            yield return Buttons.Notification.Click();
 
             if (!Panel.OraclePanel.IsActive()) yield break;
             LogManager.SubHeader("Oracle Rituals");
@@ -71,7 +77,7 @@ namespace FireBot.Bot.Automation.Oracle
 
         private static class Buttons
         {
-            public static ButtonWrapper RitualNotification => new ButtonWrapper(Notification);
+            public static ButtonWrapper Notification => new ButtonWrapper(OracleRitualNotification);
 
             public static ButtonWrapper CloseRituals => new ButtonWrapper(CloseButton);
         }

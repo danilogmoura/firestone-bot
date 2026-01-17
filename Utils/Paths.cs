@@ -14,7 +14,7 @@
 
         internal static class Engineer
         {
-            public const string GridNotification = NotificationsGrid + "/Engineer";
+            public const string EngineerGridNotification = NotificationsGrid + "/Engineer";
 
             public const string ClaimToolsButton =
                 Menus + "/Engineer/submenus/bg/engineerSubmenu/toolsProductionSection/claimToolsButton";
@@ -24,7 +24,7 @@
 
         internal static class WarfrontCampaign
         {
-            public const string GridNotification = NotificationsGrid + "/WarfrontCampaign";
+            public const string WarfrontCampaignNotification = NotificationsGrid + "/WarfrontCampaign";
 
             public const string ClaimToolsButton =
                 Menus + "/WorldMap/submenus/warfrontCampaignSubmenu/loot/claimButton";
@@ -49,7 +49,7 @@
 
             public const string MissionCloseButton = MenuWorldMap + "/closeButton";
 
-            public const string GridMissionButton = NotificationsGrid + "/MapMissions";
+            public const string MapMissionNotification = NotificationsGrid + "/MapMissions";
         }
 
         internal static class Expedition
@@ -70,7 +70,7 @@
         {
             public const string LibrarySubmenus = Menus + "/Library/submenus";
 
-            public const string Notification = NotificationsGrid + "/FirestoneResearch";
+            public const string FirestoneResearchNotification = NotificationsGrid + "/FirestoneResearch";
 
             public const string MissionCloseButton = Menus + "/Library/closeButton";
 
@@ -88,7 +88,7 @@
 
         internal static class OracleRituals
         {
-            public const string Notification = NotificationsGrid + "/OracleRituals";
+            public const string OracleRitualNotification = NotificationsGrid + "/OracleRituals";
 
             public const string MenuOracle = Menus + "/Oracle";
 
@@ -106,7 +106,7 @@
 
         internal static class GuardianTraining
         {
-            public const string Notification = NotificationsGrid + "/GuardianTraining";
+            public const string GuardianTrainingNotification = NotificationsGrid + "/GuardianTraining";
 
             public const string MenuMagicQuarters = Menus + "/MagicQuarters";
 

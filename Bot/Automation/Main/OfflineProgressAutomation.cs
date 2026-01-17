@@ -1,17 +1,23 @@
 ﻿using System.Collections;
+using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
 using static FireBot.Utils.Paths.BattleRoot;
 
 namespace FireBot.Bot.Automation.Main
 {
-    public abstract class OfflineProgressAutomation
+    internal class OfflineProgressAutomation : IAutomationObserver
     {
-        public static IEnumerator Process()
-        {
-            var popup = new ObjectWrapper(OfflineProgressPopup);
-            if (!popup.IsActive()) yield break;
+        private readonly ButtonWrapper _claimButton = new ButtonWrapper(OfflineProgressPopupClaimButton);
+        private ObjectWrapper Popup => new ObjectWrapper(OfflineProgressPopup);
 
-            yield return new ButtonWrapper(OfflineProgressPopupClaimButton).Click();
+        public bool ToogleCondition()
+        {
+            return Popup.IsActive();
+        }
+
+        public IEnumerator OnNotificationTriggered()
+        {
+            yield return _claimButton.Click();
         }
     }
 }

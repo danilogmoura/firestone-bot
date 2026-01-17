@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
 using FireBot.Utils;
 using UnityEngine;
@@ -10,11 +11,16 @@ using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Mission
 {
-    internal static class MissionMapAutomation
+    internal class MissionMapAutomation : IAutomationObserver
     {
         private static List<Mission> _missionCache;
 
-        public static IEnumerator Process()
+        public bool ToogleCondition()
+        {
+            return Buttons.Notification.IsActive();
+        }
+
+        public IEnumerator OnNotificationTriggered()
         {
             if (!Buttons.Notification.IsActive()) yield break;
 
@@ -29,7 +35,7 @@ namespace FireBot.Bot.Automation.Mission
                 yield break;
             }
 
-            LogManager.SubHeader("Missions");
+            LogManager.SubHeader("Map Missions");
 
             foreach (var mission in _missionCache.Where(mission => mission.IsActive && mission.IsClaim))
                 yield return mission.Click();
@@ -140,7 +146,7 @@ namespace FireBot.Bot.Automation.Mission
         private static class Buttons
         {
             public static ButtonWrapper Start => new ButtonWrapper(StartMissionButton);
-            public static ButtonWrapper Notification => new ButtonWrapper(GridMissionButton);
+            public static ButtonWrapper Notification => new ButtonWrapper(MapMissionNotification);
             public static ButtonWrapper Close => new ButtonWrapper(MissionCloseButton);
         }
     }
