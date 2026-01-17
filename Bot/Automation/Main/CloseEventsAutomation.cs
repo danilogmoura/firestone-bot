@@ -4,13 +4,12 @@ using System.Linq;
 using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
 using FireBot.Utils;
-using MelonLoader;
 using static FireBot.Utils.Paths;
 using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Main
 {
-    public class CloseEventsAutomation : AutomationObserver
+    public class Disabled_CloseEventsAutomation : AutomationObserver
     {
         private const string CloseButtonPath = "bg/closeButton";
 
@@ -34,8 +33,6 @@ namespace FireBot.Bot.Automation.Main
             foreach (var rootPath in _eventsPath)
             {
                 var closeButton = new ButtonWrapper(JoinPath(rootPath, CloseButtonPath));
-
-                MelonLogger.Msg(JoinPath(rootPath, CloseButtonPath));
 
                 if (closeButton.IsActive())
                     yield return closeButton.Click();
