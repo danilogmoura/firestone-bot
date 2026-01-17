@@ -1,7 +1,7 @@
 ﻿using System.Collections;
+using FireBot.Config;
 using UnityEngine;
 using UnityEngine.UI;
-using static FireBot.Utils.BotConstants;
 
 namespace FireBot.Bot.Component
 {
@@ -16,7 +16,13 @@ namespace FireBot.Bot.Component
             return IsActive() && HasComponent() && ComponentCached.enabled && ComponentCached.interactable;
         }
 
-        public IEnumerator Click(float delay = InteractionDelay)
+
+        public IEnumerator Click()
+        {
+            return Click(BotSettings.InteractionDelay.Value);
+        }
+
+        public IEnumerator Click(float delay)
         {
             if (!IsInteractable())
                 yield break;

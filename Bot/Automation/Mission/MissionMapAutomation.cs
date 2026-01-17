@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FireBot.Bot.Automation.Core;
 using FireBot.Bot.Component;
+using FireBot.Config;
 using FireBot.Utils;
 using UnityEngine;
-using static FireBot.Utils.BotConstants;
 using static FireBot.Utils.Paths.Missions;
 using static FireBot.Utils.StringUtils;
 
@@ -112,7 +112,7 @@ namespace FireBot.Bot.Automation.Mission
             public IEnumerator Click()
             {
                 _missionInteractionWrapper?.OnClick();
-                yield return new WaitForSeconds(InteractionDelay);
+                yield return new WaitForSeconds(BotSettings.InteractionDelay.Value);
             }
         }
 
