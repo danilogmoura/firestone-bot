@@ -28,25 +28,12 @@ namespace FireBot.Bot.Component
         {
             if (string.IsNullOrEmpty(_path)) return;
 
-            var firstSlashIndex = _path.IndexOf('/');
+            var rootObj = UnityGameObject.Find(_path.Split('/')[0]);
+            if (rootObj == null) return;
 
-            UnityGameObject rootObj;
-
-            if (firstSlashIndex == -1)
-            {
-                rootObj = UnityGameObject.Find(_path);
-                if (rootObj != null) _cachedTransform = rootObj.transform;
-            }
-            else
-            {
-                var rootName = _path.Substring(0, firstSlashIndex);
-                var childPath = _path.Substring(firstSlashIndex + 1);
-
-                rootObj = UnityGameObject.Find(rootName);
-
-                if (rootObj != null)
-                    _cachedTransform = rootObj.transform.Find(childPath);
-            }
+            _cachedTransform = !_path.Contains("/")
+                ? rootObj.transform
+                : rootObj.transform.Find(_path.Substring(_path.IndexOf('/') + 1));
         }
 
         public void InvalidateCache()

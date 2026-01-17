@@ -10,15 +10,15 @@ namespace FireBot.Bot.Automation.Enginneer
     {
         public bool ToogleCondition()
         {
-            return Button.notification.IsActive();
+            return Button.Notification.IsActive();
         }
 
         public IEnumerator OnNotificationTriggered()
         {
-            if (!Button.notification.IsActive()) yield break;
+            if (!Button.Notification.IsActive()) yield break;
 
             LogManager.SubHeader("Tools Production");
-            yield return Button.notification.Click();
+            yield return Button.Notification.Click();
 
             var caimToolsButton = new ButtonWrapper(ClaimToolsButton);
 
@@ -28,9 +28,9 @@ namespace FireBot.Bot.Automation.Enginneer
             yield return closeButton.Click();
         }
 
-        private class Button
+        private static class Button
         {
-            public static readonly ButtonWrapper notification = new ButtonWrapper(EngineerGridNotification);
+            public static readonly ButtonWrapper Notification = new ButtonWrapper(EngineerGridNotification);
         }
     }
 }
