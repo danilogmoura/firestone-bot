@@ -44,7 +44,7 @@
         <Compile Include="Bot\Automation\GuildShop\FreePickaxesAutomation.cs" />
         <Compile Include="Bot\Automation\Library\FirestoneResearchAutomation.cs" />
         <Compile Include="Bot\Automation\MagicQuarters\GuardianTrainingAutomation.cs" />
-        <Compile Include="Bot\Automation\Main\CloseEventsAutomation.cs" />
+        <Compile Include="Bot\Automation\Main\CloseEventsAutomation_Disabled.cs" />
         <Compile Include="Bot\Automation\Main\OfflineProgressAutomation.cs" />
         <Compile Include="Bot\Automation\Mission\MissionMapAutomation.cs" />
         <Compile Include="Bot\Automation\Oracle\OracleRitualsAutomation.cs" />

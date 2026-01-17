@@ -9,7 +9,7 @@ using static FireBot.Utils.StringUtils;
 
 namespace FireBot.Bot.Automation.Main
 {
-    public class Disabled_CloseEventsAutomation : AutomationObserver
+    public class CloseEventsAutomation_Disabled : AutomationObserver
     {
         private const string CloseButtonPath = "bg/closeButton";
 
