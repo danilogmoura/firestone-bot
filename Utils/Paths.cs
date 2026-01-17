@@ -117,5 +117,16 @@
             public const string TrainingButton =
                 MenuMagicQuarters + "/submenus/bg/infoSubmenu/activities/unlocked/train/trainButton";
         }
+
+        internal static class GuildShop
+        {
+            public const string FreePickaxesNotificationPath = NotificationsGrid + "/FreePickaxes";
+
+            public const string MenuGuildShopPath = Menus + "/GuildShop";
+
+            public const string CloseButtonPath = MenuGuildShopPath + "/closeButton";
+
+            public const string FreePickaxeItemPath = MenuGuildShopPath + "/bg/submenus/supplies/items/freePickaxe";
+        }
     }
 }

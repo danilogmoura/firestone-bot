@@ -41,6 +41,7 @@
         <Compile Include="Bot\Automation\Enginneer\ToolsProductionAutomation.cs" />
         <Compile Include="Bot\Automation\Enginneer\WarfrontCampaignAutomation.cs" />
         <Compile Include="Bot\Automation\Expedition\ExpeditionAutomation.cs" />
+        <Compile Include="Bot\Automation\GuildShop\FreePickaxesAutomation.cs" />
         <Compile Include="Bot\Automation\Library\FirestoneResearchAutomation.cs" />
         <Compile Include="Bot\Automation\MagicQuarters\GuardianTrainingAutomation.cs" />
         <Compile Include="Bot\Automation\Main\OfflineProgressAutomation.cs" />
