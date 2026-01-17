@@ -53,7 +53,7 @@ namespace FireBot.Bot.Automation.Mission
 
         private static int GetSquadCount()
         {
-            return new SquadsCountUGUIWrapper().Current;
+            return new SquadsCountUGUIWrapper().Values.current;
         }
 
         private static void UpdateMissionCache()
@@ -111,7 +111,7 @@ namespace FireBot.Bot.Automation.Mission
 
             public IEnumerator Click()
             {
-                _missionInteractionWrapper.OnClick();
+                _missionInteractionWrapper?.OnClick();
                 yield return new WaitForSeconds(InteractionDelay);
             }
         }
@@ -122,22 +122,21 @@ namespace FireBot.Bot.Automation.Mission
             {
             }
 
-            public int Current => ParseValues().current;
-
-            public int Total => ParseValues().total;
+            public (int current, int total) Values => ParseValues();
 
             private (int current, int total) ParseValues()
             {
                 var text = GetParsedText();
+                if (string.IsNullOrEmpty(text)) return (0, 0);
 
-                if (string.IsNullOrWhiteSpace(text)) return (0, 0);
+                var slashIndex = text.IndexOf('/');
+                if (slashIndex == -1) return (0, 0);
 
-                var parts = text.Trim().Split('/');
+                var part1 = text.Substring(0, slashIndex);
+                var part2 = text.Substring(slashIndex + 1);
 
-                if (parts.Length != 2) return (0, 0);
-
-                int.TryParse(parts[0], out var curr);
-                int.TryParse(parts[1], out var tot);
+                int.TryParse(part1, out var curr);
+                int.TryParse(part2, out var tot);
 
                 return (curr, tot);
             }
@@ -145,9 +144,11 @@ namespace FireBot.Bot.Automation.Mission
 
         private static class Buttons
         {
-            public static ButtonWrapper Start => new ButtonWrapper(StartMissionButton);
-            public static ButtonWrapper Notification => new ButtonWrapper(MapMissionNotification);
-            public static ButtonWrapper Close => new ButtonWrapper(MissionCloseButton);
+            public static readonly ButtonWrapper Start = new ButtonWrapper(StartMissionButton);
+
+            public static readonly ButtonWrapper Notification = new ButtonWrapper(MapMissionNotification);
+
+            public static readonly ButtonWrapper Close = new ButtonWrapper(MissionCloseButton);
         }
     }
 }

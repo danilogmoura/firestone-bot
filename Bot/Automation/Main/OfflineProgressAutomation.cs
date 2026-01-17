@@ -7,8 +7,8 @@ namespace FireBot.Bot.Automation.Main
 {
     internal class OfflineProgressAutomation : IAutomationObserver
     {
-        private readonly ButtonWrapper _claimButton = new ButtonWrapper(OfflineProgressPopupClaimButton);
-        private ObjectWrapper Popup => new ObjectWrapper(OfflineProgressPopup);
+        private static readonly ObjectWrapper Popup = new ObjectWrapper(OfflineProgressPopup);
+        private static readonly ButtonWrapper ClaimButton = new ButtonWrapper(OfflineProgressPopupClaimButton);
 
         public bool ToogleCondition()
         {
@@ -17,7 +17,7 @@ namespace FireBot.Bot.Automation.Main
 
         public IEnumerator OnNotificationTriggered()
         {
-            yield return _claimButton.Click();
+            yield return ClaimButton.Click();
         }
     }
 }

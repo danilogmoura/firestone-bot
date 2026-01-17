@@ -77,16 +77,16 @@ namespace FireBot.Bot.Automation.Oracle
 
         private static class Buttons
         {
-            public static ButtonWrapper Notification => new ButtonWrapper(OracleRitualNotification);
+            public static readonly ButtonWrapper Notification = new ButtonWrapper(OracleRitualNotification);
 
-            public static ButtonWrapper CloseRituals => new ButtonWrapper(CloseButton);
+            public static readonly ButtonWrapper CloseRituals = new ButtonWrapper(CloseButton);
         }
 
         private static class Panel
         {
-            public static ObjectWrapper OraclePanel => new ObjectWrapper(MenuOracle);
+            public static readonly ObjectWrapper OraclePanel = new ObjectWrapper(MenuOracle);
 
-            public static ObjectWrapper OracleRitualGrid => new ObjectWrapper(RitualGrid);
+            public static readonly ObjectWrapper OracleRitualGrid = new ObjectWrapper(RitualGrid);
         }
     }
 }

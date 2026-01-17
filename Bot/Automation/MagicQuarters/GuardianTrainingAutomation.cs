@@ -44,28 +44,26 @@ namespace FireBot.Bot.Automation.MagicQuarters
 
                 yield return Button.Training?.Click();
 
-                yield return new ButtonWrapper(JoinPath(GuardianList, guardianRoot.name))?.Click();
+                yield return new ButtonWrapper(JoinPath(GuardianList, guardianRoot.name)).Click();
             }
 
-            yield return Button.Close?.Click();
+            yield return Button.Close.Click();
         }
 
         private static class Button
         {
             public static readonly ButtonWrapper Notification = new ButtonWrapper(GuardianTrainingNotification);
 
-            public static ButtonWrapper Close => new ButtonWrapper(CloseButton);
+            public static readonly ButtonWrapper Close = new ButtonWrapper(CloseButton);
 
-            public static ButtonWrapper Training => new ButtonWrapper(TrainingButton);
+            public static readonly ButtonWrapper Training = new ButtonWrapper(TrainingButton);
         }
 
         private readonly struct Object
         {
-            public static ObjectWrapper CooldownOn => new ObjectWrapper(JoinPath(TrainingButton, "cooldownOn"));
+            public static readonly ObjectWrapper CooldownOn = new ObjectWrapper(JoinPath(TrainingButton, "cooldownOn"));
 
-            public static ObjectWrapper CooldownOff => new ObjectWrapper(JoinPath(TrainingButton, "cooldownOff"));
-
-            public static ObjectWrapper Panel => new ObjectWrapper(MenuMagicQuarters);
+            public static readonly ObjectWrapper Panel = new ObjectWrapper(MenuMagicQuarters);
         }
     }
 }
