@@ -96,5 +96,11 @@
             <HintPath>$(FirestoneGamePath)\MelonLoader\Il2CppAssemblies\UnityEngine.UI.dll</HintPath>
         </Reference>
     </ItemGroup>
+    <ItemGroup>
+      <Content Include=".gitignore" />
+      <Content Include=".gitmodules" />
+      <Content Include="Directory.Build.props" />
+      <Content Include="global.json" />
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>

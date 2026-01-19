@@ -1,0 +1,3 @@
+[submodule "external/UniverseLib"]
+	path = external/UniverseLib
+	url = https://github.com/danilogmoura/UniverseLib.git

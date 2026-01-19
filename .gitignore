@@ -6,5 +6,4 @@
 riderModule.iml
 /_ReSharper.Caches/
 *.sln.DotSettings.user
-*.csproj.user
 Directory.Build.props
