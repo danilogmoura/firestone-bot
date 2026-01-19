@@ -36,37 +36,37 @@
         <PostBuildEvent>move FireBot.dll "$(FirestoneGamePath)\Mods"</PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="Bot\Automation\Core\AutomationHandler.cs"/>
-        <Compile Include="Bot\Automation\Core\IAutomationObserver.cs"/>
-        <Compile Include="Bot\Automation\Enginneer\ToolsProductionAutomation.cs"/>
-        <Compile Include="Bot\Automation\Enginneer\WarfrontCampaignAutomation.cs"/>
-        <Compile Include="Bot\Automation\Expedition\ExpeditionAutomation.cs"/>
-        <Compile Include="Bot\Automation\GuildShop\FreePickaxesAutomation.cs"/>
-        <Compile Include="Bot\Automation\Library\FirestoneResearchAutomation.cs"/>
-        <Compile Include="Bot\Automation\MagicQuarters\GuardianTrainingAutomation.cs"/>
-        <Compile Include="Bot\Automation\Main\CloseEventsAutomation_Disabled.cs"/>
-        <Compile Include="Bot\Automation\Main\OfflineProgressAutomation.cs"/>
-        <Compile Include="Bot\Automation\Mission\MissionMapAutomation.cs"/>
-        <Compile Include="Bot\Automation\Oracle\OracleRitualsAutomation.cs"/>
-        <Compile Include="Bot\Automation\WarMachine\DailyMissions.cs"/>
-        <Compile Include="Bot\Component\ComponentWrapper.cs"/>
-        <Compile Include="Bot\Component\MapMissionInteractionWrapper.cs"/>
-        <Compile Include="Bot\Component\ObjectWrapper.cs"/>
-        <Compile Include="Bot\Component\SpriteRendererWrapper.cs"/>
-        <Compile Include="Bot\Component\TextMeshProWrapper.cs"/>
-        <Compile Include="Bot\Component\ButtonWrapper.cs"/>
-        <Compile Include="Bot\Component\MappedObjectBase.cs"/>
-        <Compile Include="Bot\Component\TextMeshProUGUIWrapper.cs"/>
-        <Compile Include="Bot\Component\TimeDisplay.cs"/>
-        <Compile Include="Config\BotSettings.cs"/>
-        <Compile Include="Main.cs"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="Utils\LogManager.cs"/>
-        <Compile Include="Utils\Paths.cs"/>
-        <Compile Include="Utils\StringUtils.cs"/>
+        <Compile Include="Main.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="src\Bot\Automation\Core\AutomationHandler.cs" />
+        <Compile Include="src\Bot\Automation\Core\IAutomationObserver.cs" />
+        <Compile Include="src\Bot\Automation\Enginneer\ToolsProductionAutomation.cs" />
+        <Compile Include="src\Bot\Automation\Enginneer\WarfrontCampaignAutomation.cs" />
+        <Compile Include="src\Bot\Automation\Expedition\ExpeditionAutomation.cs" />
+        <Compile Include="src\Bot\Automation\GuildShop\FreePickaxesAutomation.cs" />
+        <Compile Include="src\Bot\Automation\Library\FirestoneResearchAutomation.cs" />
+        <Compile Include="src\Bot\Automation\MagicQuarters\GuardianTrainingAutomation.cs" />
+        <Compile Include="src\Bot\Automation\Main\CloseEventsAutomation_Disabled.cs" />
+        <Compile Include="src\Bot\Automation\Main\OfflineProgressAutomation.cs" />
+        <Compile Include="src\Bot\Automation\Mission\MissionMapAutomation.cs" />
+        <Compile Include="src\Bot\Automation\Oracle\OracleRitualsAutomation.cs" />
+        <Compile Include="src\Bot\Automation\WarMachine\DailyMissions.cs" />
+        <Compile Include="src\Bot\Component\ButtonWrapper.cs" />
+        <Compile Include="src\Bot\Component\ComponentWrapper.cs" />
+        <Compile Include="src\Bot\Component\MapMissionInteractionWrapper.cs" />
+        <Compile Include="src\Bot\Component\MappedObjectBase.cs" />
+        <Compile Include="src\Bot\Component\ObjectWrapper.cs" />
+        <Compile Include="src\Bot\Component\SpriteRendererWrapper.cs" />
+        <Compile Include="src\Bot\Component\TextMeshProUGUIWrapper.cs" />
+        <Compile Include="src\Bot\Component\TextMeshProWrapper.cs" />
+        <Compile Include="src\Bot\Component\TimeDisplay.cs" />
+        <Compile Include="src\Config\BotSettings.cs" />
+        <Compile Include="src\Utils\LogManager.cs" />
+        <Compile Include="src\Utils\Paths.cs" />
+        <Compile Include="src\Utils\StringUtils.cs" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config"/>
+        <None Include="App.config" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="0Harmony">
