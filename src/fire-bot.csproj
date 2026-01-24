@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <OutputType>Library</OutputType>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="MelonLoader">
+            <HintPath>$(MelonLoaderNetDir)\MelonLoader.dll</HintPath>
+        </Reference>
+        <Reference Include="0Harmony">
+            <HintPath>$(MelonLoaderNetDir)\0Harmony.dll</HintPath>
+        </Reference>
+        <Reference Include="Il2CppInterop.Runtime">
+            <HintPath>$(MelonLoaderNetDir)\Il2CppInterop.Runtime.dll</HintPath>
+        </Reference>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(Il2CppAssembliesDir)\Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="Il2CppACTk.Runtime">
+            <HintPath>$(Il2CppAssembliesDir)\Il2CppACTk.Runtime.dll</HintPath>
+        </Reference>
+        <Reference Include="Il2Cppmscorlib">
+            <HintPath>$(Il2CppAssembliesDir)\Il2Cppmscorlib.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>$(Il2CppAssembliesDir)\Unity.TextMeshPro.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>$(Il2CppAssembliesDir)\UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(Il2CppAssembliesDir)\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.IMGUIModule">
+            <HintPath>$(Il2CppAssembliesDir)\UnityEngine.IMGUIModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.InputLegacyModule">
+            <HintPath>$(Il2CppAssembliesDir)\UnityEngine.InputLegacyModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.TextRenderingModule">
+            <HintPath>$(Il2CppAssembliesDir)\UnityEngine.TextRenderingModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>$(Il2CppAssembliesDir)\UnityEngine.UI.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="Build">
+        <Message Text="[Deploy] Copiando $(AssemblyName).dll para a pasta de Mods..." Importance="High"/>
+        <Message Text="➡ Destino: $(ModsDir)" Importance="High"/>
+
+        <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll"
+              DestinationFolder="$(ModsDir)"
+              Condition="Exists('$(ModsDir)')"
+              SkipUnchangedFiles="true"/>
+
+        <Warning Text="A pasta de Mods não foi encontrada. O arquivo não foi copiado."
+                 Condition="!Exists('$(ModsDir)')"/>
+    </Target>
+
+</Project>

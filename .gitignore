@@ -1,9 +1,24 @@
-/.idea/
-/.vscode/
-/bin/
-/obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+## --- Build and Binary Directories ---
+bin/
+obj/
+
+## --- Dependencies and User-Specific Settings ---
+packages/
+*.user
+*.userosscache
 *.sln.DotSettings.user
+
+## --- MSBuild Configuration Files ---
 Directory.Build.props
+
+## --- IDE Specific Files (Rider, VS Code, Visual Studio) ---
+.idea/
+.vscode/
+*.iml
+*.suo
+_ReSharper.Caches/
+
+## --- Operating System Files ---
+.DS_Store
+Thumbs.db
+global.json

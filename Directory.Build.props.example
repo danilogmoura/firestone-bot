@@ -1,7 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <!-- Configure the path to your Firestone installation -->
-    <!-- Example: C:\Games\Steam\steamapps\common\Firestone -->
-    <FirestoneGamePath>PATH</FirestoneGamePath>
-  </PropertyGroup>
-</Project>
