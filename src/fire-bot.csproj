@@ -6,6 +6,9 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
 
     <ItemGroup>
         <Reference Include="MelonLoader">
@@ -47,22 +50,28 @@
         <Reference Include="UnityEngine.UI">
             <HintPath>$(Il2CppAssembliesDir)\UnityEngine.UI.dll</HintPath>
         </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\external\UniverseLib\UniverseLib.MelonLoader.IL2CPP\UniverseLib.MelonLoader.IL2CPP.csproj"/>
+        <Reference Include="UniverseLib.ML.IL2CPP.Interop">
+            <HintPath>..\libs\UniverseLib\UniverseLib.ML.IL2CPP.Interop.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="Build">
-        <Message Text="[Deploy] Copiando $(AssemblyName).dll para a pasta de Mods..." Importance="High"/>
-        <Message Text="➡ Destino: $(ModsDir)" Importance="High"/>
+        <Message Text="[Deploy] Starting file distribution..." Importance="High"/>
 
         <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll"
               DestinationFolder="$(ModsDir)"
               Condition="Exists('$(ModsDir)')"
               SkipUnchangedFiles="true"/>
 
-        <Warning Text="A pasta de Mods não foi encontrada. O arquivo não foi copiado."
-                 Condition="!Exists('$(ModsDir)')"/>
+        <Copy SourceFiles="$(ProjectDir)..\libs\UniverseLib\UniverseLib.ML.IL2CPP.Interop.dll"
+              DestinationFolder="$(UserLibs)"
+              Condition="Exists('$(UserLibs)')"
+              SkipUnchangedFiles="true"/>
+
+        <Message Text="➡ Mod deployed to: $(ModsDir)" Importance="High" Condition="Exists('$(ModsDir)')"/>
+        <Message Text="➡ Dependency deployed to: $(UserLibs)" Importance="High" Condition="Exists('$(UserLibs)')"/>
+
+        <Warning Text="Target directories not found. Check your Directory.Build.props path settings."
+                 Condition="!Exists('$(ModsDir)') Or !Exists('$(UserLibs)')"/>
     </Target>
 </Project>

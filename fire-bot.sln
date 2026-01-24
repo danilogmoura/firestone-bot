@@ -1,8 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fire-bot", "src\fire-bot.csproj", "{D0A140C0-A82B-462E-B5C9-1D0E5F2761ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniverseLib.MelonLoader.IL2CPP", "external\UniverseLib\UniverseLib.MelonLoader.IL2CPP\UniverseLib.MelonLoader.IL2CPP.csproj", "{D8254C5E-BE13-46AC-9B9B-BA1C738732BB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,9 +15,5 @@ Global
 		{D0A140C0-A82B-462E-B5C9-1D0E5F2761ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0A140C0-A82B-462E-B5C9-1D0E5F2761ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0A140C0-A82B-462E-B5C9-1D0E5F2761ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8254C5E-BE13-46AC-9B9B-BA1C738732BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8254C5E-BE13-46AC-9B9B-BA1C738732BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8254C5E-BE13-46AC-9B9B-BA1C738732BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8254C5E-BE13-46AC-9B9B-BA1C738732BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
