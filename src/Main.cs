@@ -1,17 +1,23 @@
-﻿using FireBot.Bot.Automation.Core;
+﻿using System.Reflection;
+using FireBot.Bot.Automation.Core;
 using FireBot.Core;
 using FireBot.Utils;
 using MelonLoader;
 using UnityEngine;
+using Main = FireBot.Main;
+
+[assembly: MelonInfo(typeof(Main), "FireBot", "0.1.0", "danilogmoura", "https://github.com/danilogmoura/fire-bot")]
+[assembly: MelonGame]
+
+[assembly: MelonColor(255, 255, 0, 255)]
+[assembly: MelonAuthorColor(255, 0, 255, 0)]
+
+[assembly: AssemblyTitle("FireBot")]
+[assembly:
+    AssemblyDescription("A bot for automating tasks using MelonLoader.")]
+[assembly: AssemblyCopyright("Created by danilogmoura")]
 
 namespace FireBot;
-
-public static class BuildInfo
-{
-    public const string Name = "FireBot";
-    public const string Author = "danilogmoura";
-    public const string Version = "0.1.0";
-}
 
 public class Main : MelonMod
 {
