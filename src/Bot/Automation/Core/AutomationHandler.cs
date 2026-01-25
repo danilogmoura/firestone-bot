@@ -17,7 +17,11 @@ public static class AutomationHandler
     {
         var assembly = Assembly.GetExecutingAssembly();
 
-        const string targetNamespace = "FireBot.Bot.Automation";
+        var handlerNamespace = typeof(AutomationHandler).Namespace ?? string.Empty;
+        var targetNamespace = handlerNamespace.EndsWith(".Core", StringComparison.Ordinal)
+            ? handlerNamespace.Substring(0, handlerNamespace.Length - ".Core".Length)
+            : handlerNamespace;
+
         const string suffix = "Automation";
 
         var automationTypes = assembly.GetTypes()

@@ -36,7 +36,6 @@ public static class BotSettings
 
         AutomationHandler.AutoRegister(configPath);
 
-        MelonLogger.Msg(ConsoleColor.DarkCyan, "[Firebot] ", ConsoleColor.Gray,
-            $"System Initialized. Configuration: {configPath}");
+        MelonLogger.Msg(ConsoleColor.Gray, $"System Initialized. Configuration: {configPath}");
     }
 }
