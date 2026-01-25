@@ -64,7 +64,7 @@ internal abstract class MappedObjectBase
         }
     }
 
-    protected T ExecuteSafe<T>(Func<T> func, [CallerMemberName] string actionName = null, T defaultValue = default)
+    protected T ExecuteSafe<T>(Func<T> func, T defaultValue = default, [CallerMemberName] string actionName = "")
     {
         try
         {
