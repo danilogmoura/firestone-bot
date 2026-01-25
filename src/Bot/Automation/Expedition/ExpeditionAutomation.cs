@@ -12,22 +12,17 @@ public class ExpeditionAutomation : AutomationObserver
 {
     private MelonPreferences_Entry<float> _checkInterval;
 
-    // Variáveis específicas desta classe
     private MelonPreferences_Entry<bool> _collectRewards;
 
-    // 1. Define o nome da seção no arquivo .cfg (Obrigatório)
     public override string SectionName => "Expedition";
 
-    // 2. Define a prioridade (Opcional, sobrescrevendo o padrão 50)
-    public override int Priority => 80; // Expedição é importante, por exemplo
+    public override int Priority => 80;
 
-    // 3. Configura as variáveis extras (Opcional)
     protected override void OnConfigure(MelonPreferences_Category category)
     {
         _collectRewards = category.CreateEntry("AutoCollect", true, "Auto Collect Rewards", "Auto Collect Rewards");
         _checkInterval = category.CreateEntry("CheckInterval", 60.0f, "Check Interval (s)", "Check Interval (s)");
     }
-
 
     public override bool ToogleCondition()
     {
