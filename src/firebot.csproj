@@ -51,8 +51,11 @@
         <Reference Include="UnityEngine.UI">
             <HintPath>$(Il2CppAssembliesDir)\UnityEngine.UI.dll</HintPath>
         </Reference>
+        <Reference Include="UnityEngine.UIModule">
+            <HintPath>$(Il2CppAssembliesDir)\UnityEngine.UIModule.dll</HintPath>
+        </Reference>
         <Reference Include="UniverseLib.ML.IL2CPP.Interop">
-            <HintPath>..\libs\UniverseLib\UniverseLib.ML.IL2CPP.Interop.dll</HintPath>
+            <HintPath>$(UniverseLibDir)\UniverseLib.ML.IL2CPP.Interop.dll</HintPath>
         </Reference>
     </ItemGroup>
 
