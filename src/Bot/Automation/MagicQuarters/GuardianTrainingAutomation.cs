@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using FireBot.Bot.Automation.Core;
-using FireBot.Bot.Component;
-using FireBot.Utils;
-using static FireBot.Utils.Paths.GuardianTraining;
-using static FireBot.Utils.StringUtils;
+using Firebot.Bot.Automation.Core;
+using Firebot.Bot.Component;
+using Firebot.Utils;
+using static Firebot.Utils.Paths.GuardianTraining;
+using static Firebot.Utils.StringUtils;
 
-namespace FireBot.Bot.Automation.MagicQuarters;
+namespace Firebot.Bot.Automation.MagicQuarters;
 
 public class GuardianTrainingAutomation : AutomationObserver
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using MelonLoader;
 
-namespace FireBot.Bot.Automation.Core;
+namespace Firebot.Bot.Automation.Core;
 
 public static class AutomationHandler
 {

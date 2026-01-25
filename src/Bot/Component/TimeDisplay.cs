@@ -1,7 +1,7 @@
 ﻿using System;
 using MelonLoader;
 
-namespace FireBot.Bot.Component
+namespace Firebot.Bot.Component
 {
     internal class TimeDisplay : TextMeshProWrapper
     {

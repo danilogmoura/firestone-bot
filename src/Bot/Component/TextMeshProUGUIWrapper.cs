@@ -1,6 +1,6 @@
 ﻿using Il2CppTMPro;
 
-namespace FireBot.Bot.Component
+namespace Firebot.Bot.Component
 {
     internal class TextMeshProUGUIWrapper : ComponentWrapper<TextMeshProUGUI>
     {

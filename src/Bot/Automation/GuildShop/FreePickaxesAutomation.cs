@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using FireBot.Bot.Automation.Core;
-using FireBot.Bot.Component;
-using FireBot.Utils;
-using static FireBot.Utils.Paths.GuildShop;
+using Firebot.Bot.Automation.Core;
+using Firebot.Bot.Component;
+using Firebot.Utils;
+using static Firebot.Utils.Paths.GuildShop;
 
-namespace FireBot.Bot.Automation.GuildShop;
+namespace Firebot.Bot.Automation.GuildShop;
 
 public class FreePickaxesAutomation : AutomationObserver
 {

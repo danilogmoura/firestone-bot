@@ -4,7 +4,7 @@ using MelonLoader;
 using MelonLoader.Logging;
 using static MelonLoader.Logging.ColorARGB;
 
-namespace FireBot.Utils
+namespace Firebot.Utils
 {
     public static class LogManager
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FireBot.Bot.Component
+namespace Firebot.Bot.Component
 {
     internal class SpriteRendererWrapper : ComponentWrapper<SpriteRenderer>
     {

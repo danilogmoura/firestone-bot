@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using MelonLoader;
 
-namespace FireBot.Bot.Automation.Core;
+namespace Firebot.Bot.Automation.Core;
 
 public abstract class AutomationObserver
 {

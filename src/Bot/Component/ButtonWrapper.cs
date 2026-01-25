@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using FireBot.Core;
+using Firebot.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FireBot.Bot.Component
+namespace Firebot.Bot.Component
 {
     internal class ButtonWrapper : ComponentWrapper<Button>
     {

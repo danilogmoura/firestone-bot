@@ -1,10 +1,10 @@
 using System.Collections;
-using FireBot.Bot.Automation.Core;
-using FireBot.Bot.Component;
-using FireBot.Utils;
-using static FireBot.Utils.Paths.Engineer;
+using Firebot.Bot.Automation.Core;
+using Firebot.Bot.Component;
+using Firebot.Utils;
+using static Firebot.Utils.Paths.Engineer;
 
-namespace FireBot.Bot.Automation.Enginneer;
+namespace Firebot.Bot.Automation.Enginneer;
 
 public class ToolsProductionAutomation : AutomationObserver
 {

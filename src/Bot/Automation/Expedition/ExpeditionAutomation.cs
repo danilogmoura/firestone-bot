@@ -1,12 +1,12 @@
 ﻿using System.Collections;
-using FireBot.Bot.Automation.Core;
-using FireBot.Bot.Component;
-using FireBot.Utils;
+using Firebot.Bot.Automation.Core;
+using Firebot.Bot.Component;
+using Firebot.Utils;
 using MelonLoader;
-using static FireBot.Utils.Paths.Expedition;
-using static FireBot.Utils.StringUtils;
+using static Firebot.Utils.Paths.Expedition;
+using static Firebot.Utils.StringUtils;
 
-namespace FireBot.Bot.Automation.Expedition;
+namespace Firebot.Bot.Automation.Expedition;
 
 public class ExpeditionAutomation : AutomationObserver
 {

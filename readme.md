@@ -1,6 +1,6 @@
-# Fire Bot
+# Firebot
 
-Fire Bot is a bot designed for the game Firestone Idle RPG. This bot aims to enhance the gaming experience by automating various tasks and providing useful features for players.
+Firebot is a bot designed for the game Firestone Idle RPG. This bot aims to enhance the gaming experience by automating various tasks and providing useful features for players.
 
 ## About
 This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https://github.com/LavaGang/MelonLoader) Nightly V0.7.2+.
@@ -18,16 +18,16 @@ This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/fire-bot.git
+   git clone https://github.com/yourusername/firebot.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd fire-bot
+   cd firebot
    ```
 3. Build the project using your preferred method (e.g., Visual Studio, command line).
 
 ## Configuration
-The bot configuration file can be found at `Firestone\UserData\fire-bot.cfg`.
+The bot configuration file can be found at `Firestone\UserData\firebot.cfg`.
 
 For now, all configuration must be done directly through this file. A configuration display interface will be implemented in the future.
 

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
-using FireBot.Bot.Automation.Core;
-using FireBot.Bot.Component;
-using FireBot.Utils;
+using Firebot.Bot.Automation.Core;
+using Firebot.Bot.Component;
+using Firebot.Utils;
 using UnityEngine;
-using static FireBot.Utils.Paths.FirestoneResearch;
-using static FireBot.Utils.StringUtils;
+using static Firebot.Utils.Paths.FirestoneResearch;
+using static Firebot.Utils.StringUtils;
 
-namespace FireBot.Bot.Automation.Library;
+namespace Firebot.Bot.Automation.Library;
 
 internal class FirestoneResearchAutomation : AutomationObserver
 {

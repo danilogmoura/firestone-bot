@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using FireBot.Bot.Automation.Core;
-using FireBot.Bot.Component;
-using FireBot.Utils;
-using static FireBot.Utils.Paths;
-using static FireBot.Utils.StringUtils;
+using Firebot.Bot.Automation.Core;
+using Firebot.Bot.Component;
+using Firebot.Utils;
+using static Firebot.Utils.Paths;
+using static Firebot.Utils.StringUtils;
 
-namespace FireBot.Bot.Automation.Main;
+namespace Firebot.Bot.Automation.Main;
 
 public class CloseEventsAutomation_Disabled : AutomationObserver
 {

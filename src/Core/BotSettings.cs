@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
-using FireBot.Bot.Automation.Core;
+using Firebot.Bot.Automation.Core;
 using MelonLoader;
 using UnityEngine;
 
-namespace FireBot.Core;
+namespace Firebot.Core;
 
 public static class BotSettings
 {

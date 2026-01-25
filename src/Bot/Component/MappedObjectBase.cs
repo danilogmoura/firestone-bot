@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityGameObject = UnityEngine.GameObject;
 
-namespace FireBot.Bot.Component
+namespace Firebot.Bot.Component
 {
     internal abstract class MappedObjectBase
     {

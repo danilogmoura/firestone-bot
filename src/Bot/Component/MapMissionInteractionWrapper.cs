@@ -1,7 +1,7 @@
 ﻿using Il2Cpp;
 using UnityEngine.EventSystems;
 
-namespace FireBot.Bot.Component
+namespace Firebot.Bot.Component
 {
     internal class MapMissionInteractionWrapper : ComponentWrapper<MapMissionInteraction>
     {

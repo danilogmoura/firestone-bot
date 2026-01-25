@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using FireBot.Bot.Automation.Core;
-using FireBot.Bot.Component;
-using FireBot.Utils;
-using static FireBot.Utils.Paths.OracleRituals;
-using static FireBot.Utils.StringUtils;
+using Firebot.Bot.Automation.Core;
+using Firebot.Bot.Component;
+using Firebot.Utils;
+using static Firebot.Utils.Paths.OracleRituals;
+using static Firebot.Utils.StringUtils;
 
-namespace FireBot.Bot.Automation.Oracle;
+namespace Firebot.Bot.Automation.Oracle;
 
 public class OracleRitualsAutomation : AutomationObserver
 {

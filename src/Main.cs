@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
-using FireBot.Bot.Automation.Core;
-using FireBot.Core;
-using FireBot.Utils;
+using Firebot.Bot.Automation.Core;
+using Firebot.Core;
+using Firebot.Utils;
 using MelonLoader;
 using UnityEngine;
-using Main = FireBot.Main;
+using Main = Firebot.Main;
 
-[assembly: MelonInfo(typeof(Main), "FireBot", "0.1.0", "danilogmoura", "https://github.com/danilogmoura/fire-bot")]
+[assembly: MelonInfo(typeof(Main), "FireBot", "0.1.0", "danilogmoura", "https://github.com/danilogmoura/firebot")]
 [assembly: MelonGame]
 
 [assembly: MelonColor(255, 255, 0, 255)]
@@ -17,7 +17,7 @@ using Main = FireBot.Main;
     AssemblyDescription("A bot for automating tasks using MelonLoader.")]
 [assembly: AssemblyCopyright("Created by danilogmoura")]
 
-namespace FireBot;
+namespace Firebot;
 
 public class Main : MelonMod
 {

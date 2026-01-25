@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using FireBot.Bot.Automation.Core;
-using FireBot.Bot.Component;
-using FireBot.Utils;
-using static FireBot.Utils.Paths.BattleRoot;
+using Firebot.Bot.Automation.Core;
+using Firebot.Bot.Component;
+using Firebot.Utils;
+using static Firebot.Utils.Paths.BattleRoot;
 
-namespace FireBot.Bot.Automation.Main
+namespace Firebot.Bot.Automation.Main
 {
     internal class OfflineProgressAutomation : AutomationObserver
     {

@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using FireBot.Bot.Automation.Core;
-using FireBot.Bot.Component;
-using FireBot.Core;
-using FireBot.Utils;
+using Firebot.Bot.Automation.Core;
+using Firebot.Bot.Component;
+using Firebot.Core;
+using Firebot.Utils;
 using UnityEngine;
-using static FireBot.Utils.Paths.Missions;
-using static FireBot.Utils.StringUtils;
+using static Firebot.Utils.Paths.Missions;
+using static Firebot.Utils.StringUtils;
 
-namespace FireBot.Bot.Automation.Mission
+namespace Firebot.Bot.Automation.Mission
 {
     internal class MissionMapAutomation : AutomationObserver
     {
