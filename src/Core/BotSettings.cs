@@ -10,14 +10,17 @@ public static class BotSettings
 {
     private static MelonPreferences_Category _category;
 
-    // Globais
-    public static MelonPreferences_Entry<bool> IsBotEnabled;
-    public static MelonPreferences_Entry<float> ScanInterval;
-    public static MelonPreferences_Entry<float> InteractionDelay;
+    private static MelonPreferences_Entry<bool> _enable;
+    private static MelonPreferences_Entry<float> _scanInterval;
+    private static MelonPreferences_Entry<float> _interactionDelay;
+    private static MelonPreferences_Entry<bool> _debugMode;
 
     // Safe Properties
-    public static float SafeScanInterval => Mathf.Max(0.1f, ScanInterval.Value);
-    public static float SafeInteractionDelay => Mathf.Max(0.05f, InteractionDelay.Value);
+    public static bool IsEnable => _enable?.Value ?? false;
+    public static float ScanInterval => Mathf.Max(0.1f, _scanInterval.Value);
+
+    public static float InteractionDelay => Mathf.Max(0.05f, _interactionDelay.Value);
+    public static bool DebugMode => _debugMode?.Value ?? false;
 
     public static void Initialize()
     {
@@ -26,11 +29,13 @@ public static class BotSettings
         _category = MelonPreferences.CreateCategory("firebot_settings", "Firebot Settings");
         _category.SetFilePath(configPath);
 
-        IsBotEnabled = _category.CreateEntry("IsBotEnabled", true, "Enable Bot", "Enable the bot system");
-        ScanInterval =
+        _enable = _category.CreateEntry("Enable", false, "Enable Bot", "Enable the bot system");
+        _scanInterval =
             _category.CreateEntry("ScanInterval", 5.0f, "Scan Interval", "Time between bot checks");
-        InteractionDelay = _category.CreateEntry("InteractionDelay", 1.0f, "Interaction Delay",
+        _interactionDelay = _category.CreateEntry("InteractionDelay", 1.0f, "Interaction Delay",
             "Delay between UI interactions");
+        _debugMode = _category.CreateEntry("DebugMode", false, "Enable Debug Mode",
+            "Enable debug logging for troubleshooting");
 
         _category.SaveToFile();
 
