@@ -15,7 +15,7 @@ namespace FireBot.Bot.Automation.Mission
     {
         private static List<Mission> _missionCache;
 
-        public override string SectionName => "Mission_Map";
+        public override string SectionName => "Mission Map";
 
         public override bool ToogleCondition()
         {

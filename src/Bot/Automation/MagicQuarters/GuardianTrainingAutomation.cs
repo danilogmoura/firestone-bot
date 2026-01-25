@@ -9,7 +9,7 @@ namespace FireBot.Bot.Automation.MagicQuarters;
 
 public class GuardianTrainingAutomation : AutomationObserver
 {
-    public override string SectionName => "GuardianTraining";
+    public override string SectionName => "Guardian Training";
 
     public override bool ToogleCondition()
     {

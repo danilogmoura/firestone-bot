@@ -12,7 +12,7 @@ public class OracleRitualsAutomation : AutomationObserver
 {
     private static readonly List<Ritual> RitualsCache = new();
 
-    public override string SectionName => "OracleRituals";
+    public override string SectionName => "Oracle Rituals";
 
     public override bool ToogleCondition()
     {
