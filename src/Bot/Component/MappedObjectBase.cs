@@ -22,9 +22,7 @@ internal abstract class MappedObjectBase
     {
         get
         {
-            if (_cachedTransform == null)
-                FindAndCacheTransform();
-
+            if (_cachedTransform == null) FindAndCacheTransform();
             return _cachedTransform;
         }
     }
@@ -33,13 +31,10 @@ internal abstract class MappedObjectBase
         ExecuteSafe(() =>
         {
             if (string.IsNullOrEmpty(_path)) return;
-
             var rootObj = UnityGameObject.Find(_path.Split('/')[0]);
+
             if (rootObj == null)
-            {
-                LogManager.Debug("MapError", $"{ObjectName}: Root not found for {_path}");
-                return;
-            }
+                throw new InvalidOperationException($"[MapError] {ObjectName}: Root not found for {_path}");
 
             _cachedTransform = !_path.Contains('/')
                 ? rootObj.transform
@@ -78,11 +73,11 @@ internal abstract class MappedObjectBase
 
     public bool Exists() => CachedTransform != null;
 
-    public bool IsActive() => CachedTransform != null && CachedTransform.gameObject.activeInHierarchy;
+    public bool IsActive() => Exists() && CachedTransform.gameObject.activeInHierarchy;
 
-    public bool HasChilden() => IsActive() && ExecuteSafe(() => CachedTransform.childCount > 0);
+    public bool HasChildren() => IsActive() && ExecuteSafe(() => CachedTransform.childCount > 0);
 
-    public int? ChildCount() => ExecuteSafe(() => CachedTransform?.childCount);
+    public int ChildCount() => Exists() ? CachedTransform.childCount : 0;
 
     public Transform GetChild(int level) => ExecuteSafe(() => CachedTransform?.GetChild(level));
 }
