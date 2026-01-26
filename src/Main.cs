@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Firebot.Bot.Automation.Core;
 using Firebot.Core;
 using MelonLoader;
 using UnityEngine;
@@ -20,26 +19,27 @@ namespace Firebot;
 
 public class Main : MelonMod
 {
-    private float _scanTimer;
+    private bool _isGameReady;
 
-    public override void OnInitializeMelon()
-    {
-        BotSettings.Initialize();
-    }
+    public override void OnInitializeMelon() => BotSettings.Initialize();
 
-    public override void OnLateInitializeMelon()
+    public override void OnSceneWasLoaded(int buildIndex, string sceneName)
     {
+        _isGameReady = sceneName == "mainScene";
+
+        if (_isGameReady)
+        {
+            if (BotSettings.AutoStart) BotManager.Start(BotSettings.StartBotDelay);
+        }
+        else
+            BotManager.Stop();
     }
 
     public override void OnUpdate()
     {
-        if (!BotSettings.IsEnable) return;
+        if (!_isGameReady || !Input.GetKeyDown(BotSettings.ShortcutKey)) return;
 
-        _scanTimer -= Time.deltaTime;
-
-        if (!(_scanTimer <= 0f)) return;
-
-        _scanTimer = BotSettings.ScanInterval;
-        AutomationHandler.CheckNotifications();
+        if (BotManager.IsRunning) BotManager.Stop();
+        else BotManager.Start();
     }
 }
