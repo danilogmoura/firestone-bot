@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Firebot.Bot.Automation.Core;
 using Firebot.Bot.Component;
-using Firebot.Utils;
 using static Firebot.Utils.Paths;
 using static Firebot.Utils.StringUtils;
 
 namespace Firebot.Bot.Automation.Main;
 
-public class CloseEventsAutomation : AutomationObserver
+public class CloseEventsAutomation_Disabled : AutomationObserver
 {
     private const string CloseButtonPath = "bg/closeButton";
 
@@ -19,10 +18,7 @@ public class CloseEventsAutomation : AutomationObserver
 
     public override int Priority => 1;
 
-    public override bool ShouldExecute()
-    {
-        return base.ShouldExecute() && HasActiveEvent();
-    }
+    public override bool ShouldExecute() => base.ShouldExecute() && HasActiveEvent();
 
     public override IEnumerator OnNotificationTriggered()
     {
