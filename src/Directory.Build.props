@@ -2,7 +2,7 @@
     <PropertyGroup>
         <TargetGameName>Firestone</TargetGameName>
         <GameRoot Condition="'$(COMMON_DIR)' != ''">$(COMMON_DIR)\$(TargetGameName)</GameRoot>
-        <GameRoot Condition="'$(GameRoot)' == ''">C:\Games\$(TargetGameName)</GameRoot>
+        <GameRoot Condition="'$(GameRoot)' == ''">C:\Program Files (x86)\Steam\$(TargetGameName)</GameRoot>
     </PropertyGroup>
 
     <PropertyGroup>
