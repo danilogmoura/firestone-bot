@@ -45,7 +45,7 @@ public class CloseEventsAutomation : AutomationObserver
         _eventsPath.Clear();
         var events = new ObjectWrapper(EventsPopupPath);
 
-        if (!events.IsActive() || !events.HasChilden()) return false;
+        if (!events.IsActive() || !events.HasChildren()) return false;
 
         for (var i = 0; i < events.ChildCount(); i++)
         {
