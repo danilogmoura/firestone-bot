@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Firebot.Bot.Automation.Core;
 using Firebot.Bot.Component;
+using Firebot.Bot.Component.TextMeshPro;
 using static Firebot.Utils.Paths.WarfrontCampaign;
 
 namespace Firebot.Bot.Automation.Enginneer;
@@ -9,10 +10,7 @@ public class WarfrontCampaignAutomation : AutomationObserver
 {
     public override string SectionTitle => "Warfront Campaign Scrolls";
 
-    public override bool ShouldExecute()
-    {
-        return base.ShouldExecute() && Button.Notification.IsActive();
-    }
+    public override bool ShouldExecute() => base.ShouldExecute() && Button.Notification.IsActive();
 
     public override IEnumerator OnNotificationTriggered()
     {
@@ -20,10 +18,15 @@ public class WarfrontCampaignAutomation : AutomationObserver
 
         yield return Button.Notification.Click();
 
+        ResetSchedule();
+
         var claimToolsButton = new ButtonWrapper(ClaimToolsButton);
         var closeButton = new ButtonWrapper(CloseButton);
 
         if (claimToolsButton.IsInteractable()) yield return claimToolsButton.Click();
+
+        var timer = new TextUI(NextLootTimeLeft);
+        ScheduleNextCheck(timer.TotalSeconds);
 
         yield return closeButton.Click();
     }

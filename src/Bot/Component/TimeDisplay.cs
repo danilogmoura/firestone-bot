@@ -1,4 +1,5 @@
 ﻿using System;
+using Firebot.Bot.Component.TextMeshPro;
 using MelonLoader;
 
 namespace Firebot.Bot.Component
@@ -11,7 +12,7 @@ namespace Firebot.Bot.Component
 
         public int ParseToSeconds()
         {
-            var timeString = GetParsedText();
+            var timeString = Text;
 
             if (string.IsNullOrEmpty(timeString)) return 0;
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Firebot.Bot.Automation.Core;
 using Firebot.Bot.Component;
-using Firebot.Utils;
 using static Firebot.Utils.Paths.BattleRoot;
 
 namespace Firebot.Bot.Automation.Main;
@@ -13,10 +12,7 @@ internal class OfflineProgressAutomation : AutomationObserver
 
     public override string SectionTitle => "Offline Progress";
 
-    public override bool ShouldExecute()
-    {
-        return base.ShouldExecute() && Popup.IsActive();
-    }
+    public override bool ShouldExecute() => base.ShouldExecute() && Popup.IsActive();
 
     public override IEnumerator OnNotificationTriggered()
     {

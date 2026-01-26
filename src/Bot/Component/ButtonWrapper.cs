@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Firebot.Core;
+using Firebot.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,12 +17,18 @@ internal class ButtonWrapper : ComponentWrapper<Button>
 
     private IEnumerator Click(float delay)
     {
-        if (!IsInteractable())
-            yield break;
+        var success = ExecuteSafe(() =>
+        {
+            if (!IsInteractable())
+                throw new InvalidOperationException("Button is not interactable.");
 
-        ComponentCached.Select();
-        ComponentCached.onClick.Invoke();
+            ComponentCached.Select();
+            ComponentCached.onClick.Invoke();
 
-        if (delay > 0) yield return new WaitForSeconds(delay);
+            LogManager.Debug(ObjectName, $"Clicked button at path: {_path}");
+            return true;
+        });
+
+        if (success && delay > 0) yield return new WaitForSeconds(delay);
     }
 }

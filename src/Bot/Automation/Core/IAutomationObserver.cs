@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using Firebot.Utils;
 using MelonLoader;
+using UnityEngine;
 
 namespace Firebot.Bot.Automation.Core;
 
 public abstract class AutomationObserver
 {
     private MelonPreferences_Entry<bool> _enabledEntry;
+    private double _nextExecutionTime = -1;
 
     public abstract string SectionTitle { get; }
 
@@ -32,6 +34,21 @@ public abstract class AutomationObserver
         category.SaveToFile();
     }
 
+    protected void ScheduleNextCheck(double secondsRemaining, double offsetSeconds = 0)
+    {
+        if (secondsRemaining <= 0)
+        {
+            _nextExecutionTime = -1;
+            return;
+        }
+
+        _nextExecutionTime = Time.time + (secondsRemaining - offsetSeconds);
+        LogDebug($"Próxima execução agendada para daqui a {secondsRemaining - offsetSeconds}s " +
+                 $"(quando o timer da UI zerar)");
+    }
+
+    protected void ResetSchedule() => _nextExecutionTime = -1;
+
     protected virtual void OnConfigure(MelonPreferences_Category category)
     {
         // Optional for derived classes
@@ -39,28 +56,20 @@ public abstract class AutomationObserver
 
     public virtual bool ShouldExecute()
     {
-        return IsEnabled;
+        if (!IsEnabled) return false;
+
+        if (_nextExecutionTime < 0) return true;
+
+        return Time.time >= _nextExecutionTime;
     }
 
     public abstract IEnumerator OnNotificationTriggered();
 
-    protected void Log(string message)
-    {
-        LogManager.Info(SectionTitle, message);
-    }
+    protected void Log(string message) => LogManager.Info(SectionTitle, message);
 
-    protected void LogWarning(string message)
-    {
-        LogManager.Warning(SectionTitle, message);
-    }
+    protected void LogWarning(string message) => LogManager.Warning(SectionTitle, message);
 
-    protected void LogError(string message)
-    {
-        LogManager.Error(SectionTitle, message);
-    }
+    protected void LogError(string message) => LogManager.Error(SectionTitle, message);
 
-    protected void LogDebug(string message)
-    {
-        LogManager.Debug(SectionTitle, message);
-    }
+    protected void LogDebug(string message) => LogManager.Debug(SectionTitle, message);
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Firebot.Bot.Automation.Core;
 using Firebot.Bot.Component;
+using Firebot.Bot.Component.TextMeshPro;
 using Firebot.Core;
 using UnityEngine;
 using static Firebot.Utils.Paths.Missions;
@@ -16,10 +17,7 @@ internal class MissionMapAutomation : AutomationObserver
 
     public override string SectionTitle => "Mission Map";
 
-    public override bool ShouldExecute()
-    {
-        return base.ShouldExecute() && Buttons.Notification.IsActive();
-    }
+    public override bool ShouldExecute() => base.ShouldExecute() && Buttons.Notification.IsActive();
 
     public override IEnumerator OnNotificationTriggered()
     {
@@ -50,10 +48,7 @@ internal class MissionMapAutomation : AutomationObserver
         yield return Buttons.Close.Click();
     }
 
-    private static int GetSquadCount()
-    {
-        return new SquadsCountUGUIWrapper().Values.current;
-    }
+    private static int GetSquadCount() => new SquadsCountUGUIWrapper().Values.current;
 
     private static void UpdateMissionCache()
     {
@@ -117,15 +112,13 @@ internal class MissionMapAutomation : AutomationObserver
 
     private class SquadsCountUGUIWrapper : TextMeshProUGUIWrapper
     {
-        public SquadsCountUGUIWrapper() : base(SquadsQuantity)
-        {
-        }
+        public SquadsCountUGUIWrapper() : base(SquadsQuantity) { }
 
         public (int current, int total) Values => ParseValues();
 
         private (int current, int total) ParseValues()
         {
-            var text = GetParsedText();
+            var text = Text;
             if (string.IsNullOrEmpty(text)) return (0, 0);
 
             var slashIndex = text.IndexOf('/');

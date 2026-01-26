@@ -8,7 +8,7 @@ namespace Firebot.Bot.Component;
 
 internal abstract class MappedObjectBase
 {
-    private readonly string _path;
+    protected readonly string _path;
     private Transform _cachedTransform;
 
     protected MappedObjectBase(string path)
@@ -71,9 +71,9 @@ internal abstract class MappedObjectBase
         }
     }
 
-    protected virtual bool Exists() => CachedTransform != null;
+    public virtual bool Exists() => CachedTransform != null;
 
-    public bool IsActive() => Exists() && CachedTransform.gameObject.activeInHierarchy;
+    public virtual bool IsActive() => Exists() && CachedTransform.gameObject.activeInHierarchy;
 
     public bool HasChildren() => IsActive() && ExecuteSafe(() => CachedTransform.childCount > 0);
 
