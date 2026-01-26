@@ -6,7 +6,7 @@ Firebot is a bot designed for the game Firestone Idle RPG. This bot aims to enha
 ## About
 This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https://github.com/LavaGang/MelonLoader) **Nightly V0.7.2+**.
 
-> **Note:** Firebot is currently supported only on **Windows**. The mod works with Firestone Idle RPG in **any game language**.
+> **Note:** Firebot is currently supported only on **Windows**. The mod works with Firestone Idle RPG in **any game language**, at **any resolution**, and can run in the **background**.
 
 ## Features
 - **Offline Progress**: Automatically claims offline progress rewards
