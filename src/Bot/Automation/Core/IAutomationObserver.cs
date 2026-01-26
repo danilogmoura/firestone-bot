@@ -29,7 +29,7 @@ public abstract class AutomationObserver
         var category = MelonPreferences.CreateCategory(SectionId, $"{SectionTitle} Settings");
         category.SetFilePath(filePath);
 
-        _enabledEntry = category.CreateEntry("enabled", false, "Enable Module",
+        _enabledEntry = category.CreateEntry("enabled", true, "Enable Module",
             $"Enable the {SectionTitle} automation module");
 
         OnConfigure(category);
