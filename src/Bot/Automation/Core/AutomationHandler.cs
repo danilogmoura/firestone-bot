@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Firebot.Utils;
 using MelonLoader;
 
 namespace Firebot.Bot.Automation.Core;
@@ -25,11 +26,8 @@ public static class AutomationHandler
         const string suffix = "Automation";
 
         var automationTypes = assembly.GetTypes()
-            .Where(t => typeof(AutomationObserver).IsAssignableFrom(t)
-                        && !t.IsInterface
-                        && !t.IsAbstract
-                        && t.Namespace != null && t.Namespace.StartsWith(targetNamespace)
-                        && t.Name.EndsWith(suffix))
+            .Where(t => typeof(AutomationObserver).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract
+                        && t.Namespace != null && t.Namespace.StartsWith(targetNamespace) && t.Name.EndsWith(suffix))
             .ToList();
 
         foreach (var type in automationTypes)
@@ -40,11 +38,10 @@ public static class AutomationHandler
                 if (instance != null)
                 {
                     instance.InitializeConfig(configFilePath);
-
                     Observers.Add(instance);
                 }
 
-                MelonLogger.Msg($"[AutoRegister] Loaded & Configured: {type.Name}");
+                LogManager.Debug(nameof(AutomationHandler), $"[AutoRegister] Loaded & Configured: {type.Name}");
             }
             catch (Exception ex)
             {
@@ -73,8 +70,5 @@ public static class AutomationHandler
         _isProcessing = false;
     }
 
-    public static T GetObserver<T>() where T : AutomationObserver
-    {
-        return Observers.OfType<T>().FirstOrDefault();
-    }
+    public static T GetObserver<T>() where T : AutomationObserver => Observers.OfType<T>().FirstOrDefault();
 }
