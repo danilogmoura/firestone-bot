@@ -42,7 +42,16 @@ If you want to use the pre-built mod, follow these steps:
    ```bash
    cd firebot
    ```
-3. Build the project using your preferred method (e.g., Visual Studio, command line).
+
+3. Configure the path to your Firestone Idle RPG game directory by editing the `src/Directory.Build.props` file if needed:
+    - By default, the path is set to `C:\Program Files (x86)\Steam\Firestone` (Windows). If your game is installed elsewhere, change the `<GameRoot>` property in this file to the correct path.
+    - You can also set the environment variable `COMMON_DIR` to override the base directory. In this case, the game path will be `$(COMMON_DIR)\Firestone`.
+      - Example:
+         ```xml
+         <GameRoot>C:\Program Files (x86)\Steam\Firestone</GameRoot>
+         ```
+
+4. Build the project using your preferred method (e.g., Visual Studio, command line).
 
 
 
