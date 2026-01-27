@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Firebot.Bot.Automation.Core;
 using Firebot.Bot.Component;
 using Firebot.Bot.Component.TextMeshPro;
@@ -15,12 +16,13 @@ public class CloseEventPromotionalAutomation : AutomationObserver
     // Path to the events popup root and its closed state
     private readonly Dictionary<string, bool> _eventsPopup = new()
     {
-        { "AnniversaryEventPromotional", true }
+        { "AnniversaryEventPromotional", true },
+        { "DecoratedHeroesPromotion", true }
     };
 
     public override int Priority => 25;
 
-    public override bool ShouldExecute() => base.ShouldExecute() && _eventsPopup.ContainsValue(true);
+    public override bool ShouldExecute() => base.ShouldExecute() && _eventsPopup.Any();
 
     public override IEnumerator OnNotificationTriggered()
     {
@@ -39,16 +41,22 @@ public class CloseEventPromotionalAutomation : AutomationObserver
             if (!popupWrapper.IsActive()) continue;
 
             var titleTextText = popupWrapper.TitleText.Text;
-            Log(
+            Log.Debug(
                 $"[{i + 1}/{events.ChildCount()}] Event found: name=\"{eventFolderName}\", title=\"{titleTextText}\"");
 
-            if (!_eventsPopup.ContainsKey(eventFolderName) || !_eventsPopup[eventFolderName]) continue;
+            if (!_eventsPopup.ContainsKey(eventFolderName) || !_eventsPopup[eventFolderName])
+            {
+                _eventsPopup[eventFolderName] = false;
+                continue;
+            }
 
             yield return popupWrapper.CloseButton.Click();
             _eventsPopup[eventFolderName] = popupWrapper.IsActive();
 
-            Log($"Closed event popup: name=\"{eventFolderName}\", title=\"{titleTextText}\"");
+            Log.Debug($"Closed event popup: name=\"{eventFolderName}\", title=\"{titleTextText}\"");
         }
+
+        _eventsPopup.Clear();
     }
 
     private class PopupWrapper : ComponentWrapper<Transform>
