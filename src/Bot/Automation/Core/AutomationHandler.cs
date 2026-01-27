@@ -10,6 +10,8 @@ namespace Firebot.Bot.Automation.Core;
 
 public static class AutomationHandler
 {
+    private static readonly Logger Log = new(nameof(AutomationHandler));
+
     private static bool _isProcessing;
 
     public static List<AutomationObserver> Observers { get; private set; } = new();
@@ -41,7 +43,7 @@ public static class AutomationHandler
                     Observers.Add(instance);
                 }
 
-                Logger.Debug(nameof(AutomationHandler), $"[AutoRegister] Loaded & Configured: {type.Name}");
+                Log.Debug($"[AutoRegister] Loaded & Configured: {type.Name}");
             }
             catch (Exception ex)
             {
@@ -49,7 +51,7 @@ public static class AutomationHandler
             }
 
         Observers = Observers.OrderBy(o => o.Priority).ToList();
-        MelonLogger.Msg($"[AutoRegister] {Observers.Count} automations loaded and ordered.");
+        Log.Info($"[AutoRegister] {Observers.Count} automations loaded and ordered.");
     }
 
     public static void CheckNotifications()

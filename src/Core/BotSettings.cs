@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using Firebot.Bot.Automation.Core;
-using Firebot.Utils;
 using MelonLoader;
 using UnityEngine;
 using Logger = Firebot.Utils.Logger;
@@ -10,6 +9,8 @@ namespace Firebot.Core;
 
 public static class BotSettings
 {
+    private static readonly Logger Log = new(nameof(BotSettings));
+
     private static MelonPreferences_Category _category;
     private static MelonPreferences_Entry<bool> _autoStart;
     private static MelonPreferences_Entry<float> _startBotDelay;
@@ -57,6 +58,6 @@ public static class BotSettings
 
         _category.SaveToFile();
         AutomationHandler.AutoRegister(configPath);
-        Logger.Info(nameof(BotSettings), $"System Initialized. Configuration: {configPath}");
+        Log.Info($"System Initialized. Configuration: {configPath}");
     }
 }

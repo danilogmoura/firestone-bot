@@ -10,10 +10,19 @@ namespace Firebot.Bot.Automation.Core;
 
 public abstract class AutomationObserver
 {
+    protected readonly Logger Log;
+
     private MelonPreferences_Entry<bool> _enabledEntry;
     private double _nextExecutionTime = -1;
 
-    public virtual string SectionTitle => StringUtils.Humanize(GetType().Name);
+    protected AutomationObserver()
+    {
+        var className = GetType().Name;
+        Log = new Logger(className);
+        SectionTitle = StringUtils.Humanize(className);
+    }
+
+    public virtual string SectionTitle { get; }
 
     public string SectionId => SectionTitle.ToLower().Replace(" ", "_");
 
@@ -51,7 +60,8 @@ public abstract class AutomationObserver
         {
             var t = TimeSpan.FromSeconds(secondsRemaining);
             var formatted = $"{t.Hours:D2}h {t.Minutes:D2}m {t.Seconds:D2}s";
-            LogDebug($"Next execution scheduled in {formatted} ({secondsRemaining}s) (when the UI timer reaches zero)");
+            Log.Debug(
+                $"Next execution scheduled in {formatted} ({secondsRemaining}s) (when the UI timer reaches zero)");
         }
     }
 
@@ -72,12 +82,4 @@ public abstract class AutomationObserver
     }
 
     public abstract IEnumerator OnNotificationTriggered();
-
-    protected void Log(string message) => Logger.Info(SectionTitle, message);
-
-    protected void LogWarning(string message) => Logger.Warning(SectionTitle, message);
-
-    protected void LogError(string message) => Logger.Error(SectionTitle, message);
-
-    protected void LogDebug(string message) => Logger.Debug(SectionTitle, message);
 }
