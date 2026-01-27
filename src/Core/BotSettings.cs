@@ -39,22 +39,28 @@ public static class BotSettings
         _category.SetFilePath(configPath);
 
         _autoStart = _category.CreateEntry("auto_start", false, "Auto Start",
-            "Determines if the bot should start automatically.");
+            "Determines if the bot logic should be initialized and started automatically upon game launch.");
 
         _startBotDelay = _category.CreateEntry("start_bot_delay", 10.0f, "Start Bot Delay",
-            "The delay (in seconds) before the bot starts, primarily used when Auto Start is enabled. Clamped between 10 and 120 seconds.");
+            "The initial cooldown (in seconds) before the bot begins execution." +
+            "\nUseful for preventing conflicts while Unity is still loading the initial scene." +
+            "\nClamped between 10.0 and 120.0 seconds.");
 
         _scanInterval = _category.CreateEntry("scan_interval", 2.0f, "Scan Interval",
-            "The interval (in seconds) between bot checks, clamped between 1 and 3600 seconds.");
+            "The interval (in seconds) between each BotManager verification cycle." +
+            "\nLower values make the bot more responsive but may impact FPS performance." +
+            "\nClamped between 1.0 and 3600.0 seconds.");
 
         _interactionDelay = _category.CreateEntry("interaction_delay", 1.0f, "Interaction Delay",
-            "The delay (in seconds) between UI interactions, clamped between 0.5 and 5 seconds.");
+            "The delay (in seconds) between individual UI interactions (clicks, transitions)." +
+            "\nEnsures the game processes the command before the next action is taken. " +
+            "\nClamped between 0.5 and 5.0 seconds.");
 
         _debugMode = _category.CreateEntry("debug_mode", false, "Enable Debug Mode",
-            "Enable debug logging for troubleshooting");
+            "Enables verbose logging and StackTrace display in the console for easier bug identification.");
 
         _shortcutKey = _category.CreateEntry("shortcut_key", KeyCode.F7, "Shortcut Key",
-            "The key used to toggle the bot on and off.");
+            "The physical key used to manually toggle the bot's execution state during gameplay.");
 
         _category.SaveToFile();
         AutomationHandler.AutoRegister(configPath);

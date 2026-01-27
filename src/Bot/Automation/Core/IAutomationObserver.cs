@@ -40,7 +40,8 @@ public abstract class AutomationObserver
         category.SetFilePath(filePath);
 
         _enabledEntry = category.CreateEntry("enabled", true, "Enable Module",
-            $"Enable the {SectionTitle} automation module");
+            $"Enables or disables the {SectionTitle} automation module." +
+            $"\nWhen disabled, this module will be ignored during the execution loop.");
 
         OnConfigure(category);
         category.SaveToFile();

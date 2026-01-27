@@ -31,6 +31,8 @@ If you want to use the pre-built mod, follow these steps:
 3. Make sure [MelonLoader Nightly V0.7.2+](https://github.com/LavaGang/MelonLoader) is installed in your game.
 4. Start the game normally. Firebot will be loaded automatically by MelonLoader.
 
+> **Tip:** By default, you can start or stop the bot at any time by pressing the **F7** key during gameplay.
+
 ---
 
 ## Installation (From Source)
@@ -55,12 +57,90 @@ If you want to use the pre-built mod, follow these steps:
 
 
 
-## Configuration
+## CONFIG:
+
 The bot configuration file can be found at `Firestone/UserData/FirebotPreferences.cfg`.
+
+The default key to manually toggle the bot is **F7**. You can change this by editing the `shortcut_key` option in the configuration file.
 
 For now, all configuration must be done directly in this file. A graphical configuration interface will be implemented in the future.
 
+Here is a list of the current config options (and their default values):
 
+```toml
+[firebot_settings]
+# Determines if the bot logic should be initialized and started automatically upon game launch.
+auto_start = false
+# The initial cooldown (in seconds) before the bot begins execution.
+# Useful for preventing conflicts while Unity is still loading the initial scene.
+# Clamped between 10.0 and 120.0 seconds.
+start_bot_delay = 10.0
+# The interval (in seconds) between each BotManager verification cycle.
+# Lower values make the bot more responsive but may impact FPS performance.
+# Clamped between 1.0 and 3600.0 seconds.
+scan_interval = 2.0
+# The delay (in seconds) between individual UI interactions (clicks, transitions).
+# Ensures the game processes the command before the next action is taken. 
+# Clamped between 0.5 and 5.0 seconds.
+interaction_delay = 1.0
+# Enables verbose logging and StackTrace display in the console for easier bug identification.
+debug_mode = false
+# The physical key used to manually toggle the bot's execution state during gameplay.
+# Default: "F7"
+shortcut_key = "F7"
+
+[oracle_rituals]
+# Enables or disables the Oracle Rituals automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+[mission_map]
+# Enables or disables the Mission Map automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+[close_event_promotional]
+# Enables or disables the Close Event Promotional automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+[offline_popup_progress]
+# Enables or disables the Offline Popup Progress automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+[guardian_training]
+# Enables or disables the Guardian Training automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+[firestone_research]
+# Enables or disables the Firestone Research automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+[free_pickaxes]
+# Enables or disables the Free Pickaxes automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+[expedition]
+# Enables or disables the Expedition automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+[tools_production]
+# Enables or disables the Tools Production automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+[warfront_campaign_scrolls]
+# Enables or disables the Warfront Campaign Scrolls automation module.
+# When disabled, this module will be ignored during the execution loop.
+enabled = true
+
+
+```
 
 
 ## Contributing
