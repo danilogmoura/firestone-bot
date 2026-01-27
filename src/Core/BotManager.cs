@@ -9,6 +9,8 @@ namespace Firebot.Core;
 
 public static class BotManager
 {
+    private const string LogTag = nameof(BotManager);
+
     private static Coroutine _botLoop;
     public static bool IsRunning { get; private set; }
 
@@ -19,7 +21,7 @@ public static class BotManager
         IsRunning = true;
         _botLoop = MelonCoroutines.Start(BotRoutine(delay)) as Coroutine;
 
-        MelonLogger.Msg(delay > 0
+        LogManager.Info(LogTag, delay > 0
             ? $"Bot scheduled to start in {delay}s..."
             : "Bot started immediately!");
     }
@@ -32,7 +34,7 @@ public static class BotManager
         if (_botLoop != null) MelonCoroutines.Stop(_botLoop);
         _botLoop = null;
 
-        LogManager.Debug(nameof(BotManager), "Parado.");
+        LogManager.Info(LogTag, "Bot stopped.");
     }
 
     private static IEnumerator BotRoutine(float delay)
@@ -47,7 +49,7 @@ public static class BotManager
             }
             catch (Exception ex)
             {
-                LogManager.Error(nameof(BotManager), $"Erro: {ex.Message}");
+                LogManager.Error(LogTag, $"Execution error: {ex.Message}");
             }
 
             yield return new WaitForSeconds(BotSettings.ScanInterval);
