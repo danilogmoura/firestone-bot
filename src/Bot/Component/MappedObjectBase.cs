@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Firebot.Utils;
 using UnityEngine;
+using Logger = Firebot.Utils.Logger;
 using UnityGameObject = UnityEngine.GameObject;
 
 namespace Firebot.Bot.Component;
 
 internal abstract class MappedObjectBase
 {
+    private static readonly Logger Log = new(nameof(MappedObjectBase));
     protected readonly string Path;
     private Transform _cachedTransform;
 
@@ -41,7 +42,7 @@ internal abstract class MappedObjectBase
                 : rootObj.transform.Find(Path.Substring(Path.IndexOf('/') + 1));
 
             if (_cachedTransform != null)
-                LogManager.Debug("MapSuccess", $"{ObjectName}: Cached {Path}");
+                Log.Debug($"{ObjectName}: Cached {Path}");
         });
 
     protected void ExecuteSafe(Action action, [CallerMemberName] string actionName = null)
@@ -52,8 +53,8 @@ internal abstract class MappedObjectBase
         }
         catch (Exception ex)
         {
-            LogManager.Error(ObjectName, $"Error in '{actionName}': {ex.Message}");
-            LogManager.Debug(ObjectName, ex.StackTrace);
+            Log.Error($"Exception in '{actionName}': {ex.Message}");
+            Log.Debug($"Full StackTrace for {actionName}:\n{ex}");
         }
     }
 
@@ -65,8 +66,8 @@ internal abstract class MappedObjectBase
         }
         catch (Exception ex)
         {
-            LogManager.Error(ObjectName, $"Error in '{actionName}': {ex.Message}");
-            LogManager.Debug(ObjectName, ex.StackTrace);
+            Log.Error($"Exception in '{actionName}': {ex.Message}");
+            Log.Debug($"Full StackTrace for {actionName}:\n{ex}");
             return defaultValue;
         }
     }

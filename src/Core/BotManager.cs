@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections;
 using Firebot.Bot.Automation.Core;
-using Firebot.Utils;
 using MelonLoader;
 using UnityEngine;
+using Logger = Firebot.Utils.Logger;
 
 namespace Firebot.Core;
 
 public static class BotManager
 {
-    private const string LogTag = nameof(BotManager);
+    private static readonly Logger Log = new(nameof(BotManager));
 
     private static Coroutine _botLoop;
     public static bool IsRunning { get; private set; }
@@ -21,7 +21,7 @@ public static class BotManager
         IsRunning = true;
         _botLoop = MelonCoroutines.Start(BotRoutine(delay)) as Coroutine;
 
-        LogManager.Info(LogTag, delay > 0
+        Log.Info(delay > 0
             ? $"Bot scheduled to start in {delay}s..."
             : "Bot started immediately!");
     }
@@ -34,7 +34,7 @@ public static class BotManager
         if (_botLoop != null) MelonCoroutines.Stop(_botLoop);
         _botLoop = null;
 
-        LogManager.Info(LogTag, "Bot stopped.");
+        Log.Info("Bot stopped.");
     }
 
     private static IEnumerator BotRoutine(float delay)
@@ -49,7 +49,7 @@ public static class BotManager
             }
             catch (Exception ex)
             {
-                LogManager.Error(LogTag, $"Execution error: {ex.Message}");
+                Log.Error($"Execution error: {ex.Message}");
             }
 
             yield return new WaitForSeconds(BotSettings.ScanInterval);

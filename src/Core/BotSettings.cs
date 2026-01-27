@@ -4,6 +4,7 @@ using Firebot.Bot.Automation.Core;
 using Firebot.Utils;
 using MelonLoader;
 using UnityEngine;
+using Logger = Firebot.Utils.Logger;
 
 namespace Firebot.Core;
 
@@ -56,6 +57,6 @@ public static class BotSettings
 
         _category.SaveToFile();
         AutomationHandler.AutoRegister(configPath);
-        LogManager.Info(nameof(BotSettings), $"System Initialized. Configuration: {configPath}");
+        Logger.Info(nameof(BotSettings), $"System Initialized. Configuration: {configPath}");
     }
 }

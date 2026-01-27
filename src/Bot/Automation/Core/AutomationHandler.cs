@@ -41,7 +41,7 @@ public static class AutomationHandler
                     Observers.Add(instance);
                 }
 
-                LogManager.Debug(nameof(AutomationHandler), $"[AutoRegister] Loaded & Configured: {type.Name}");
+                Logger.Debug(nameof(AutomationHandler), $"[AutoRegister] Loaded & Configured: {type.Name}");
             }
             catch (Exception ex)
             {

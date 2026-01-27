@@ -4,6 +4,7 @@ using Firebot.Utils;
 using MelonLoader;
 using UnityEngine;
 using static Firebot.Core.BotSettings;
+using Logger = Firebot.Utils.Logger;
 
 namespace Firebot.Bot.Automation.Core;
 
@@ -72,11 +73,11 @@ public abstract class AutomationObserver
 
     public abstract IEnumerator OnNotificationTriggered();
 
-    protected void Log(string message) => LogManager.Info(SectionTitle, message);
+    protected void Log(string message) => Logger.Info(SectionTitle, message);
 
-    protected void LogWarning(string message) => LogManager.Warning(SectionTitle, message);
+    protected void LogWarning(string message) => Logger.Warning(SectionTitle, message);
 
-    protected void LogError(string message) => LogManager.Error(SectionTitle, message);
+    protected void LogError(string message) => Logger.Error(SectionTitle, message);
 
-    protected void LogDebug(string message) => LogManager.Debug(SectionTitle, message);
+    protected void LogDebug(string message) => Logger.Debug(SectionTitle, message);
 }

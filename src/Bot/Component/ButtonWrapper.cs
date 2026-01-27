@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections;
 using Firebot.Core;
-using Firebot.Utils;
 using UnityEngine;
 using UnityEngine.UI;
+using Logger = Firebot.Utils.Logger;
 
 namespace Firebot.Bot.Component;
 
 internal class ButtonWrapper : ComponentWrapper<Button>
 {
+    private static readonly Logger Log = new(nameof(ButtonWrapper));
+
     public ButtonWrapper(string path) : base(path) { }
 
     public bool IsInteractable() => IsActive() && ComponentCached.enabled && ComponentCached.interactable;
@@ -25,7 +27,7 @@ internal class ButtonWrapper : ComponentWrapper<Button>
             ComponentCached.Select();
             ComponentCached.onClick.Invoke();
 
-            LogManager.Debug(ObjectName, $"Clicked button at path: {Path}");
+            Log.Debug($"Clicked button at path: {Path}");
             return true;
         });
 
