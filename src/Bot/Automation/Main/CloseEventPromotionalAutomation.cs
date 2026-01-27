@@ -1,61 +1,62 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Firebot.Bot.Automation.Core;
 using Firebot.Bot.Component;
 using Firebot.Bot.Component.TextMeshPro;
+using UnityEngine;
+using static Firebot.Core.BotSettings;
 using static Firebot.Utils.Paths;
 using static Firebot.Utils.StringUtils;
 
 namespace Firebot.Bot.Automation.Main;
 
-// menusRoot/menuCanvasParent/SafeArea/menuCanvas/events/AnniversaryEventPromotional
-// menusRoot/menuCanvasParent/SafeArea/menuCanvas/events/AnniversaryEventPromotional/bg/closeButton
-// menusRoot/menuCanvasParent/SafeArea/menuCanvas/events/AnniversaryEventPromotional/bg/titleBg/menuTitle
-public class CloseEventsAutomation : AutomationObserver
+public class CloseEventPromotionalAutomation : AutomationObserver
 {
-    private readonly List<string> _eventsPath = new();
-
-    public override string SectionTitle => "Close Events";
+    // Path to the events popup root and its closed state
+    private readonly Dictionary<string, bool> _eventsPopup = new()
+    {
+        { "AnniversaryEventPromotional", true }
+    };
 
     public override int Priority => 25;
 
-    public override bool ShouldExecute() => base.ShouldExecute() && HasActiveEvent();
+    public override bool ShouldExecute() => base.ShouldExecute() && _eventsPopup.ContainsValue(true);
 
     public override IEnumerator OnNotificationTriggered()
     {
-        yield return CloseEvents();
-    }
-
-    private IEnumerator CloseEvents()
-    {
-        foreach (var rootPath in _eventsPath) { }
-
-        yield break;
-    }
-
-    private bool HasActiveEvent()
-    {
-        _eventsPath.Clear();
         var events = new ObjectWrapper(EventsPopupPath);
 
-        if (!events.IsActive() || !events.HasChildren()) return false;
+        if (!events.IsActive() || !events.HasChildren()) yield return new WaitForSeconds(InteractionDelay);
 
         for (var i = 0; i < events.ChildCount(); i++)
         {
             var eventFolder = events.GetChild(i);
+            if (!eventFolder.gameObject.activeInHierarchy) continue;
 
             var eventFolderName = eventFolder.name;
+            var popupWrapper = new PopupWrapper(JoinPath(EventsPopupPath, eventFolderName));
 
-            Log($"=>>>>>>>>>>>>>>>>>> eventFolderName: {eventFolderName}");
+            if (!popupWrapper.IsActive()) continue;
 
-            var textUI = new TextUI(JoinPath(EventsPopupPath, eventFolderName, "bg/titleBg/menuTitle"));
-            Log($"=>>>>>>>>>>>>>>>>>> textUI.Text: {textUI.Text}");
+            var titleTextText = popupWrapper.TitleText.Text;
+            Log(
+                $"[{i + 1}/{events.ChildCount()}] Event found: name=\"{eventFolderName}\", title=\"{titleTextText}\"");
 
-            if (!eventFolder.gameObject.activeInHierarchy) continue;
-            _eventsPath.Add(JoinPath(EventsPopupPath, eventFolder.name));
+            if (!_eventsPopup.ContainsKey(eventFolderName) || !_eventsPopup[eventFolderName]) continue;
+
+            yield return popupWrapper.CloseButton.Click();
+            _eventsPopup[eventFolderName] = popupWrapper.IsActive();
+
+            Log($"Closed event popup: name=\"{eventFolderName}\", title=\"{titleTextText}\"");
         }
+    }
 
-        return _eventsPath.Any();
+    private class PopupWrapper : ComponentWrapper<Transform>
+    {
+        public PopupWrapper(string path) : base(path) { }
+
+        public ButtonWrapper CloseButton => new(JoinPath(Path, "bg/closeButton"));
+
+        public TextUI TitleText => new(JoinPath(Path, "bg/titleBg/menuTitle"));
     }
 }
