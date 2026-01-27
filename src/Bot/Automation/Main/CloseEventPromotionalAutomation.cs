@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Firebot.Bot.Automation.Core;
 using Firebot.Bot.Component;
+using Firebot.Bot.Component.TextMeshPro;
 using static Firebot.Utils.Paths;
 using static Firebot.Utils.StringUtils;
 
 namespace Firebot.Bot.Automation.Main;
 
-public class CloseEventsAutomation_Disabled : AutomationObserver
+// menusRoot/menuCanvasParent/SafeArea/menuCanvas/events/AnniversaryEventPromotional
+// menusRoot/menuCanvasParent/SafeArea/menuCanvas/events/AnniversaryEventPromotional/bg/closeButton
+// menusRoot/menuCanvasParent/SafeArea/menuCanvas/events/AnniversaryEventPromotional/bg/titleBg/menuTitle
+public class CloseEventsAutomation : AutomationObserver
 {
-    private const string CloseButtonPath = "bg/closeButton";
-
     private readonly List<string> _eventsPath = new();
 
     public override string SectionTitle => "Close Events";
 
-    public override int Priority => 1;
+    public override int Priority => 25;
 
     public override bool ShouldExecute() => base.ShouldExecute() && HasActiveEvent();
 
@@ -27,13 +29,9 @@ public class CloseEventsAutomation_Disabled : AutomationObserver
 
     private IEnumerator CloseEvents()
     {
-        foreach (var rootPath in _eventsPath)
-        {
-            var closeButton = new ButtonWrapper(JoinPath(rootPath, CloseButtonPath));
+        foreach (var rootPath in _eventsPath) { }
 
-            if (closeButton.IsActive())
-                yield return closeButton.Click();
-        }
+        yield break;
     }
 
     private bool HasActiveEvent()
@@ -46,6 +44,14 @@ public class CloseEventsAutomation_Disabled : AutomationObserver
         for (var i = 0; i < events.ChildCount(); i++)
         {
             var eventFolder = events.GetChild(i);
+
+            var eventFolderName = eventFolder.name;
+
+            Log($"=>>>>>>>>>>>>>>>>>> eventFolderName: {eventFolderName}");
+
+            var textUI = new TextUI(JoinPath(EventsPopupPath, eventFolderName, "bg/titleBg/menuTitle"));
+            Log($"=>>>>>>>>>>>>>>>>>> textUI.Text: {textUI.Text}");
+
             if (!eventFolder.gameObject.activeInHierarchy) continue;
             _eventsPath.Add(JoinPath(EventsPopupPath, eventFolder.name));
         }

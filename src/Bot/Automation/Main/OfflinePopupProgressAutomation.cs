@@ -10,8 +10,7 @@ internal class OfflineProgressAutomation : AutomationObserver
     private static readonly ObjectWrapper Popup = new(OfflineProgressPopup);
     private static readonly ButtonWrapper ClaimButton = new(OfflineProgressPopupClaimButton);
 
-    public override int Priority => 80;
-    public override string SectionTitle => "Offline Progress";
+    public override int Priority => 20;
 
     public override bool ShouldExecute() => base.ShouldExecute() && Popup.IsActive();
 
