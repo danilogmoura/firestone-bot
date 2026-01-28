@@ -25,7 +25,7 @@ public class WarfrontCampaignAutomation : AutomationObserver
 
         if (claimToolsButton.IsInteractable()) yield return claimToolsButton.Click();
 
-        var timer = new TextUI(NextLootTimeLeft);
+        var timer = new TextDisplay(NextLootTimeLeft);
         ScheduleNextCheck(timer.TotalSeconds);
 
         yield return closeButton.Click();

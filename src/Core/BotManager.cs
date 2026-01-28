@@ -13,7 +13,7 @@ public static class BotManager
 {
     private static readonly Logger Log = new(nameof(BotManager));
 
-    private static TextUI _statusColor;
+    private static TextDisplay _statusColor;
 
     private static Coroutine _botLoop;
 
@@ -64,7 +64,7 @@ public static class BotManager
 
     private static void ToggleStatusColor()
     {
-        _statusColor ??= new TextUI(Paths.CharacterLevelPath);
+        _statusColor ??= new TextDisplay(Paths.CharacterLevelPath);
         if (IsRunning) _statusColor.SetOutline(Color.green);
         else _statusColor.RemoveOutline();
     }

@@ -57,6 +57,6 @@ public class CloseEventPromotionalAutomation : AutomationObserver
     {
         public PopupWrapper(string path) : base(path) { }
         public ButtonWrapper CloseButton => new(JoinPath(Path, "bg/closeButton"));
-        public TextUI TitleText => new(JoinPath(Path, "bg/titleBg/menuTitle"));
+        public TextDisplay TitleText => new(JoinPath(Path, "bg/titleBg/menuTitle"));
     }
 }
