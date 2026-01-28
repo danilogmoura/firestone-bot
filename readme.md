@@ -154,6 +154,7 @@ The short-term focus is on stabilizing the core execution and expanding automati
 *A quick release focused on daily routines and giving control to the user.*
 - [ ] **Feature:** Daily Rewards automation.
 - [ ] **Logic:** Implementation of a configurable priority system for the **Mission Map**.
+- [ ] **Logic:** Implementation of configurable priority settings for **Guardian Training**.
 - [ ] **Optimization:** Restructuring of the **Firestone Tree** logic with added priority choices.
 
 ### 🧪 v0.3.0 - Gameplay Expansion (Feature Update)
