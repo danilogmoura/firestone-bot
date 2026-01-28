@@ -19,3 +19,6 @@ _ReSharper.Caches/
 .DS_Store
 Thumbs.db
 global.json
+
+# Ignore analysis and reports directory
+Reports/
