@@ -71,11 +71,6 @@ internal class FirestoneResearchAutomation : AutomationObserver
     private static class Panel
     {
         public static readonly ObjectWrapper SubmenusWrapper = new(SubmenusTreePath);
-
-        //menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Library/submenus/firestoneResearch/researchScrollView/viewport/content/submenus
-        //menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Library/submenus/firestoneResearch/
-        //menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Library/submenus/firestoneResearch/researchPanel/selectResearchTable
-        //menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/Library/submenus/firestoneResearch/researchPanel/selectResearchTable
         public static readonly ObjectWrapper Slot0 = new(ResearchPanelDownPath + "/researchSlot0");
         public static readonly ObjectWrapper Slot1 = new(ResearchPanelDownPath + "/researchSlot1");
         public static readonly ObjectWrapper SelectResearch = new(SelectResearchTablePath);
