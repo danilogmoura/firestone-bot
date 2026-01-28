@@ -27,7 +27,7 @@ public class CloseEventPromotionalAutomation : AutomationObserver
 
     public override IEnumerator OnNotificationTriggered()
     {
-        var rootEvents = new ObjectWrapper(EventsPopupPath);
+        var rootEvents = new TransformWrapper(EventsPopupPath);
         if (!rootEvents.IsActive() || !rootEvents.HasChildren()) yield break;
 
         var activeTargets = rootEvents.GetChildren().Where(child =>

@@ -70,10 +70,10 @@ internal class FirestoneResearchAutomation : AutomationObserver
 
     private static class Panel
     {
-        public static readonly ObjectWrapper SubmenusWrapper = new(SubmenusTreePath);
-        public static readonly ObjectWrapper Slot0 = new(ResearchPanelDownPath + "/researchSlot0");
-        public static readonly ObjectWrapper Slot1 = new(ResearchPanelDownPath + "/researchSlot1");
-        public static readonly ObjectWrapper SelectResearch = new(SelectResearchTablePath);
+        public static readonly TransformWrapper SubmenusWrapper = new(SubmenusTreePath);
+        public static readonly TransformWrapper Slot0 = new(ResearchPanelDownPath + "/researchSlot0");
+        public static readonly TransformWrapper Slot1 = new(ResearchPanelDownPath + "/researchSlot1");
+        public static readonly TransformWrapper SelectResearch = new(SelectResearchTablePath);
     }
 
     private static class Buttons

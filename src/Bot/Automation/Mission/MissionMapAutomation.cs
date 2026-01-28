@@ -53,7 +53,7 @@ internal class MissionMapAutomation : AutomationObserver
     {
         _missionCache = new List<Mission>();
 
-        var missionsContainer = new ObjectWrapper(MissionRegion);
+        var missionsContainer = new TransformWrapper(MissionRegion);
 
         if (!missionsContainer.Exists()) return;
 

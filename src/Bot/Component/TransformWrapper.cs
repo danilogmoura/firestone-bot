@@ -5,26 +5,26 @@ using static Firebot.Utils.StringUtils;
 
 namespace Firebot.Bot.Component;
 
-internal class ObjectWrapper : ComponentWrapper<Transform>
+internal class TransformWrapper : ComponentWrapper<Transform>
 {
-    public ObjectWrapper(string path) : base(path) { }
+    public TransformWrapper(string path) : base(path) { }
 
-    public List<ObjectWrapper> GetChildren() => ExecuteSafe(() =>
+    public List<TransformWrapper> GetChildren() => ExecuteSafe(() =>
     {
-        var children = new List<ObjectWrapper>();
+        var children = new List<TransformWrapper>();
         for (var i = 0; i < ChildCount(); i++)
         {
             var child = GetChild(i);
-            children.Add(new ObjectWrapper(JoinPath(Path, child.name)));
+            children.Add(new TransformWrapper(JoinPath(Path, child.name)));
         }
 
         return children;
     });
 
-    public ObjectWrapper Find(string path) => ExecuteSafe(() =>
+    public TransformWrapper Find(string path) => ExecuteSafe(() =>
     {
         var transform = Component.Find(path);
         if (transform == null) throw new InvalidOperationException("Child not found: " + path);
-        return new ObjectWrapper(JoinPath(Path, path));
+        return new TransformWrapper(JoinPath(Path, path));
     });
 }

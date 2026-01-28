@@ -78,7 +78,7 @@ public class OracleRitualsAutomation : AutomationObserver
 
     private static class Panel
     {
-        public static readonly ObjectWrapper OraclePanel = new(MenuOracle);
-        public static readonly ObjectWrapper OracleRitualGrid = new(RitualGrid);
+        public static readonly TransformWrapper OraclePanel = new(MenuOracle);
+        public static readonly TransformWrapper OracleRitualGrid = new(RitualGrid);
     }
 }

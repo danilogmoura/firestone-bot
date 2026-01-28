@@ -7,7 +7,7 @@ namespace Firebot.Bot.Automation.Main;
 
 internal class OfflinePopupProgressAutomation : AutomationObserver
 {
-    private static readonly ObjectWrapper Popup = new(OfflineProgressPopup);
+    private static readonly TransformWrapper Popup = new(OfflineProgressPopup);
     private static readonly ButtonWrapper ClaimButton = new(OfflineProgressPopupClaimButton);
 
     public override int Priority => 20;

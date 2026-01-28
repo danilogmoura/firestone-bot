@@ -30,7 +30,7 @@ public class GuardianTrainingAutomation : AutomationObserver
         }
 
 
-        var guardians = new ObjectWrapper(GuardianList).GetChildren();
+        var guardians = new TransformWrapper(GuardianList).GetChildren();
 
         foreach (var guardianRoot in guardians)
         {
@@ -59,7 +59,7 @@ public class GuardianTrainingAutomation : AutomationObserver
 
     private readonly struct Object
     {
-        public static readonly ObjectWrapper CooldownOn = new(JoinPath(TrainingButton, "cooldownOn"));
-        public static readonly ObjectWrapper Panel = new(MenuMagicQuarters);
+        public static readonly TransformWrapper CooldownOn = new(JoinPath(TrainingButton, "cooldownOn"));
+        public static readonly TransformWrapper Panel = new(MenuMagicQuarters);
     }
 }

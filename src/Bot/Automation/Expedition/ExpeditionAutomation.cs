@@ -41,7 +41,7 @@ public class ExpeditionAutomation : AutomationObserver
         public static readonly PendingExpeditionSection PendingExpedition = new();
     }
 
-    private class CurrentExpeditionSection : ObjectWrapper
+    private class CurrentExpeditionSection : TransformWrapper
     {
         private readonly ButtonWrapper _claimButton = new(JoinPath(CurrentExpeditionPath, "claimButton"));
 
@@ -55,7 +55,7 @@ public class ExpeditionAutomation : AutomationObserver
         }
     }
 
-    private class PendingExpeditionSection : ObjectWrapper
+    private class PendingExpeditionSection : TransformWrapper
     {
         private readonly ButtonWrapper _startButton = new(JoinPath(PendingExpeditionPath, "startButton"));
 
