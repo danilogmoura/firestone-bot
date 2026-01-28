@@ -20,5 +20,10 @@ internal abstract class ComponentWrapper<T> : MappedObjectBase where T : UnityEn
 
     public override bool Exists() => Component != null;
 
-    public override bool IsActive() => Component != null && Component.gameObject.activeInHierarchy;
+    public override bool IsActive()
+    {
+        var active = Component != null && Component.gameObject.activeInHierarchy;
+        Log.Debug($"Component {typeof(T).Name} is active: {active}");
+        return active;
+    }
 }

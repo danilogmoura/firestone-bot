@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Linq;
 using Firebot.Bot.Automation.Core;
 using Firebot.Bot.Component;
-using UnityEngine;
 using static Firebot.Utils.Paths.FirestoneResearch;
 using static Firebot.Utils.StringUtils;
 
@@ -32,19 +30,29 @@ internal class FirestoneResearchAutomation : AutomationObserver
         foreach (var tree in submenus)
         {
             if (!tree.Name.StartsWith("tree") || !tree.IsActive()) continue;
-
             var slots = tree.GetChildren();
 
-            foreach (var slot in slots
-                         .Where(slot => slot.IsActive() && Panel.SelectResearch.IsActive()))
+            foreach (var slot in slots)
             {
+                var activeSlot = slot.ExecuteSafe(() =>
+                {
+                    if (!slot.IsActive()) return false;
+                    if (!slot.Name.StartsWith("firestoneResearch")) return false;
+
+                    var bar = slot.Find("progressBarBg");
+                    var glow = slot.Find("glow");
+
+                    log.Debug($"Checking slot {slot.Name}: Bar active = {bar.IsActive()}, Glow active = {glow.IsActive()}");
+                    return bar.IsActive() && !glow.IsActive();
+                });
+
+                if (!activeSlot) continue;
                 yield return OpenPopup(JoinPath(SubmenusTreePath, tree.Name, slot.Name));
 
                 if (Panel.SubmenusWrapper.IsActive() && Buttons.StartResearch.IsInteractable())
                     yield return Buttons.StartResearch.Click();
             }
         }
-
         yield return Buttons.Close.Click();
     }
 
@@ -53,31 +61,6 @@ internal class FirestoneResearchAutomation : AutomationObserver
         var button = new ButtonWrapper(paths);
         if (!button.IsInteractable()) yield break;
         yield return button.Click();
-    }
-
-    private readonly struct ResearchSlotWrapper
-    {
-        private readonly Transform _root;
-
-        public string Name { get; }
-
-        public ResearchSlotWrapper(Transform t)
-        {
-            _root = t;
-            Name = t.name;
-        }
-
-        public bool IsValid()
-        {
-            if (_root == null || !_root.gameObject.activeInHierarchy) return false;
-            if (!Name.StartsWith("firestoneResearch")) return false;
-
-            var bar = _root.Find("progressBarBg");
-            var glow = _root.Find("glow");
-
-            return bar != null && bar.gameObject.activeInHierarchy &&
-                   (glow == null || !glow.gameObject.activeInHierarchy);
-        }
     }
 
     private static class Panel
