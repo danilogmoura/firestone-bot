@@ -12,7 +12,7 @@ using static System.Int32;
 using static Firebot.Utils.Paths.Missions;
 using static Firebot.Utils.StringUtils;
 
-namespace Firebot.Bot.Automation.Mission;
+namespace Firebot.Bot.Automation.MapMissions;
 
 internal class MissionMapAutomation : AutomationObserver
 {
