@@ -8,6 +8,7 @@ namespace Firebot.Utils;
 public class Logger
 {
     private const ConsoleColor TextColor = ConsoleColor.Gray;
+    private const ConsoleColor DebugColor = ConsoleColor.Blue;
     private readonly string _logTag;
 
     public Logger(string logTag)
@@ -19,9 +20,14 @@ public class Logger
         string contextInfo = null, DateTime? timestamp = null)
     {
         var ts = (timestamp ?? DateTime.UtcNow).ToString("O");
-        return
-            $"[{level}] [{logTag}] {message} | correlationId={correlationId ?? "-"} | context={contextInfo ?? "-"} | timestamp={ts}";
+        var json =
+            $"{{\"message\":\"{EscapeJson(message)}\",\"correlationId\":\"{EscapeJson(correlationId ?? "-")}\",\"context\":\"{EscapeJson(contextInfo ?? "-")}\",\"timestamp\":\"{ts}\"}}";
+        return $"[{level}] [{logTag}] {json}";
     }
+
+    private static string EscapeJson(string value) => string.IsNullOrEmpty(value)
+        ? ""
+        : value.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r");
 
     // Info
     public void Info(string message, string correlationId = null, string contextInfo = null)
@@ -48,13 +54,13 @@ public class Logger
     public void Debug(string message, string correlationId = null, string contextInfo = null)
     {
         if (BotSettings.DebugMode || MelonDebug.IsEnabled())
-            MelonDebug.Msg(ComposeMessage("DEBUG", _logTag, message, correlationId, contextInfo));
+            MelonLogger.Msg(DebugColor, ComposeMessage("DEBUG", _logTag, message, correlationId, contextInfo));
     }
 
     public void Debug(Exception ex, string correlationId = null, string contextInfo = null)
     {
         if (BotSettings.DebugMode || MelonDebug.IsEnabled())
-            MelonDebug.Msg(ComposeExceptionMessage("DEBUG", ex, correlationId, contextInfo));
+            MelonLogger.Msg(DebugColor, ComposeExceptionMessage("DEBUG", ex, correlationId, contextInfo));
     }
 
     // Structured event log (for automation/component events)
