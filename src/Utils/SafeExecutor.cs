@@ -28,8 +28,8 @@ public static class SafeExecutor
     /// <summary>
     ///     Safely executes a function, logging any exception with traceability and returning a default value in case of error.
     /// </summary>
-    public static T Run<T>(Func<T> func, Logger logger, string correlationId = null, T defaultValue = default,
-        string contextInfo = null, [CallerMemberName] string actionName = null)
+    public static T Run<T>(Func<T> func, Logger logger, string correlationId = null,
+        string contextInfo = null, T defaultValue = default, [CallerMemberName] string actionName = null)
     {
         try
         {
