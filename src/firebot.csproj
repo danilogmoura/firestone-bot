@@ -67,15 +67,9 @@
               Condition="Exists('$(ModsDir)')"
               SkipUnchangedFiles="true"/>
 
-        <Copy SourceFiles="$(ProjectDir)..\libs\UniverseLib\UniverseLib.MelonLoader.IL2CPP.dll"
-              DestinationFolder="$(UserLibs)"
-              Condition="Exists('$(UserLibs)')"
-              SkipUnchangedFiles="true"/>
-
         <Message Text="➡ Mod deployed to: $(ModsDir)" Importance="High" Condition="Exists('$(ModsDir)')"/>
-        <Message Text="➡ Dependency deployed to: $(UserLibs)" Importance="High" Condition="Exists('$(UserLibs)')"/>
 
         <Warning Text="Target directories not found. Check your Directory.Build.props path settings."
-                 Condition="!Exists('$(ModsDir)') Or !Exists('$(UserLibs)')"/>
+                 Condition="!Exists('$(ModsDir)')"/>
     </Target>
 </Project>

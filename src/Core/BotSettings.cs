@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Firebot.Bot.Automation.Core;
+using Firebot.Automation.Core;
 using MelonLoader;
 using UnityEngine;
-using Logger = Firebot.Utils.Logger;
+using Logger = Firebot.Core.Logger;
 
 namespace Firebot.Core;
 
