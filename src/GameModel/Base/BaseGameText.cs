@@ -1,32 +1,27 @@
 ﻿using Il2CppTMPro;
-using UnityEngine;
 
 namespace Firebot.GameModel.Base;
 
-public class BaseGameText<T> : GameElement where T : TMP_Text
+public class BaseGameText : GameElement
 {
-    private T _cachedComponent;
+    private TMP_Text _cachedComponent;
 
-    public BaseGameText(string path, string contextName, GameElement parent = null)
-        : base(path, contextName, parent) { }
+    public BaseGameText(string path, string contextName, GameElement parent = null) :
+        base(path, contextName, parent) { }
 
-    public BaseGameText(Transform root, string contextName)
-        : base(null, contextName)
-    {
-        _cachedTransform = root;
-    }
-
-    public T Component
+    private TMP_Text Component
     {
         get
         {
-            if (_cachedComponent != null && _cachedComponent.gameObject != null)
-                return _cachedComponent;
+            if (_cachedComponent != null && _cachedComponent.gameObject == null)
+                _cachedComponent = null;
 
-            if (!TryGetComponent(out _cachedComponent) && IsVisible())
-                Debug($"Component of type {typeof(T).Name} not found at path: {Path}");
+            if (_cachedComponent != null || TryGetComponent(out _cachedComponent)) return _cachedComponent;
 
-            return _cachedComponent;
+            if (IsVisible())
+                Debug($"Component TMP_Text not found at path: {Path}");
+
+            return null;
         }
     }
 
@@ -37,10 +32,11 @@ public class BaseGameText<T> : GameElement where T : TMP_Text
             if (!IsVisible()) return string.Empty;
 
             var comp = Component;
-            if (comp == null || !comp.isActiveAndEnabled) return string.Empty;
+            if (comp == null) return string.Empty;
 
-            var text = comp.GetParsedText();
-            Debug($"Text at path '{Path}': {text}");
+            var text = comp.text;
+
+            Debug($"Text at '{ContextName}': {text}");
             return text;
         }
     }

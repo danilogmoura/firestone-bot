@@ -1,8 +1,9 @@
-﻿namespace Firebot.GameModel;
+﻿namespace Firebot.GameModel.Configuration;
 
 public static class GamePaths
 {
     private const string BaseCanvas = "menusRoot/menuCanvasParent/SafeArea/menuCanvas";
+    private const string SafeArea = "battleRoot/battleMain/battleCanvas/SafeArea";
 
     public static class Menus
     {
@@ -27,6 +28,9 @@ public static class GamePaths
     public static class Popups
     {
         private const string Root = BaseCanvas + "/popups";
+
+        public const string CloseButton = "/bg/closeButton";
+
         public const string Expeditions = Root + "/Expeditions";
         public const string GuildBank = Root + "/GuildBank";
         public const string PreviewMission = Root + "/PreviewMission";
@@ -35,7 +39,16 @@ public static class GamePaths
 
     public static class Notifications
     {
-        private const string Root = "battleRoot/battleMain/battleCanvas/SafeArea";
-        public const string NotificationGrid = Root + "/leftSideUI/notifications/Viewport/grid";
+        private const string Root = SafeArea + "/leftSideUI/notifications/Viewport/grid";
+    }
+
+    public static class RightSideMenu
+    {
+        public const string Root = SafeArea + "/rightSideUI/menuButtons";
+
+        public const string TownButton = Root + "/townButton";
+        public const string MapButton = Root + "/mapButton";
+        public const string GuildButton = Root + "/guildButton";
+        public const string StoreButton = Root + "/storeButton";
     }
 }

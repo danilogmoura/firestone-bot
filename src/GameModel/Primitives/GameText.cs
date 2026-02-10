@@ -13,33 +13,37 @@ public class GameText : GameElement
     public GameText(string path, string contextName, GameElement parent = null) :
         base(path, contextName, parent) { }
 
-    public GameText(Transform root, string contextName) :
-        base(null, contextName)
-    {
-        _cachedTransform = root;
-    }
+    public GameText(Transform root, string contextName, string path = null) : base(root, contextName, path) { }
 
-    public TMP_Text Component
+    private TMP_Text Component
     {
         get
         {
+            if (_cachedComponent != null && _cachedComponent.gameObject == null) _cachedComponent = null;
             if (_cachedComponent != null) return _cachedComponent;
-
-            if (Root != null) _cachedComponent = Root.GetComponent<TMP_Text>();
-
+            if (Root != null) Root.TryGetComponent(out _cachedComponent);
             return _cachedComponent;
         }
     }
 
     public string Text => GetParsedText();
+
     public TimeSpan Time => TimeParser.Parse(Text);
+
     public double TotalSeconds => Time.TotalSeconds;
 
     public string GetParsedText()
     {
         if (!IsVisible() || Component == null) return string.Empty;
-        Debug($" Getting parsed text from GameText at path '{Path}': '{Component.text}'");
-        return Component.GetParsedText();
+
+        try
+        {
+            return Component.text;
+        }
+        catch
+        {
+            return string.Empty;
+        }
     }
 
     public void SetColor(Color newColor)
@@ -49,19 +53,18 @@ public class GameText : GameElement
 
     public void SetOutline(Color color, float thickness = 0.2f)
     {
-        if (!IsVisible() || Component == null) return;
+        if (!IsVisible() || Component == null || Component.fontSharedMaterial == null) return;
 
         Component.fontSharedMaterial.EnableKeyword("OUTLINE_ON");
         Component.outlineColor = color;
         Component.outlineWidth = thickness;
-
         Component.UpdateMeshPadding();
         Component.SetAllDirty();
     }
 
     public void RemoveOutline()
     {
-        if (!IsVisible() || Component == null) return;
+        if (!IsVisible() || Component == null || Component.fontSharedMaterial == null) return;
 
         Component.outlineWidth = 0f;
         Component.fontSharedMaterial.DisableKeyword("OUTLINE_ON");
