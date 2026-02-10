@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Firebot.Core;
 using Firebot.Old._Old;
 using Firebot.Old._Old.TMProComponents;
 using Firebot.Old._Old.UI;
@@ -11,7 +12,7 @@ using UnityEngine;
 using static System.Int32;
 using static Firebot.Old.Core.BotContext;
 using static Firebot.Old.Core.Paths.Missions;
-using static Firebot.Old.Core.StringUtils;
+using static Firebot.Utilities.StringUtils;
 
 namespace Firebot.Old.Automation.MapMissions;
 

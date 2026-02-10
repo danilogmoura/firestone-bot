@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using Firebot.Old.Core;
+using Firebot.Utilities;
 using MelonLoader;
 using UnityEngine;
-using static Firebot.Old.Core.BotSettings;
+using static Firebot.Core.BotSettings;
 using Logger = Firebot.Old.Core.Logger;
 
 namespace Firebot.Old.Automation.Core;

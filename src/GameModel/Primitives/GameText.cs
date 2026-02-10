@@ -10,10 +10,10 @@ public class GameText : GameElement
 {
     private TMP_Text _cachedComponent;
 
-    public GameText(string path, string contextName, GameElement parent = null) :
-        base(path, contextName, parent) { }
+    public GameText(string path, GameElement parent = null) :
+        base(path, parent) { }
 
-    public GameText(Transform root, string contextName, string path = null) : base(root, contextName, path) { }
+    public GameText(Transform root, string path = null) : base(root, path) { }
 
     private TMP_Text Component
     {

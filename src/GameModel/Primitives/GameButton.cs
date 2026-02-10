@@ -1,15 +1,16 @@
 ﻿using Firebot.GameModel.Base;
 using UnityEngine;
 using UnityEngine.UI;
+using Logger = Firebot.Core.Logger;
 
 namespace Firebot.GameModel.Primitives;
 
 public class GameButton : GameElement
 {
-    public GameButton(string path, string contextName, GameElement parent = null) :
-        base(path, contextName, parent) { }
+    public GameButton(string path, GameElement parent = null) :
+        base(path, parent) { }
 
-    public GameButton(Transform root, string contextName, string path = null) : base(root, contextName, path) { }
+    public GameButton(Transform root, string path = null) : base(root, path) { }
 
     public override bool IsVisible()
     {
@@ -24,7 +25,7 @@ public class GameButton : GameElement
     {
         if (!IsVisible())
         {
-            LogWarning("Tentativa de clique falhou: Botão invisível.");
+            Logger.Debug($"Click attempt failed: button not visible (path: '{Path ?? "N/A"}').");
             return;
         }
 
@@ -33,9 +34,9 @@ public class GameButton : GameElement
             if (button.interactable && button.enabled)
                 button.onClick.Invoke();
             else
-                LogWarning("Botão encontrado mas não interável/habilitado.");
+                Logger.Debug($"Button found but not interactable or disabled (path: '{Path ?? "N/A"}').");
         }
         else
-            LogError("Objeto encontrado, mas não possui componente Button.");
+            Logger.Debug($"Object found at path '{Path ?? "N/A"}' but it does not have a Button component.");
     }
 }

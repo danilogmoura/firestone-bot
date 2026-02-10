@@ -1,16 +1,12 @@
 ﻿using System;
 using System.IO;
-using Firebot.Old.Automation.Core;
 using MelonLoader;
 using UnityEngine;
-using Logger = Firebot.Old.Core.Logger;
 
-namespace Firebot.Old.Core;
+namespace Firebot.Core;
 
 public static class BotSettings
 {
-    private static readonly Logger Log = new(nameof(BotSettings));
-
     private static MelonPreferences_Category _category;
     private static MelonPreferences_Entry<bool> _autoStart;
     private static MelonPreferences_Entry<float> _startBotDelay;
@@ -18,6 +14,17 @@ public static class BotSettings
     private static MelonPreferences_Entry<float> _interactionDelay;
     private static MelonPreferences_Entry<bool> _debugMode;
     private static MelonPreferences_Entry<KeyCode> _shortcutKey;
+
+    private static string _configPath;
+
+    public static string ConfigPath
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_configPath)) _configPath = Path.Combine("UserData", "FirebotPreferences.cfg");
+            return _configPath;
+        }
+    }
 
     // Safe Properties
     public static bool AutoStart => _autoStart?.Value ?? false;
@@ -33,10 +40,8 @@ public static class BotSettings
 
     public static void Initialize()
     {
-        var configPath = Path.Combine("UserData", "FirebotPreferences.cfg");
-
         _category = MelonPreferences.CreateCategory("firebot_settings", "Firebot Settings");
-        _category.SetFilePath(configPath);
+        _category.SetFilePath(ConfigPath);
 
         _autoStart = _category.CreateEntry("auto_start", false, "Auto Start",
             "Determines if the bot logic should be initialized and started automatically upon game launch.");
@@ -63,7 +68,6 @@ public static class BotSettings
             "The physical key used to manually toggle the bot's execution state during gameplay.");
 
         _category.SaveToFile();
-        AutomationHandler.AutoRegister(configPath);
-        Log.Info($"System Initialized. Configuration: {configPath}");
+        Logger.Info($"System Initialized. Configuration: {ConfigPath}");
     }
 }

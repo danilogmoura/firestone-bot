@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Firebot.Old._Old.Wrappers;
 using Firebot.Old.Automation.Core;
 using static Firebot.Old.Core.Paths.OracleRituals;
-using static Firebot.Old.Core.StringUtils;
+using static Firebot.Utilities.StringUtils;
 
 namespace Firebot.Old.Automation.Oracle;
 

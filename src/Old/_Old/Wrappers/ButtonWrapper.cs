@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Firebot.Core;
 using Firebot.Old.Core;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Firebot.Core;
 using Firebot.Old._Old.TMProComponents;
 using Firebot.Old.Automation.Core;
 using MelonLoader;

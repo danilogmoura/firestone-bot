@@ -6,9 +6,9 @@ using Firebot.Old._Old.Wrappers;
 using Firebot.Old.Automation.Core;
 using UnityEngine;
 using static Firebot.Old.Core.BotContext;
-using static Firebot.Old.Core.BotSettings;
+using static Firebot.Core.BotSettings;
 using static Firebot.Old.Core.Paths;
-using static Firebot.Old.Core.StringUtils;
+using static Firebot.Utilities.StringUtils;
 
 namespace Firebot.Old.Automation.Main;
 

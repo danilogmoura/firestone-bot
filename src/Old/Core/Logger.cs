@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Firebot.Core;
 using MelonLoader;
 
 namespace Firebot.Old.Core;

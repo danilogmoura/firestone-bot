@@ -1,4 +1,5 @@
-﻿using Il2CppTMPro;
+﻿using Firebot.Core;
+using Il2CppTMPro;
 
 namespace Firebot.GameModel.Base;
 
@@ -6,8 +7,8 @@ public class BaseGameText : GameElement
 {
     private TMP_Text _cachedComponent;
 
-    public BaseGameText(string path, string contextName, GameElement parent = null) :
-        base(path, contextName, parent) { }
+    public BaseGameText(string path, GameElement parent = null) :
+        base(path, parent) { }
 
     private TMP_Text Component
     {
@@ -19,7 +20,7 @@ public class BaseGameText : GameElement
             if (_cachedComponent != null || TryGetComponent(out _cachedComponent)) return _cachedComponent;
 
             if (IsVisible())
-                Debug($"Component TMP_Text not found at path: {Path}");
+                Logger.Debug($"Component TMP_Text not found at path: {Path}");
 
             return null;
         }
@@ -36,7 +37,7 @@ public class BaseGameText : GameElement
 
             var text = comp.text;
 
-            Debug($"Text at '{ContextName}': {text}");
+            Logger.Debug($"Text at '{Component?.name}': {text}");
             return text;
         }
     }

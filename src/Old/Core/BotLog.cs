@@ -1,4 +1,5 @@
 ﻿using System;
+using Firebot.Core;
 using MelonLoader;
 
 namespace Firebot.Old.Core;

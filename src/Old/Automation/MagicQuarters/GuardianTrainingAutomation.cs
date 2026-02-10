@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using Firebot.Core;
 using Firebot.Old._Old.Wrappers;
 using Firebot.Old.Automation.Core;
 using Firebot.Old.Core;
 using UnityEngine;
 using static Firebot.Old.Core.Paths.GuardianTraining;
-using static Firebot.Old.Core.StringUtils;
+using static Firebot.Utilities.StringUtils;
 
 namespace Firebot.Old.Automation.MagicQuarters;
 

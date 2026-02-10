@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Firebot.Old.Core;
+namespace Firebot.Utilities;
 
 public abstract class StringUtils
 {
@@ -21,7 +21,7 @@ public abstract class StringUtils
     /// <param name="input">The string to be formatted.</param>
     /// <param name="suffixToRemove">The suffix to strip from the end of the string.</param>
     /// <returns>A formatted, human-readable string.</returns>
-    public static string Humanize(string input, string suffixToRemove = "Automation")
+    public static string Humanize(string input, string suffixToRemove = "Task")
     {
         if (string.IsNullOrWhiteSpace(input))
             return input;

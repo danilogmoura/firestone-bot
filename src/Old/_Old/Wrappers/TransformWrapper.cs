@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Firebot.Old.Core.StringUtils;
+using static Firebot.Utilities.StringUtils;
 
 namespace Firebot.Old._Old.Wrappers;
 

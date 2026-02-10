@@ -59,20 +59,19 @@
         </Reference>
     </ItemGroup>
 
-
     <Target Name="PostBuild" AfterTargets="Build">
-        <Message Text="[Deploy] Starting file distribution..." Importance="High" />
+        <Message Text="[Deploy] Starting file distribution..." Importance="High"/>
 
         <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll"
-            DestinationFolder="$(ModsDir)"
-            Condition="Exists('$(ModsDir)')"
-            SkipUnchangedFiles="true" />
+              DestinationFolder="$(ModsDir)"
+              Condition="Exists('$(ModsDir)')"
+              SkipUnchangedFiles="true"/>
 
         <Message Text="➡ Mod deployed to: $(ModsDir)" Importance="High"
-            Condition="Exists('$(ModsDir)')" />
+                 Condition="Exists('$(ModsDir)')"/>
 
         <Warning
-            Text="Target directories not found. Check your Directory.Build.props path settings."
-            Condition="!Exists('$(ModsDir)')" />
+                Text="Target directories not found. Check your Directory.Build.props path settings."
+                Condition="!Exists('$(ModsDir)')"/>
     </Target>
 </Project>

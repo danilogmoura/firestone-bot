@@ -2,7 +2,7 @@
 using Firebot.Old._Old.Wrappers;
 using Firebot.Old.Automation.Core;
 using static Firebot.Old.Core.Paths.Expedition;
-using static Firebot.Old.Core.StringUtils;
+using static Firebot.Utilities.StringUtils;
 
 namespace Firebot.Old.Automation.Expedition;
 
