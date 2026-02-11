@@ -8,7 +8,7 @@ public class BasePopup : GameElement
 {
     public BasePopup(string path, GameElement parent = null) : base(path, parent) { }
 
-    private GameButton CloseButton => new(GamePaths.Popups.CloseButton, this);
+    private GameButton CloseButton => new(Paths.Popups.CloseButton, this);
 
     public void Close()
     {

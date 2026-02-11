@@ -7,7 +7,6 @@ using Firebot.Old._Old.TMProComponents;
 using Firebot.Old._Old.UI;
 using Firebot.Old._Old.Wrappers;
 using Firebot.Old.Automation.Core;
-using Firebot.Old.Core;
 using UnityEngine;
 using static System.Int32;
 using static Firebot.Old.Core.BotContext;

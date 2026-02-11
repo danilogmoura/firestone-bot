@@ -10,16 +10,9 @@ public abstract class BotTask
     private MelonPreferences_Category _category;
     private MelonPreferences_Entry<bool> _enabledEntry;
 
-    protected BotTask(string name)
-    {
-        Name = name;
-        NextRunTime = DateTime.MinValue;
-    }
-
     public virtual string SectionTitle => Humanize(GetType().Name);
 
-    public string Name { get; }
-    public DateTime NextRunTime { get; set; }
+    public DateTime NextRunTime { get; set; } = DateTime.MinValue;
 
     public virtual int Priority => 50;
 

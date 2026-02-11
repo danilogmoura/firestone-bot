@@ -35,7 +35,7 @@ public static class BotManager
                 var task = (BotTask)Activator.CreateInstance(type);
                 task.InitializeConfig(configPath);
                 _tasks.Add(task);
-                Logger.Debug($"[Loader] Registered task: {task.Name} (section: {task.SectionTitle})");
+                Logger.Debug($"[Loader] Registered task: {task.SectionTitle}");
             }
             catch (Exception e)
             {
@@ -82,13 +82,13 @@ public static class BotManager
             {
                 var sw = Stopwatch.StartNew();
                 Logger.Info(
-                    $"[TASK START] Starting task: {readyTask.Name} (section: {readyTask.SectionTitle}, priority: {readyTask.Priority}, nextRun: {readyTask.NextRunTime:O})");
+                    $"[TASK START] Starting task: {readyTask.SectionTitle} (priority: {readyTask.Priority}, nextRun: {readyTask.NextRunTime:O})");
 
                 yield return readyTask.Execute();
 
                 sw.Stop();
                 Logger.Info(
-                    $"[TASK END] {readyTask.Name} (section: {readyTask.SectionTitle}) finished in {sw.Elapsed.TotalSeconds:F2}s");
+                    $"[TASK END] {readyTask.SectionTitle} finished in {sw.Elapsed.TotalSeconds:F2}s");
             }
 
             yield return new WaitForSeconds(1f);
