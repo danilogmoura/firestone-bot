@@ -12,10 +12,10 @@ public class WarfrontCampaignLoot : BotTask
 {
     public override IEnumerator Execute()
     {
-        new MainHud().MapButton.Click();
+        new MainHUD().MapButton.Click();
         yield return new WaitForSeconds(InteractionDelay);
 
-        new MapMissionHud().WarfrontCampaignButton.Click();
+        new MapMissionHUD().WarfrontCampaignButton.Click();
         yield return new WaitForSeconds(InteractionDelay);
 
         var loot = new Loot();
@@ -38,7 +38,7 @@ public class WarfrontCampaignLoot : BotTask
         NextRunTime = loot.FindNextRunTime;
         yield return new WaitForSeconds(InteractionDelay);
 
-        new MapMissionHud().CloseButton.Click();
+        new MapMissionHUD().CloseButton.Click();
         yield return new WaitForSeconds(InteractionDelay);
     }
 }

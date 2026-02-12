@@ -15,7 +15,7 @@ public class MapMissionsTask : BotTask
 {
     public override IEnumerator Execute()
     {
-        var mainHud = new MainHud();
+        var mainHud = new MainHUD();
         var mapButton = mainHud.MapButton;
 
         if (!mapButton.IsClickable()) yield break;
@@ -58,7 +58,7 @@ public class MapMissionsTask : BotTask
         }
 
         allMissions = ScanMissions();
-        var missionHud = new MapMissionHud();
+        var missionHud = new MapMissionHUD();
         NextRunTime = !allMissions.Any() ? missionHud.MissionRefresh.Time() : new ActiveMissions().FindNextRunTime;
         Logger.Debug($"Found {allMissions.Count} missions, next run time in {NextRunTime}");
 

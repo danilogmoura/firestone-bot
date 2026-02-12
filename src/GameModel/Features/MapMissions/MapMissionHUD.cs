@@ -4,9 +4,9 @@ using Firebot.GameModel.Primitives;
 
 namespace Firebot.GameModel.Features.MapMissions;
 
-public class MapMissionHud : GameElement
+public class MapMissionHUD : GameElement
 {
-    public MapMissionHud() : base(Paths.MapMissions.Hub.Root) { }
+    public MapMissionHUD() : base(Paths.MapMissions.Hub.Root) { }
 
     public GameButton CloseButton => new(Paths.MapMissions.Hub.CloseButton, this);
 

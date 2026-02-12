@@ -4,9 +4,9 @@ using Firebot.GameModel.Primitives;
 
 namespace Firebot.GameModel.Shared;
 
-public class MainHud : GameElement
+public class MainHUD : GameElement
 {
-    public MainHud() : base(Paths.MainHud.Root) { }
+    public MainHUD() : base(Paths.MainHud.Root) { }
 
     public GameButton TownButton => new(Paths.MainHud.TownButton, this);
     public GameButton MapButton => new(Paths.MainHud.MapButton, this);

@@ -117,4 +117,29 @@ public static class Paths
             public const string CloseButton = "/closeButton";
         }
     }
+
+    public static class Engineer
+    {
+        public static class Garage
+        {
+            public const string Root = MenusRoottSafeArea + "/menuCanvas/popups/GarageSelection";
+
+            public const string CloseButton = "/bg/closeButton";
+
+            public const string EngineerButton = "/bg/engineer";
+
+            public static class EngineerSubmenu
+            {
+                public const string Root = MenusRoottSafeArea + "/menuCanvas/menus/Engineer";
+
+                public const string CloseButton = "/closeButton";
+
+                public const string ClaimToolsButton =
+                    "/submenus/bg/engineerSubmenu/toolsProductionSection/claimToolsButton";
+
+                public const string ClaimToolsCooldownTimeLeft =
+                    "/submenus/bg/engineerSubmenu/toolsProductionSection/claimToolsButton/cooldownOn/cooldownTimeLeft";
+            }
+        }
+    }
 }
