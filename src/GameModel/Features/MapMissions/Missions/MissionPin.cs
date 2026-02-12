@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using Firebot.GameModel.Base;
 using Firebot.GameModel.Configuration;
 using Firebot.GameModel.Primitives;
 using Il2Cpp;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Firebot.Core.BotSettings;
 
 namespace Firebot.GameModel.Features.MapMissions.Missions;
 
@@ -22,9 +24,9 @@ public class MissionPin : GameElement
     public bool IsCompleted =>
         IsVisible() && new GameSprite(Paths.MapMissions.Missions.MapPin.CompletedTick, this).IsVisible();
 
-    public void OnClick()
+    public IEnumerator OnClick()
     {
-        if (CachedTransform == null) return;
+        if (CachedTransform == null) yield break;
 
         var fakeEvent = new PointerEventData(EventSystem.current)
         {
@@ -32,5 +34,6 @@ public class MissionPin : GameElement
         };
         CachedTransform.TryGetComponent(out MapMissionInteraction group);
         group.OnPointerClick(fakeEvent);
+        yield return new WaitForSeconds(InteractionDelay);
     }
 }

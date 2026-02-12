@@ -10,7 +10,11 @@ public static class Watchdog
     {
         "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/OfflineProgress/bg/collectButton",
         "menusRoot/menuCanvasParent/SafeArea/menuCanvas/events/AnniversaryEventPromotional/bg/closeButton",
-        "menusRoot/menuCanvasParent/SafeArea/menuCanvas/events/LoveIsInTheAirPromotion/bg/closeButton"
+        "menusRoot/menuCanvasParent/SafeArea/menuCanvas/events/LoveIsInTheAirPromotion/bg/closeButton",
+        "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/Settings/bg/closeButton",
+        "menusRoot/menuCanvasParent/SafeArea/menuCanvas/popups/TechnicalMessage/bg/closeButton",
+        "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/TownIrongard/closeButton",
+        "menusRoot/menuCanvasParent/SafeArea/menuCanvas/menus/TownGuild/closeButton"
     };
 
     public static IEnumerator ForceClearAll()
@@ -19,12 +23,12 @@ public static class Watchdog
         {
             foreach (var path in NuisancePaths)
             {
-                var btn = new GameButton(path);
+                var gameButton = new GameButton(path);
 
-                if (!btn.IsVisible()) continue;
+                if (!gameButton.IsVisible()) continue;
                 Debug.Log($"[Watchdog] Fechando popup: {path}");
-                btn.Click();
-                yield return new WaitForSeconds(0.5f);
+
+                yield return gameButton.Click();
             }
 
             yield return new WaitForSeconds(0.5f);

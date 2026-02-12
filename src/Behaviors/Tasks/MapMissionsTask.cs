@@ -6,7 +6,6 @@ using Firebot.GameModel.Configuration;
 using Firebot.GameModel.Features.MapMissions;
 using Firebot.GameModel.Features.MapMissions.Missions;
 using Firebot.GameModel.Shared;
-using UnityEngine;
 using Logger = Firebot.Core.Logger;
 
 namespace Firebot.Behaviors.Tasks;
@@ -18,42 +17,37 @@ public class MapMissionsTask : BotTask
         var mainHud = new MainHUD();
         var mapButton = mainHud.MapButton;
 
-        if (!mapButton.IsClickable()) yield break;
-
-        mapButton.Click();
-        yield return new WaitForSeconds(1f);
+        yield return mapButton.Click();
 
         var allMissions = ScanMissions();
         var toCollect = allMissions.Where(mission => mission.IsCompleted).ToList();
-        var toStart = allMissions.Where(mission => !mission.IsActive).OrderByDescending(m => m.TimeRequired).ToList();
+        var toStart = allMissions.Where(mission => !mission.IsActive)
+            .OrderByDescending(mission => mission.TimeRequired)
+            .ToList();
 
         foreach (var mission in toCollect)
         {
-            mission.OnClick();
-            yield return new WaitForSeconds(1f);
+            yield return mission.OnClick();
             Logger.Debug($"Collecting mission '{mission.Root.name}' with {mission.TimeRequired} remaining.");
         }
 
         foreach (var mission in toStart)
         {
-            mission.OnClick();
-            yield return new WaitForSeconds(1f);
+            yield return mission.OnClick();
 
             var previewMission = new PreviewMission();
             if (previewMission.IsNotEnoughSquads)
             {
-                previewMission.CloseButton.Click();
-                yield return new WaitForSeconds(1f);
+                yield return previewMission.CloseButton.Click();
                 break;
             }
 
             if (previewMission.StartMissionButton.IsVisible())
             {
-                previewMission.StartMissionButton.Click();
+                yield return previewMission.StartMissionButton.Click();
                 Logger.Debug($"Mission '{mission.Root.name}' started.");
             }
 
-            yield return new WaitForSeconds(1f);
             Logger.Debug($"Starting mission '{mission.Root.name}' with {mission.TimeRequired} required.");
         }
 
@@ -62,8 +56,7 @@ public class MapMissionsTask : BotTask
         NextRunTime = !allMissions.Any() ? missionHud.MissionRefresh.Time() : new ActiveMissions().FindNextRunTime;
         Logger.Debug($"Found {allMissions.Count} missions, next run time in {NextRunTime}");
 
-        missionHud.CloseButton.Click();
-        yield return new WaitForSeconds(1f);
+        yield return missionHud.CloseButton.Click();
     }
 
     private static List<MissionPin> ScanMissions()

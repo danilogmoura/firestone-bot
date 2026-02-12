@@ -1,4 +1,6 @@
-﻿using Firebot.GameModel.Base;
+﻿using System.Collections;
+using Firebot.Core;
+using Firebot.GameModel.Base;
 using UnityEngine;
 using UnityEngine.UI;
 using Logger = Firebot.Core.Logger;
@@ -21,18 +23,22 @@ public class GameButton : GameElement
     public bool IsClickable() => IsVisible() && TryGetComponent(out Button button) &&
                                  button.enabled && button.interactable;
 
-    public void Click()
+    public IEnumerator Click()
     {
         if (!IsVisible())
         {
             Logger.Debug($"Click attempt failed: button not visible (path: '{Path ?? "N/A"}').");
-            return;
+            yield break;
         }
 
         if (TryGetComponent(out Button button))
         {
             if (button.interactable && button.enabled)
+            {
                 button.onClick.Invoke();
+                yield return new WaitForSeconds(BotSettings.InteractionDelay);
+            }
+
             else
                 Logger.Debug($"Button found but not interactable or disabled (path: '{Path ?? "N/A"}').");
         }
