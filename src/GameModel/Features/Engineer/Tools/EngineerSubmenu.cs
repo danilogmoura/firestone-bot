@@ -14,5 +14,5 @@ public class EngineerSubmenu : GameElement
     public GameButton ClaimToolsButton => new(Paths.Engineer.Garage.EngineerSubmenu.ClaimToolsButton, this);
 
     public DateTime FindNextRunTime =>
-        new GameText(Paths.Engineer.Garage.EngineerSubmenu.ClaimToolsCooldownTimeLeft, this).Time();
+        new GameText(Paths.Engineer.Garage.EngineerSubmenu.ClaimToolsCooldownTimeLeft, this).Time;
 }

@@ -12,5 +12,5 @@ public class Loot : GameElement
     public GameButton ClaimToolsButton => new(Paths.MapMissions.WarfrontCampaign.Loot.ClaimToolsButton, this);
 
     public DateTime FindNextRunTime =>
-        new GameText(Paths.MapMissions.WarfrontCampaign.Loot.NextLootTimeLeft, this).Time();
+        new GameText(Paths.MapMissions.WarfrontCampaign.Loot.NextLootTimeLeft, this).Time;
 }

@@ -27,7 +27,7 @@ public class GameText : GameElement
 
     public string Text => GetParsedText();
 
-    public DateTime Time(double bufferSeconds = 0) => TimeParser.ParseExpectedTime(Text, bufferSeconds);
+    public DateTime Time => TimeParser.ParseExpectedTime(Text);
 
     public string GetParsedText()
     {

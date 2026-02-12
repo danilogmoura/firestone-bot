@@ -22,7 +22,7 @@ public class ActiveMissions : GameElement
                 if (!gameElement.IsVisible()) continue;
 
                 var timer = new GameText(gameElement.Root, Paths.MapMissions.Missions.ActiveMissions.MissionProgress);
-                var missionFinishTime = timer.Time();
+                var missionFinishTime = timer.Time;
 
                 if (missionFinishTime < earliestDate && missionFinishTime > DateTime.Now)
                 {

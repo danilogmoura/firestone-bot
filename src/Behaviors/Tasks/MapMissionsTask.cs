@@ -25,6 +25,8 @@ public class MapMissionsTask : BotTask
             .OrderByDescending(mission => mission.TimeRequired)
             .ToList();
 
+        Logger.Debug($"Found {allMissions.Count} missions, {toCollect.Count} to collect, {toStart.Count} to start.");
+
         foreach (var mission in toCollect)
         {
             yield return mission.OnClick();
@@ -42,18 +44,13 @@ public class MapMissionsTask : BotTask
                 break;
             }
 
-            if (previewMission.StartMissionButton.IsVisible())
-            {
-                yield return previewMission.StartMissionButton.Click();
-                Logger.Debug($"Mission '{mission.Root.name}' started.");
-            }
-
+            yield return previewMission.StartMissionButton.Click();
             Logger.Debug($"Starting mission '{mission.Root.name}' with {mission.TimeRequired} required.");
         }
 
         allMissions = ScanMissions();
         var missionHud = new MapMissionHUD();
-        NextRunTime = !allMissions.Any() ? missionHud.MissionRefresh.Time() : new ActiveMissions().FindNextRunTime;
+        NextRunTime = !allMissions.Any() ? missionHud.MissionRefresh.Time : new ActiveMissions().FindNextRunTime;
         Logger.Debug($"Found {allMissions.Count} missions, next run time in {NextRunTime}");
 
         yield return missionHud.CloseButton.Click();

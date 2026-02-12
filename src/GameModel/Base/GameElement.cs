@@ -73,7 +73,7 @@ public class GameElement
         return Root != null && Root.TryGetComponent(out component);
     }
 
-    public List<GameElement> GetChildren()
+    public List<GameElement> GetChildrens()
     {
         var children = new List<GameElement>();
         for (var i = 0; i < Root.childCount; i++)
@@ -83,5 +83,17 @@ public class GameElement
         }
 
         return children;
+    }
+
+    public IEnumerable<GameElement> GetChildren()
+    {
+        if (Root == null) yield break;
+
+        var count = Root.childCount;
+        for (var i = 0; i < count; i++)
+        {
+            var child = Root.GetChild(i);
+            yield return new GameElement(child);
+        }
     }
 }

@@ -16,7 +16,7 @@ public class MissionPin : GameElement
 
     public MissionPin(Transform root, string path = null) : base(root, path) { }
 
-    public DateTime TimeRequired => new GameText(Paths.MapMissions.Missions.MapPin.MissionTimeRequirement, this).Time();
+    public DateTime TimeRequired => new GameText(Paths.MapMissions.Missions.MapPin.MissionTimeRequirement, this).Time;
 
     public bool IsActive =>
         IsVisible() && new GameSprite(Paths.MapMissions.Missions.MapPin.MissionActiveIcon, this).IsVisible();
