@@ -10,8 +10,6 @@
         <MelonLoaderNetDir>$(MelonLoaderDir)\net6</MelonLoaderNetDir>
         <Il2CppAssembliesDir>$(MelonLoaderDir)\Il2CppAssemblies</Il2CppAssembliesDir>
         <ModsDir>$(GameRoot)\Mods</ModsDir>
-        <UserLibs>$(GameRoot)\UserLibs</UserLibs>
-        <UniverseLibDir>$(MSBuildProjectDirectory)\..\libs\UniverseLib</UniverseLibDir>
     </PropertyGroup>
 
     <PropertyGroup>

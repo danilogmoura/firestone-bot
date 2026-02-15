@@ -1,71 +1,100 @@
 ﻿using System;
 using System.Collections;
-using Firebot.Bot.Automation.Core;
-using Firebot.Bot.Components.TMProComponents;
-using Firebot.Utils;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using Firebot.Behaviors;
 using MelonLoader;
 using UnityEngine;
-using Logger = Firebot.Utils.Logger;
 
 namespace Firebot.Core;
 
 public static class BotManager
 {
-    private static readonly Logger Log = new(nameof(BotManager));
-
-    private static TextDisplay _statusColor;
-
-    private static Coroutine _botLoop;
-
+    private static List<BotTask> _tasks = new();
+    private static object _botRoutineHandle;
     public static bool IsRunning { get; private set; }
 
-    public static void Start(float delay = 0f)
+    public static void Initialize()
+    {
+        var configPath = BotSettings.ConfigPath;
+        const string targetNamespace = "Firebot.Behaviors.Tasks";
+
+        _tasks.Clear();
+
+        var assembly = Assembly.GetExecutingAssembly();
+        var taskTypes = assembly.GetTypes()
+            .Where(task => task.Namespace != null && task.Namespace.StartsWith(targetNamespace) &&
+                           task.IsSubclassOf(typeof(BotTask)) && !task.IsAbstract)
+            .ToList();
+
+        foreach (var type in taskTypes)
+            try
+            {
+                var task = (BotTask)Activator.CreateInstance(type);
+                if (task != null)
+                {
+                    task.InitializeConfig(configPath);
+                    _tasks.Add(task);
+                    Logger.Debug($"[Loader] Registered task: {task.SectionTitle}");
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Debug($"[Loader] Failed to load {type.Name}: {e.GetType().Name} - {e.Message}");
+            }
+
+        _tasks = _tasks.OrderBy(t => t.Priority).ToList();
+    }
+
+    public static void Start()
     {
         if (IsRunning) return;
+        if (_tasks.Count == 0) Initialize();
 
         IsRunning = true;
-        ToggleStatusColor();
-        _botLoop = MelonCoroutines.Start(BotRoutine(delay)) as Coroutine;
-
-        Log.Info(delay > 0
-            ? $"Bot scheduled to start in {delay}s..."
-            : "Bot started immediately!");
+        _botRoutineHandle = MelonCoroutines.Start(BotSchedulerLoop());
+        Logger.Debug($"Started. Tasks loaded: {_tasks.Count}");
     }
 
     public static void Stop()
     {
         if (!IsRunning) return;
-
         IsRunning = false;
-        ToggleStatusColor();
-        if (_botLoop != null) MelonCoroutines.Stop(_botLoop);
-        _botLoop = null;
-        Log.Info("Bot stopped.");
+        if (_botRoutineHandle != null) MelonCoroutines.Stop(_botRoutineHandle);
+        Logger.Debug("Stopped.");
     }
 
-    private static IEnumerator BotRoutine(float delay)
+    private static IEnumerator BotSchedulerLoop()
     {
-        if (delay > 0) yield return new WaitForSeconds(delay);
+        if (BotSettings.AutoStart) yield return new WaitForSeconds(BotSettings.StartBotDelay);
+
+        Logger.Info("Performing initial popup cleanup to ensure a consistent UI state before scheduling tasks...");
+        yield return Watchdog.ForceClearAll();
 
         while (IsRunning)
         {
-            try
+            var readyTask = _tasks.Where(t => t.IsReady())
+                .OrderBy(t => t.Priority)
+                .ThenBy(t => t.NextRunTime)
+                .FirstOrDefault();
+
+            if (readyTask != null)
             {
-                AutomationHandler.CheckNotifications();
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Execution error: {ex.Message}");
+                var sw = Stopwatch.StartNew();
+                Logger.Info(
+                    $"[TASK START] {readyTask.SectionTitle} (priority: {readyTask.Priority})");
+
+                yield return readyTask.Execute();
+
+                sw.Stop();
+                Logger.Info(
+                    $"[TASK END] {readyTask.SectionTitle} finished in {sw.Elapsed.TotalSeconds:F2}s (nextRun: {readyTask.NextRunTime.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)})");
             }
 
-            yield return new WaitForSeconds(BotSettings.ScanInterval);
+            yield return new WaitForSeconds(1f);
         }
-    }
-
-    private static void ToggleStatusColor()
-    {
-        _statusColor ??= new TextDisplay(Paths.CharacterLevelPath);
-        if (IsRunning) _statusColor.SetOutline(Color.green);
-        else _statusColor.RemoveOutline();
     }
 }
