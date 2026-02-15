@@ -8,64 +8,60 @@ namespace Firebot.GameModel.Primitives;
 
 public class GameText : GameElement
 {
-    private TMP_Text _cachedComponent;
+    public GameText(string path = null, GameElement parent = null, Transform transform = null)
+        : base(path, parent, transform) { }
 
-    public GameText(string path, GameElement parent = null) : base(path, parent) { }
-
-    public GameText(Transform root, string path = null) : base(root, path) { }
-
-    private TMP_Text Component
-    {
-        get
-        {
-            if (_cachedComponent != null && _cachedComponent.gameObject == null) _cachedComponent = null;
-            if (_cachedComponent != null) return _cachedComponent;
-            if (Root != null) Root.TryGetComponent(out _cachedComponent);
-            return _cachedComponent;
-        }
-    }
-
-    public string Text => GetParsedText();
-
-    public DateTime Time => TimeParser.ParseExpectedTime(Text);
+    public DateTime Time => TimeParser.ParseExpectedTime(GetParsedText());
 
     public string GetParsedText()
     {
-        if (!IsVisible() || Component == null) return string.Empty;
+        if (!IsVisible())
+        {
+            Debug($"[FAILED] Read ignored: Element invisible/inactive. Path: {Path}");
+            return string.Empty;
+        }
 
+        if (!TryGetComponent(out TMP_Text tmp)) return string.Empty;
         try
         {
-            return Component.text;
+            return tmp.text;
         }
-        catch
+        catch (Exception e)
         {
+            Debug($"[FAILED] Exception while reading text: {e.Message}. Path: {Path}");
             return string.Empty;
         }
     }
 
     public void SetColor(Color newColor)
     {
-        if (IsVisible() && Component != null) Component.color = newColor;
+        if (TryGetComponent(out TMP_Text tmp))
+            tmp.color = newColor;
     }
 
     public void SetOutline(Color color, float thickness = 0.2f)
     {
-        if (!IsVisible() || Component == null || Component.fontSharedMaterial == null) return;
+        if (!TryGetComponent(out TMP_Text tmp) || tmp.fontSharedMaterial == null)
+        {
+            Debug($"[FAILED] FAILED to set outline: TMP_Text or Material missing. Path: {Path}");
+            return;
+        }
 
-        Component.fontSharedMaterial.EnableKeyword("OUTLINE_ON");
-        Component.outlineColor = color;
-        Component.outlineWidth = thickness;
-        Component.UpdateMeshPadding();
-        Component.SetAllDirty();
+        tmp.fontSharedMaterial.EnableKeyword("OUTLINE_ON");
+        tmp.outlineColor = color;
+        tmp.outlineWidth = thickness;
+        tmp.UpdateMeshPadding();
+        tmp.SetAllDirty();
     }
 
     public void RemoveOutline()
     {
-        if (!IsVisible() || Component == null || Component.fontSharedMaterial == null) return;
-
-        Component.outlineWidth = 0f;
-        Component.fontSharedMaterial.DisableKeyword("OUTLINE_ON");
-        Component.UpdateMeshPadding();
-        Component.SetAllDirty();
+        if (TryGetComponent(out TMP_Text tmp) || tmp.fontSharedMaterial != null)
+        {
+            tmp.outlineWidth = 0f;
+            tmp.fontSharedMaterial.DisableKeyword("OUTLINE_ON");
+            tmp.UpdateMeshPadding();
+            tmp.SetAllDirty();
+        }
     }
 }

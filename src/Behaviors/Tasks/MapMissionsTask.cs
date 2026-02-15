@@ -1,76 +1,96 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Firebot.Core;
 using Firebot.GameModel.Base;
-using Firebot.GameModel.Configuration;
 using Firebot.GameModel.Features.MapMissions;
 using Firebot.GameModel.Features.MapMissions.Missions;
 using Firebot.GameModel.Shared;
-using Logger = Firebot.Core.Logger;
+using MelonLoader;
 
 namespace Firebot.Behaviors.Tasks;
 
 public class MapMissionsTask : BotTask
 {
+    private MelonPreferences_Entry<string> _timeOrder;
+
+    protected override void OnConfigure(MelonPreferences_Category category)
+    {
+        if (_timeOrder != null) return;
+
+        _timeOrder = category.CreateEntry(
+            "mission_time_order",
+            "desc",
+            "Mission Time Order",
+            "Sort missions by time required. Use 'asc' (shorter first) or 'desc' (longer first)."
+        );
+    }
+
     public override IEnumerator Execute()
     {
-        var mainHud = new MainHUD();
-        var mapButton = mainHud.MapButton;
-
-        yield return mapButton.Click();
-
+        yield return MainHUD.MapButton.Click();
         var allMissions = ScanMissions();
-        var toCollect = allMissions.Where(mission => mission.IsCompleted).ToList();
-        var toStart = allMissions.Where(mission => !mission.IsActive)
-            .OrderByDescending(mission => mission.TimeRequired)
-            .ToList();
 
-        Logger.Debug($"Found {allMissions.Count} missions, {toCollect.Count} to collect, {toStart.Count} to start.");
-
+        var toCollect = allMissions.Where(m => m.IsCompleted).ToList();
         foreach (var mission in toCollect)
         {
             yield return mission.OnClick();
-            Logger.Debug($"Collecting mission '{mission.Root.name}' with {mission.TimeRequired} remaining.");
+            Debug($"[TASK] Collected: {mission.Name}");
         }
 
+        var pending = allMissions.Where(m => !m.IsActive && !m.IsCompleted);
+        var toStart = IsAscending()
+            ? pending.OrderBy(m => m.TimeRequired).ToList()
+            : pending.OrderByDescending(m => m.TimeRequired).ToList();
         foreach (var mission in toStart)
         {
             yield return mission.OnClick();
 
-            var previewMission = new PreviewMission();
-            if (previewMission.IsNotEnoughSquads)
+            if (PreviewMission.IsNotEnoughSquads)
             {
-                yield return previewMission.CloseButton.Click();
+                Debug("[TASK] Stopping: No more squads available.");
+                yield return PreviewMission.CloseButton.Click();
                 break;
             }
 
-            yield return previewMission.StartMissionButton.Click();
-            Logger.Debug($"Starting mission '{mission.Root.name}' with {mission.TimeRequired} required.");
+            yield return PreviewMission.StartMissionButton.Click();
+            Debug($"[TASK] Started mission: {mission.Name}");
         }
 
-        allMissions = ScanMissions();
-        var missionHud = new MapMissionHUD();
-        NextRunTime = !allMissions.Any() ? missionHud.MissionRefresh.Time : new ActiveMissions().FindNextRunTime;
-        Logger.Debug($"Found {allMissions.Count} missions, next run time in {NextRunTime}");
+        var activeMissions = new ActiveMissions();
+        if (allMissions.Any(m => m.IsActive))
+            NextRunTime = activeMissions.FindNextRunTime;
+        else
+            NextRunTime = MapMissionHUD.MissionRefresh.Time;
 
-        yield return missionHud.CloseButton.Click();
+        yield return MapMissionHUD.CloseButton.Click();
     }
 
-    private static List<MissionPin> ScanMissions()
+    private List<MissionPin> ScanMissions()
     {
-        var missionRoot = new BasePage(Paths.MapMissions.Missions.MapPin.Root);
+        Debug("[SCAN] Starting Mission Pin discovery...");
+
+        var missionRoot = new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.Root);
         var missions = new List<MissionPin>();
 
-        foreach (var gameElement in missionRoot.GetChildren())
+        foreach (var category in missionRoot.GetChildren())
         {
-            if (!gameElement.IsVisible()) continue;
-            foreach (var gameElementChild in gameElement.GetChildren())
+            if (!category.IsVisible()) continue;
+
+            foreach (var pinElement in category.GetChildren())
             {
-                if (!gameElementChild.IsVisible()) continue;
-                missions.Add(new MissionPin(gameElementChild.Root));
+                if (!pinElement.IsVisible()) continue;
+
+                var missionPin = new MissionPin(parent: pinElement);
+                missions.Add(missionPin);
             }
         }
 
+        Debug($"[SCAN] Completed. Found {missions.Count} active missions.");
         return missions;
     }
+
+    private bool IsAscending()
+        => string.Equals(_timeOrder?.Value?.Trim(), "asc", StringComparison.OrdinalIgnoreCase);
 }

@@ -1,14 +1,13 @@
 ﻿using System;
+using Firebot.Core;
 using Firebot.GameModel.Base;
-using Firebot.GameModel.Configuration;
 using Firebot.GameModel.Primitives;
 
 namespace Firebot.GameModel.Features.MapMissions.Missions;
 
 public class ActiveMissions : GameElement
 {
-    public ActiveMissions() : base(Paths.MapMissions.Missions.ActiveMissions.Root +
-                                   Paths.MapMissions.Missions.ActiveMissions.ActiveMissionsGrid) { }
+    public ActiveMissions() : base(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.ActiveGrid) { }
 
     public DateTime FindNextRunTime
     {
@@ -21,14 +20,15 @@ public class ActiveMissions : GameElement
             {
                 if (!gameElement.IsVisible()) continue;
 
-                var timer = new GameText(gameElement.Root, Paths.MapMissions.Missions.ActiveMissions.MissionProgress);
+                var timer =
+                    new GameText(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.ProgressSuffix, gameElement);
+
                 var missionFinishTime = timer.Time;
 
-                if (missionFinishTime < earliestDate && missionFinishTime > DateTime.Now)
-                {
-                    earliestDate = missionFinishTime;
-                    foundAny = true;
-                }
+                if (missionFinishTime >= earliestDate || missionFinishTime <= DateTime.Now) continue;
+
+                earliestDate = missionFinishTime;
+                foundAny = true;
             }
 
             return foundAny ? earliestDate : DateTime.Now.AddMinutes(1);

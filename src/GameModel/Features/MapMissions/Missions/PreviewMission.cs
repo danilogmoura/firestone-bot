@@ -1,17 +1,16 @@
-﻿using Firebot.GameModel.Base;
-using Firebot.GameModel.Configuration;
+﻿using Firebot.Core;
+using Firebot.GameModel.Base;
 using Firebot.GameModel.Primitives;
 
 namespace Firebot.GameModel.Features.MapMissions.Missions;
 
-public class PreviewMission : GameElement
+public static class PreviewMission
 {
-    public PreviewMission() : base(Paths.MapMissions.Missions.Preview.Root) { }
+    public static GameButton CloseButton => new(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PreviewLoc.Close);
 
-    public GameButton CloseButton => new(Paths.MapMissions.Missions.Preview.CloseButton, this);
+    public static GameButton StartMissionButton =>
+        new(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PreviewLoc.StartBtn);
 
-    public GameButton StartMissionButton => new(Paths.MapMissions.Missions.Preview.StartMissionButton, this);
-
-    public bool IsNotEnoughSquads =>
-        new BasePage(Paths.MapMissions.Missions.Preview.NotEnoughSquadsText, this).IsVisible();
+    public static bool IsNotEnoughSquads =>
+        new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PreviewLoc.NotEnoughSquads).IsVisible();
 }

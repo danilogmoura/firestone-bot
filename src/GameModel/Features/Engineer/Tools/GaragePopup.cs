@@ -1,14 +1,11 @@
-﻿using Firebot.GameModel.Base;
-using Firebot.GameModel.Configuration;
+﻿using Firebot.Core;
 using Firebot.GameModel.Primitives;
 
 namespace Firebot.GameModel.Features.Engineer.Tools;
 
-public class GaragePopup : GameElement
+public static class GaragePopup
 {
-    public GaragePopup() : base(Paths.Engineer.Garage.Root) { }
+    public static GameButton CloseButton => new(Paths.MenusLoc.CanvasLoc.EngineerLoc.GarageLoc.Close);
 
-    public GameButton CloseButton => new(Paths.Engineer.Garage.CloseButton, this);
-
-    public GameButton EngineerButton => new(Paths.Engineer.Garage.EngineerButton, this);
+    public static GameButton EngineerButton => new(Paths.MenusLoc.CanvasLoc.EngineerLoc.GarageLoc.EngineerBtn);
 }

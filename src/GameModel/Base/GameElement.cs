@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using Firebot.Utilities;
 using UnityEngine;
-using static Firebot.Utilities.StringUtils;
 using Logger = Firebot.Core.Logger;
 
 namespace Firebot.GameModel.Base;
@@ -11,102 +8,126 @@ namespace Firebot.GameModel.Base;
 public class GameElement
 {
     private readonly string _className;
-    private readonly string _path;
 
     public GameElement(string path = null, GameElement parent = null, Transform transform = null)
     {
         _className = GetType().Name;
-        _path = path?.Trim('/');
 
-        var baseTransform = parent?.Root ?? transform;
-        if (!string.IsNullOrEmpty(_path) && baseTransform != null)
+        if (transform != null)
+            Path = GetGameObjectPath(transform);
+        else if (parent != null)
         {
-            var resolved = baseTransform.Find(_path);
-            if (resolved != null)
-                _path = resolved.GetPath();
+            var parentPath = !string.IsNullOrEmpty(parent.Path) ? parent.Path : GetGameObjectPath(parent.Root);
+            if (!string.IsNullOrEmpty(parentPath))
+                Path = string.IsNullOrEmpty(path) ? parentPath.Trim('/') : $"{parentPath.Trim('/')}/{path.Trim('/')}";
             else
-                Debug($"Child transform not found. Parent: {baseTransform.name}, Path: {Ellipsize(_path)}");
+                Path = path?.Trim('/');
         }
-        else if (string.IsNullOrEmpty(_path) && baseTransform != null)
-        {
-            _path = baseTransform.GetPath();
-            Debug($"Path derived from base transform: {Ellipsize(_path)}");
-        }
+        else
+            Path = path?.Trim('/');
 
-        var source = string.Join(" | ", new[]
-        {
-            baseTransform != null ? $"Parent: {baseTransform.name}" : null,
-            !string.IsNullOrEmpty(_path) ? $"Path: {Ellipsize(_path)}" : null
-        }.Where(s => s != null));
+        if (!string.IsNullOrEmpty(Path) && Path.StartsWith("/")) Path = Path[1..];
 
-        Debug($"Initialized {_className} with {source}");
+        Debug(!string.IsNullOrEmpty(Path)
+            ? $"[SUCCESS] GameElement initialized. Path: {Path}"
+            : "[FAILED] GameElement initialized with empty path.");
     }
 
-    public Transform Root
+    protected string Path { get; }
+
+    protected Transform Root
     {
         get
         {
-            if (!string.IsNullOrEmpty(_path))
-            {
-                var resolved = FindAbsolute(_path);
-                if (resolved == null)
-                    Debug($"Absolute path not found: {Ellipsize(_path)}");
+            var resolved = ResolvePath(Path);
 
-                return resolved;
-            }
+            if (resolved == null && !string.IsNullOrEmpty(Path))
+                Debug($"[FAILED] Critical: Could not resolve Transform. Path: {Path}");
 
-            Debug("Root resolution skipped (no parent, no path, no immediate transform)");
-            return null;
+            return resolved;
         }
     }
 
-    private static Transform FindAbsolute(string fullPath)
+    public string Name => Root?.name ?? string.Empty;
+
+    private Transform ResolvePath(string path)
     {
-        var firstSlash = fullPath.IndexOf('/');
+        if (string.IsNullOrEmpty(path)) return null;
+        var slashIndex = path.IndexOf('/');
 
-        if (firstSlash == -1)
-            return GameObject.Find(fullPath)?.transform;
+        if (slashIndex == -1)
+        {
+            var obj = GameObject.Find(path);
+            if (obj == null)
+                Debug($"[FAILED] Root Object not found in scene: {path}");
+            return obj?.transform;
+        }
 
-        var rootName = fullPath[..firstSlash];
-        var relativePath = fullPath[(firstSlash + 1)..];
-
+        var rootName = path[..slashIndex];
         var rootObj = GameObject.Find(rootName);
-        return rootObj != null ? rootObj.transform.Find(relativePath) : null;
+
+        if (rootObj == null)
+        {
+            Debug($"[FAILED] Root '{rootName}' missing. Hierarchy search aborted. Path: {path}");
+            return null;
+        }
+
+        var relativePath = path[(slashIndex + 1)..];
+        var result = rootObj.transform.Find(relativePath);
+
+        if (result == null)
+            Debug($"[FAILED] Path broken: '{rootName}' exists, but child '{relativePath}' is missing. Full: {path}");
+
+        return result;
     }
 
-    public virtual bool IsVisible() => Root != null && Root.gameObject.activeInHierarchy;
+    public virtual bool IsVisible()
+    {
+        var success = Root != null && Root.gameObject.activeInHierarchy;
+
+        if (!success)
+            Debug($"[FAILED] Element is hidden or inactive. Path: {Path}");
+
+        return success;
+    }
+
+    public bool TryGetComponent<T>(out T component) where T : Component
+    {
+        component = null;
+        var currentRoot = Root;
+        if (currentRoot == null) return false;
+
+        var success = currentRoot.TryGetComponent(out component);
+        if (!success)
+            Debug($"[FAILED] Component <{typeof(T).Name}> missing on: {currentRoot.name}. Path: {Path}");
+
+        return success;
+    }
 
     public IEnumerable<GameElement> GetChildren()
     {
         var currentRoot = Root;
         if (currentRoot == null)
         {
-            Debug("GetChildren called but root is null");
+            Debug($"[FAILED] Cannot get children: Root is null. Path: {Path}");
             yield break;
         }
 
-        foreach (var o in currentRoot)
-        {
-            var child = (Transform)o;
-            yield return new GameElement(transform: child);
-        }
+        for (var i = 0; i < currentRoot.childCount; i++)
+            yield return new GameElement(transform: currentRoot.GetChild(i));
     }
 
-    public bool TryGetComponent<T>(out T component) where T : Component
+    private static string GetGameObjectPath(Transform transform)
     {
-        component = null;
-        var root = Root;
-        if (root == null)
+        if (transform == null) return string.Empty;
+        var path = transform.name;
+        while (transform.parent != null)
         {
-            Debug($"TryGetComponent<{typeof(T).Name}> failed: root is null");
-            return false;
+            transform = transform.parent;
+            path = transform.name + "/" + path;
         }
 
-        var success = root.TryGetComponent(out component);
-        if (!success)
-            Debug($"TryGetComponent<{typeof(T).Name}> failed on: {root.name}");
-
-        return success;
+        return path;
     }
 
     protected void Debug(string message, [CallerMemberName] string member = "", [CallerLineNumber] int line = 0)

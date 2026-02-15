@@ -1,18 +1,14 @@
-﻿using Firebot.GameModel.Base;
-using Firebot.GameModel.Configuration;
+﻿using Firebot.Core;
 using Firebot.GameModel.Primitives;
 
 namespace Firebot.GameModel.Shared;
 
-public class MainHUD : GameElement
+public class MainHUD
 {
-    public MainHUD() : base(Paths.MainHud.Root) { }
-
-    public GameButton TownButton => new(Paths.MainHud.TownButton, this);
-    public GameButton MapButton => new(Paths.MainHud.MapButton, this);
-    public GameButton GuildButton => new(Paths.MainHud.GuildButton, this);
-    public GameButton StoreButton => new(Paths.MainHud.StoreButton, this);
-
-    public GameButton PathOfGloryButton => new(Paths.MainHud.PathOfGloryButton, this);
-    public GameButton EventsButton => new(Paths.MainHud.EventsButton, this);
+    public static GameButton TownButton => new(Paths.BattleLoc.MainHudLoc.TownButton);
+    public static GameButton MapButton => new(Paths.BattleLoc.MainHudLoc.MapButton);
+    public static GameButton GuildButton => new(Paths.BattleLoc.MainHudLoc.GuildButton);
+    public static GameButton StoreButton => new(Paths.BattleLoc.MainHudLoc.StoreButton);
+    public static GameButton PathOfGloryButton => new(Paths.BattleLoc.MainHudLoc.PathOfGloryButton);
+    public static GameButton EventsButton => new(Paths.BattleLoc.MainHudLoc.EventsButton);
 }

@@ -11,15 +11,13 @@ public class WarfrontCampaignLoot : BotTask
 {
     public override IEnumerator Execute()
     {
-        yield return new MainHUD().MapButton.Click();
-        yield return new MapMissionHUD().WarfrontCampaignButton.Click();
+        yield return MainHUD.MapButton.Click();
+        yield return MapMissionHUD.WarfrontCampaignButton.Click();
+        yield return WarfrontLoot.ClaimToolsButton.Click();
 
-        var loot = new Loot();
-        var claimToolsButton = loot.ClaimToolsButton;
-        yield return claimToolsButton.Click();
+        NextRunTime = WarfrontLoot.FindNextRunTime;
 
-        NextRunTime = loot.FindNextRunTime;
         yield return new WaitForSeconds(InteractionDelay);
-        yield return new MapMissionHUD().CloseButton.Click();
+        yield return MapMissionHUD.CloseButton.Click();
     }
 }

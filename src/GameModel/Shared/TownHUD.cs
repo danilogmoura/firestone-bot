@@ -1,14 +1,11 @@
-﻿using Firebot.GameModel.Base;
-using Firebot.GameModel.Configuration;
+﻿using Firebot.Core;
 using Firebot.GameModel.Primitives;
 
 namespace Firebot.GameModel.Shared;
 
-public class TownHUD : GameElement
+public static class TownHUD
 {
-    public TownHUD() : base(Paths.Town.HUD.Root) { }
+    public static GameButton CloseButton => new(Paths.MenusLoc.CanvasLoc.TownHUDLoc.Close);
 
-    public GameButton CloseButton => new(Paths.Town.HUD.CloseButton, this);
-
-    public GameButton EngineerButton => new(Paths.Town.HUD.EngineerButton, this);
+    public static GameButton EngineerButton => new(Paths.MenusLoc.CanvasLoc.TownHUDLoc.Engineer);
 }

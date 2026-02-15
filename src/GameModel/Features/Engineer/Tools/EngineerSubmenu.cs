@@ -1,18 +1,15 @@
 ﻿using System;
-using Firebot.GameModel.Base;
-using Firebot.GameModel.Configuration;
+using Firebot.Core;
 using Firebot.GameModel.Primitives;
 
 namespace Firebot.GameModel.Features.Engineer.Tools;
 
-public class EngineerSubmenu : GameElement
+public static class EngineerSubmenu
 {
-    public EngineerSubmenu() : base(Paths.Engineer.Garage.EngineerSubmenu.Root) { }
+    public static GameButton CloseButton => new(Paths.MenusLoc.CanvasLoc.EngineerLoc.SubmenuLoc.Close);
 
-    public GameButton CloseButton => new(Paths.Engineer.Garage.EngineerSubmenu.CloseButton, this);
+    public static GameButton ClaimToolsButton => new(Paths.MenusLoc.CanvasLoc.EngineerLoc.SubmenuLoc.ClaimTools);
 
-    public GameButton ClaimToolsButton => new(Paths.Engineer.Garage.EngineerSubmenu.ClaimToolsButton, this);
-
-    public DateTime FindNextRunTime =>
-        new GameText(Paths.Engineer.Garage.EngineerSubmenu.ClaimToolsCooldownTimeLeft, this).Time;
+    public static DateTime FindNextRunTime =>
+        new GameText(Paths.MenusLoc.CanvasLoc.EngineerLoc.SubmenuLoc.Cooldown).Time;
 }

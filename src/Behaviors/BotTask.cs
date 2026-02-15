@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
+using Firebot.Core;
 using MelonLoader;
 using static Firebot.Utilities.StringUtils;
 
@@ -7,8 +9,14 @@ namespace Firebot.Behaviors;
 
 public abstract class BotTask
 {
+    private readonly string _className;
     private MelonPreferences_Category _category;
     private MelonPreferences_Entry<bool> _enabledEntry;
+
+    protected BotTask()
+    {
+        _className = GetType().Name;
+    }
 
     public virtual string SectionTitle => Humanize(GetType().Name);
 
@@ -42,4 +50,7 @@ public abstract class BotTask
     public bool IsReady() => IsEnabled && DateTime.Now >= NextRunTime;
 
     public abstract IEnumerator Execute();
+
+    protected void Debug(string message, [CallerMemberName] string member = "", [CallerLineNumber] int line = 0)
+        => Logger.Debug($"[{_className}::{member}:{line}] {message}");
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
+using Firebot.Core;
 using Firebot.GameModel.Base;
-using Firebot.GameModel.Configuration;
 using Firebot.GameModel.Primitives;
 using Il2Cpp;
 using UnityEngine;
@@ -12,28 +12,43 @@ namespace Firebot.GameModel.Features.MapMissions.Missions;
 
 public class MissionPin : GameElement
 {
-    public MissionPin(string path, GameElement parent) : base(path, parent) { }
+    public MissionPin(string path = null, GameElement parent = null, Transform transform = null)
+        : base(path, parent, transform) { }
 
-    public MissionPin(Transform root, string path = null) : base(root, path) { }
-
-    public DateTime TimeRequired => new GameText(Paths.MapMissions.Missions.MapPin.MissionTimeRequirement, this).Time;
+    public DateTime TimeRequired =>
+        new GameText(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.TimeReq, this).Time;
 
     public bool IsActive =>
-        IsVisible() && new GameSprite(Paths.MapMissions.Missions.MapPin.MissionActiveIcon, this).IsVisible();
+        new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.ActiveIcon, this).IsVisible();
 
     public bool IsCompleted =>
-        IsVisible() && new GameSprite(Paths.MapMissions.Missions.MapPin.CompletedTick, this).IsVisible();
+        new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.Tick, this).IsVisible();
 
     public IEnumerator OnClick()
     {
-        if (CachedTransform == null) yield break;
-
-        var fakeEvent = new PointerEventData(EventSystem.current)
+        if (!IsVisible())
         {
-            button = PointerEventData.InputButton.Left
-        };
-        CachedTransform.TryGetComponent(out MapMissionInteraction group);
-        group.OnPointerClick(fakeEvent);
+            Debug($"[FAILED] OnClick ignored: MissionPin not visible. Path: {Path}");
+            yield return new WaitForSeconds(InteractionDelay);
+            yield break;
+        }
+
+        if (TryGetComponent(out MapMissionInteraction interaction))
+            try
+            {
+                var fakeEvent = new PointerEventData(EventSystem.current)
+                {
+                    button = PointerEventData.InputButton.Left
+                };
+                interaction.OnPointerClick(fakeEvent);
+            }
+            catch (Exception e)
+            {
+                Debug($"[ERROR] Exception during Custom Click: {e.Message}. Path: {Path}");
+            }
+        else
+            Debug($"[FAILED] MissionPin found but MapMissionInteraction component is missing. Path: {Path}");
+
         yield return new WaitForSeconds(InteractionDelay);
     }
 }

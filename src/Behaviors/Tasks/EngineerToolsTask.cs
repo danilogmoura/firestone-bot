@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Firebot.GameModel.Features.Engineer.Tools;
 using Firebot.GameModel.Shared;
-using Logger = Firebot.Core.Logger;
 
 namespace Firebot.Behaviors.Tasks;
 
@@ -9,20 +8,15 @@ public class EngineerToolsTask : BotTask
 {
     public override IEnumerator Execute()
     {
-        yield return new MainHUD().TownButton.Click();
+        yield return MainHUD.TownButton.Click();
+        yield return TownHUD.EngineerButton.Click();
+        yield return GaragePopup.EngineerButton.Click();
 
-        var townHUD = new TownHUD();
-        yield return townHUD.EngineerButton.Click();
-        yield return new GaragePopup().EngineerButton.Click();
+        yield return EngineerSubmenu.ClaimToolsButton.Click();
+        NextRunTime = EngineerSubmenu.FindNextRunTime;
 
-        var engineerSubmenu = new EngineerSubmenu();
-        var claimToolsButton = engineerSubmenu.ClaimToolsButton;
-        yield return claimToolsButton.Click();
-
-        NextRunTime = engineerSubmenu.FindNextRunTime;
-        Logger.Debug($"Engineer tools are on cooldown, next run time: {NextRunTime}");
-
-        yield return engineerSubmenu.CloseButton.Click();
-        yield return townHUD.CloseButton.Click();
+        yield return EngineerSubmenu.CloseButton.Click();
+        yield return GaragePopup.CloseButton.Click();
+        yield return TownHUD.CloseButton.Click();
     }
 }
