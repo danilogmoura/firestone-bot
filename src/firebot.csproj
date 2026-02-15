@@ -54,9 +54,6 @@
         <Reference Include="UnityEngine.UIModule">
             <HintPath>$(Il2CppAssembliesDir)\UnityEngine.UIModule.dll</HintPath>
         </Reference>
-        <Reference Include="UniverseLib.MelonLoader.IL2CPP">
-            <HintPath>$(UniverseLibDir)\UniverseLib.MelonLoader.IL2CPP.dll</HintPath>
-        </Reference>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="Build">
@@ -67,15 +64,11 @@
               Condition="Exists('$(ModsDir)')"
               SkipUnchangedFiles="true"/>
 
-        <Copy SourceFiles="$(ProjectDir)..\libs\UniverseLib\UniverseLib.MelonLoader.IL2CPP.dll"
-              DestinationFolder="$(UserLibs)"
-              Condition="Exists('$(UserLibs)')"
-              SkipUnchangedFiles="true"/>
+        <Message Text="➡ Mod deployed to: $(ModsDir)" Importance="High"
+                 Condition="Exists('$(ModsDir)')"/>
 
-        <Message Text="➡ Mod deployed to: $(ModsDir)" Importance="High" Condition="Exists('$(ModsDir)')"/>
-        <Message Text="➡ Dependency deployed to: $(UserLibs)" Importance="High" Condition="Exists('$(UserLibs)')"/>
-
-        <Warning Text="Target directories not found. Check your Directory.Build.props path settings."
-                 Condition="!Exists('$(ModsDir)') Or !Exists('$(UserLibs)')"/>
+        <Warning
+                Text="Target directories not found. Check your Directory.Build.props path settings."
+                Condition="!Exists('$(ModsDir)')"/>
     </Target>
 </Project>

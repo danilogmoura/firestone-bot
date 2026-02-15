@@ -21,15 +21,21 @@ public class Main : MelonMod
 {
     private bool _isGameReady;
 
-    public override void OnInitializeMelon() => BotSettings.Initialize();
+    public override void OnInitializeMelon()
+    {
+        BotSettings.Initialize();
+        BotManager.Initialize();
+
+        LoggerInstance.Msg("Firebot System Initialized.");
+    }
 
     public override void OnSceneWasLoaded(int buildIndex, string sceneName)
     {
-        _isGameReady = sceneName == "mainScene";
+        _isGameReady = sceneName == "mainScene" || sceneName == "Game";
 
         if (_isGameReady)
         {
-            if (BotSettings.AutoStart) BotManager.Start(BotSettings.StartBotDelay);
+            if (BotSettings.AutoStart) BotManager.Start();
         }
         else
             BotManager.Stop();
@@ -39,7 +45,9 @@ public class Main : MelonMod
     {
         if (!_isGameReady || !Input.GetKeyDown(BotSettings.ShortcutKey)) return;
 
-        if (BotManager.IsRunning) BotManager.Stop();
-        else BotManager.Start();
+        if (BotManager.IsRunning)
+            BotManager.Stop();
+        else
+            BotManager.Start();
     }
 }
