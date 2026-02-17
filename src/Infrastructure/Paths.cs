@@ -46,7 +46,7 @@ public static class Paths
             private static class PopupsLoc
             {
                 public const string Root = CanvasLoc.Root + "/popups";
-                public const string CloseButton = "/bg/closeButton";
+                public const string CloseBtn = "/bg/closeButton";
             }
 
             public static class MapLoc
@@ -63,11 +63,13 @@ public static class Paths
                     public static class PreviewLoc
                     {
                         private const string Root = PopupsLoc.Root + "/PreviewMission";
-                        public const string Close = Root + PopupsLoc.CloseButton;
+                        public const string CloseBtn = Root + PopupsLoc.CloseBtn;
                         public const string StartBtn = Root + "/bg/managementBg/container/startMissionButton";
-                        public const string NotEnoughSquads = Root + "/bg/managementBg/previewMissionNotEnoughSquads";
 
-                        public const string NextRunTime =
+                        public const string NotEnoughSquadsTxt =
+                            Root + "/bg/managementBg/previewMissionNotEnoughSquads";
+
+                        public const string NextRunTimeTxt =
                             Root +
                             "/bg/rewardBg/previewMissionTime/previewBar/missionProgress/activeMissionProgressText";
                     }
@@ -108,7 +110,7 @@ public static class Paths
                 public static class ExpeditionLoc
                 {
                     private const string Root = PopupsLoc.Root + "/Expeditions";
-                    public const string CloseBtn = Root + PopupsLoc.CloseButton;
+                    public const string CloseBtn = Root + PopupsLoc.CloseBtn;
 
                     public const string NextRunTimeTxt = Root + "/bg/timeLeftBg/timeLeftText";
 
