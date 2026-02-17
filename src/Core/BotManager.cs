@@ -73,17 +73,26 @@ public static class BotManager
 
         while (IsRunning)
         {
+            BotTask notificationTask = null;
             BotTask readyTask = null;
             var earliest = DateTime.MaxValue;
 
             foreach (var task in _tasks)
             {
+                if (notificationTask == null && task.IsNotificationVisible())
+                {
+                    notificationTask = task;
+                    continue;
+                }
+
                 if (!task.IsReady()) continue;
                 if (task.NextRunTime >= earliest) continue;
 
                 earliest = task.NextRunTime;
                 readyTask = task;
             }
+
+            if (notificationTask != null) readyTask = notificationTask;
 
             if (readyTask != null)
             {
