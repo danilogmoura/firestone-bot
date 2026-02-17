@@ -103,6 +103,39 @@ public static class Paths
 
                     public const string NextRunTimeTxt = ClaimBtn + "/cooldownOn/cooldownTimeLeft";
                 }
+
+                public static class MagicQuarters
+                {
+                    private const string Root = CanvasLoc.Root + "/menus/MagicQuarters";
+
+                    public const string GuardoianList = Root + "/guardianList";
+
+                    private const string UnlockedGuadian = Root + "/submenus/bg/infoSubmenu/activities/unlocked";
+
+                    public const string EnlightenmentBtn = UnlockedGuadian + "/enlightenment/enlightenmentButton";
+
+                    public const string TrainBtn = UnlockedGuadian + "/train/trainButton";
+
+                    public const string NextRunTimeTxt = TrainBtn + "/cooldownOn/cooldownTimeLeft";
+
+                    // Config helper for guardian_index (Magic Quarters):
+                    // Index -> Guardian (matches Paths.MenusLoc.CanvasLoc.TownLoc.MagicQuarters.GuardoianList)
+                    // 0 -> Grace
+                    // 1 -> Vermilion (default)
+                    // 2 -> Ankaa
+                    // 3 -> Azhar
+
+                    private static readonly string[] Guardians =
+                    {
+                        "guardian (0)",
+                        "guardian (1)",
+                        "guardian (2)",
+                        "guardian (3)"
+                    };
+
+                    public static string GuardianByIndex(int index) =>
+                        $"{GuardoianList}/{Guardians[index]}";
+                }
             }
 
             public static class GuildLoc
