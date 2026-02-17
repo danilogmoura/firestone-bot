@@ -15,11 +15,7 @@ public class GameText : GameElement
 
     public string GetParsedText()
     {
-        if (!IsVisible())
-        {
-            Debug($"[FAILED] Read ignored: Element invisible/inactive. Path: {Path}");
-            return string.Empty;
-        }
+        if (!IsVisible()) return string.Empty;
 
         if (!TryGetComponent(out TMP_Text tmp)) return string.Empty;
         try
@@ -56,7 +52,7 @@ public class GameText : GameElement
 
     public void RemoveOutline()
     {
-        if (TryGetComponent(out TMP_Text tmp) || tmp.fontSharedMaterial != null)
+        if (TryGetComponent(out TMP_Text tmp) && tmp.fontSharedMaterial != null)
         {
             tmp.outlineWidth = 0f;
             tmp.fontSharedMaterial.DisableKeyword("OUTLINE_ON");

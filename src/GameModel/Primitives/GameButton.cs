@@ -9,7 +9,8 @@ namespace Firebot.GameModel.Primitives;
 public class GameButton : GameElement
 {
     public GameButton(string path = null, GameElement parent = null, Transform transform = null) :
-        base(path, parent, transform) { }
+        base(path, parent, transform)
+    { }
 
     private bool IsClickable(out Button button)
     {
@@ -23,15 +24,20 @@ public class GameButton : GameElement
     public IEnumerator Click()
     {
         if (IsClickable(out var button))
-            button.onClick.Invoke();
+        {
+            try
+            {
+                button.onClick.Invoke();
+            }
+            catch (System.Exception e)
+            {
+                Debug($"[FAILED] Click threw exception: {e.Message}. Path: {Path}");
+            }
+        }
         else
         {
-            if (Root == null)
-                Debug($"[FAILED] Click ignored: Object NOT FOUND. Path: {Path}");
-            else if (!Root.gameObject.activeInHierarchy)
-                Debug($"[FAILED] Click ignored: Object INACTIVE. Path: {Path}");
-            else
-                Debug($"[FAILED] Click ignored: Button DISABLED/NON-INTERACTABLE. Path: {Path}");
+            if (button != null)
+                Debug($"[FAILED] Click ignored: Button disabled/non-interactable. Path: {Path}");
         }
 
         yield return new WaitForSeconds(InteractionDelay);
