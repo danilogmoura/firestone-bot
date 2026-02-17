@@ -2,6 +2,17 @@
 
 public static class Paths
 {
+    public static class Watchdog
+    {
+        public const string CanvasRoot = MenusLoc.CanvasLoc.Root;
+        public const string EventsRoot = CanvasRoot + "/events";
+        public const string PopupsRoot = CanvasRoot + "/popups";
+        public const string MenusRoot = CanvasRoot + "/menus";
+        public const string CloseSuffix = "/bg/closeButton";
+        public const string CollectSuffix = "/bg/collectButton";
+        public const string MenuCloseSuffix = "/closeButton";
+    }
+
     public static class BattleLoc
     {
         public const string Root = "battleRoot";
