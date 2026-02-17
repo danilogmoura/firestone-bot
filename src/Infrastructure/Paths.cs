@@ -4,7 +4,7 @@ public static class Paths
 {
     public static class Watchdog
     {
-        public const string CanvasRoot = MenusLoc.CanvasLoc.Root;
+        private const string CanvasRoot = MenusLoc.CanvasLoc.Root;
         public const string EventsRoot = CanvasRoot + "/events";
         public const string PopupsRoot = CanvasRoot + "/popups";
         public const string MenusRoot = CanvasRoot + "/menus";
@@ -16,6 +16,23 @@ public static class Paths
     public static class BattleLoc
     {
         public const string Root = "battleRoot";
+
+        public static class NotificationsLoc
+        {
+            private const string Root = BattleLoc.Root +
+                                        "/battleMain/battleCanvas/SafeArea/leftSideUI/notifications/Viewport/grid";
+
+            public const string Engineer = Root + "/Engineer";
+            public const string WarfrontCampaign = Root + "/WarfrontCampaign";
+            public const string FreePickaxes = Root + "/FreePickaxes";
+            public const string Expeditions = Root + "/Expeditions";
+            public const string Quests = Root + "/Quests";
+            public const string GuardianTraining = Root + "/GuardianTraining";
+            public const string FirestoneResearch = Root + "/FirestoneResearch";
+            public const string Experiments = Root + "/Experiments";
+            public const string OracleRituals = Root + "/OracleRituals";
+            public const string MapMissions = Root + "/MapMissions";
+        }
 
         public static class MainHudLoc
         {
