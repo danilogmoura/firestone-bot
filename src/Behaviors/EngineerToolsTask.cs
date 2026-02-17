@@ -13,8 +13,8 @@ public class EngineerToolsTask : BotTask
     public override IEnumerator Execute()
     {
         yield return Notifications.Engineer;
-        yield return EngineerSubmenu.ClaimTools;
-        NextRunTime = EngineerSubmenu.NextRunTime;
-        yield return EngineerSubmenu.Close;
+        yield return Engineer.ClaimTools;
+        NextRunTime = Engineer.NextRunTime;
+        yield return Engineer.Close;
     }
 }

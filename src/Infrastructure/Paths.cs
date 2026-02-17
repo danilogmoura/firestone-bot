@@ -93,16 +93,13 @@ public static class Paths
             {
                 public static class EngineerLoc
                 {
-                    public static class SubmenuLoc
-                    {
-                        private const string Root = CanvasLoc.Root + "/menus/Engineer";
-                        public const string Close = Root + "/closeButton";
+                    private const string Root = CanvasLoc.Root + "/menus/Engineer";
+                    public const string Close = Root + "/closeButton";
 
-                        public const string ClaimTools =
-                            Root + "/submenus/bg/engineerSubmenu/toolsProductionSection/claimToolsButton";
+                    public const string ClaimTools =
+                        Root + "/submenus/bg/engineerSubmenu/toolsProductionSection/claimToolsButton";
 
-                        public const string NextRunTime = ClaimTools + "/cooldownOn/cooldownTimeLeft";
-                    }
+                    public const string NextRunTime = ClaimTools + "/cooldownOn/cooldownTimeLeft";
                 }
             }
 
