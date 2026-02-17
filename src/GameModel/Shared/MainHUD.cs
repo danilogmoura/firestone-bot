@@ -1,8 +1,10 @@
-﻿using Firebot.GameModel.Primitives;
+﻿using System;
+using Firebot.GameModel.Primitives;
 using Firebot.Infrastructure;
 
 namespace Firebot.GameModel.Shared;
 
+[Obsolete("This class is deprecated. Will be removed in a future update.")]
 public class MainHUD
 {
     public static GameButton TownButton => new(Paths.BattleLoc.MainHudLoc.TownButton);
