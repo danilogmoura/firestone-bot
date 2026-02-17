@@ -12,6 +12,7 @@ public static class BotSettings
     private static MelonPreferences_Entry<float> _startBotDelay;
     private static MelonPreferences_Entry<float> _scanInterval;
     private static MelonPreferences_Entry<float> _interactionDelay;
+    private static MelonPreferences_Entry<float> _maxTaskRuntime;
     private static MelonPreferences_Entry<bool> _debugMode;
     private static MelonPreferences_Entry<KeyCode> _shortcutKey;
 
@@ -31,6 +32,7 @@ public static class BotSettings
     public static float StartBotDelay => Mathf.Clamp(_startBotDelay.Value, 10.0f, 120.0f);
     public static float ScanInterval => Mathf.Clamp(_scanInterval.Value, 5.0f, 3600.0f);
     public static float InteractionDelay => Mathf.Clamp(_interactionDelay.Value, 0.5f, 5.0f);
+    public static float MaxTaskRuntime => Mathf.Clamp(_maxTaskRuntime.Value, 10.0f, 3600.0f);
     public static bool DebugMode => _debugMode?.Value ?? false;
 
     public static KeyCode ShortcutKey =>
@@ -51,15 +53,18 @@ public static class BotSettings
             "\nUseful for preventing conflicts while Unity is still loading the initial scene." +
             "\nClamped between 10.0 and 120.0 seconds.");
 
-        _scanInterval = _category.CreateEntry("scan_interval", 2.0f, "Scan Interval",
+        _scanInterval = _category.CreateEntry("scan_interval", 5.0f, "Scan Interval",
             "The interval (in seconds) between each BotManager verification cycle." +
             "\nLower values make the bot more responsive but may impact FPS performance." +
-            "\nClamped between 1.0 and 3600.0 seconds.");
+            "\nClamped between 5.0 and 3600.0 seconds.");
 
         _interactionDelay = _category.CreateEntry("interaction_delay", 1.0f, "Interaction Delay",
             "The delay (in seconds) between individual UI interactions (clicks, transitions)." +
             "\nEnsures the game processes the command before the next action is taken. " +
             "\nClamped between 0.5 and 5.0 seconds.");
+        _maxTaskRuntime = _category.CreateEntry("max_task_runtime", 120.0f, "Max Task Runtime",
+            "Maximum time (in seconds) a single task is allowed to run before it is aborted." +
+            "\nClamped between 10.0 and 3600.0 seconds.");
 
         _debugMode = _category.CreateEntry("debug_mode", false, "Enable Debug Mode",
             "Enables verbose logging and StackTrace display in the console for easier bug identification.");

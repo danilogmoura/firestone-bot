@@ -71,8 +71,6 @@ public static class BotManager
     {
         if (AutoStart) yield return new WaitForSeconds(StartBotDelay);
 
-        yield return RunSafe(Watchdog.ForceClearAll(), "Initial Watchdog cleanup");
-
         while (IsRunning)
         {
             BotTask readyTask = null;
@@ -89,6 +87,8 @@ public static class BotManager
 
             if (readyTask != null)
             {
+                yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup before {readyTask.SectionTitle}");
+
                 var stopwatch = Stopwatch.StartNew();
                 Logger.Info(
                     $"[Task] Started: {readyTask.SectionTitle} (NextRunTime: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss})");
@@ -114,10 +114,20 @@ public static class BotManager
             yield break;
         }
 
+        var timeoutSeconds = MaxTaskRuntime;
+        var timeoutEnabled = timeoutSeconds > 0f;
+        var stopwatch = Stopwatch.StartNew();
+
         while (true)
         {
             object current = null;
             bool movedNext;
+
+            if (timeoutEnabled && stopwatch.Elapsed.TotalSeconds > timeoutSeconds)
+            {
+                Logger.Debug($"[FAILED] {context} timed out after {timeoutSeconds:0.###}s.");
+                yield break;
+            }
 
             try
             {
