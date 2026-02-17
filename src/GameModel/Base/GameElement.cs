@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Logger = Firebot.Core.Logger;
 
@@ -25,9 +26,7 @@ public class GameElement
             Path = BuildPath(parentPath, path);
         }
         else
-            Path = path?.Trim('/');
-
-        if (!string.IsNullOrEmpty(Path) && Path.StartsWith("/")) Path = Path[1..];
+            Path = CleanPath(path);
 
         if (string.IsNullOrEmpty(Path))
             DebugOnce("init-empty-path", "[FAILED] GameElement initialized with empty path.");
@@ -50,6 +49,9 @@ public class GameElement
     }
 
     public string Name => Root?.name ?? string.Empty;
+
+    private static string CleanPath(string path) =>
+        string.IsNullOrEmpty(path) ? path : Regex.Replace(path, @"/+", "/").Trim('/');
 
     private Transform ResolvePath(string path)
     {
@@ -138,12 +140,12 @@ public class GameElement
     private static string BuildPath(string basePath, string path)
     {
         if (string.IsNullOrEmpty(basePath))
-            return path?.Trim('/');
+            return CleanPath(path);
 
         if (string.IsNullOrEmpty(path))
-            return basePath.Trim('/');
+            return CleanPath(basePath);
 
-        return $"{basePath.Trim('/')}/{path.Trim('/')}";
+        return CleanPath($"{basePath}/{path}");
     }
 
     protected void Debug(string message, [CallerMemberName] string member = "", [CallerLineNumber] int line = 0)

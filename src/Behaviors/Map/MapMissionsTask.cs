@@ -10,13 +10,13 @@ using Firebot.GameModel.Shared;
 using Firebot.Infrastructure;
 using MelonLoader;
 
-namespace Firebot.Behaviors;
+namespace Firebot.Behaviors.Map;
 
 public class MapMissionsTask : BotTask
 {
     private MelonPreferences_Entry<string> _timeOrder;
 
-    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.MapMissions;
+    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.MapMissionsBtn;
 
     protected override void OnConfigure(MelonPreferences_Category category)
     {

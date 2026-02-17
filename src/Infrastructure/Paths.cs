@@ -22,16 +22,16 @@ public static class Paths
             private const string Root = BattleLoc.Root +
                                         "/battleMain/battleCanvas/SafeArea/leftSideUI/notifications/Viewport/grid";
 
-            public const string Engineer = Root + "/Engineer";
-            public const string WarfrontCampaign = Root + "/WarfrontCampaign";
-            public const string FreePickaxes = Root + "/FreePickaxes";
-            public const string Expeditions = Root + "/Expeditions";
-            public const string Quests = Root + "/Quests";
-            public const string GuardianTraining = Root + "/GuardianTraining";
-            public const string FirestoneResearch = Root + "/FirestoneResearch";
-            public const string Experiments = Root + "/Experiments";
-            public const string OracleRituals = Root + "/OracleRituals";
-            public const string MapMissions = Root + "/MapMissions";
+            public const string EngineerBtn = Root + "/Engineer";
+            public const string WarfrontCampaignBtn = Root + "/WarfrontCampaign";
+            public const string FreePickaxesBtn = Root + "/FreePickaxes";
+            public const string ExpeditionsBtn = Root + "/Expeditions";
+            public const string QuestsBtn = Root + "/Quests";
+            public const string GuardianTrainingBtn = Root + "/GuardianTraining";
+            public const string FirestoneResearchBtn = Root + "/FirestoneResearch";
+            public const string ExperimentsBtn = Root + "/Experiments";
+            public const string OracleRitualsBtn = Root + "/OracleRituals";
+            public const string MapMissionsBtn = Root + "/MapMissions";
         }
     }
 
@@ -53,9 +53,9 @@ public static class Paths
             {
                 private const string Root = CanvasLoc.Root + "/menus/WorldMap";
                 private const string Sub = Root + "/submenus/mapMissionsSubmenu";
-                public const string Close = Root + "/closeButton";
+                public const string CloseBtn = Root + "/closeButton";
 
-                public const string NextRunTime =
+                public const string NextRunTimeTxt =
                     Sub + "/bottomLeftUI/missionRefreshCanvas/missionRefreshBg/missionRefreshText";
 
                 public static class MissionsLoc
@@ -84,8 +84,8 @@ public static class Paths
                 public static class WarfrontLoc
                 {
                     private const string LootRoot = Root + "/submenus/warfrontCampaignSubmenu/loot";
-                    public const string NextRunTime = LootRoot + "/nextLootTimeLeft";
-                    public const string Claim = LootRoot + "/claimButton";
+                    public const string NextRunTimeTxt = LootRoot + "/nextLootTimeLeft";
+                    public const string ClaimBtn = LootRoot + "/claimButton";
                 }
             }
 
@@ -94,34 +94,37 @@ public static class Paths
                 public static class EngineerLoc
                 {
                     private const string Root = CanvasLoc.Root + "/menus/Engineer";
-                    public const string Close = Root + "/closeButton";
+                    public const string CloseBtn = Root + "/closeButton";
 
-                    public const string ClaimTools =
+                    public const string ClaimBtn =
                         Root + "/submenus/bg/engineerSubmenu/toolsProductionSection/claimToolsButton";
 
-                    public const string NextRunTime = ClaimTools + "/cooldownOn/cooldownTimeLeft";
+                    public const string NextRunTimeTxt = ClaimBtn + "/cooldownOn/cooldownTimeLeft";
                 }
             }
 
             public static class GuildLoc
             {
-                public static class EngineerLoc
+                public static class ExpeditionLoc
                 {
-                    public static class SubmenuLoc
-                    {
-                        private const string Root = PopupsLoc.Root + "/Expeditions";
-                        public const string Close = Root + PopupsLoc.CloseButton;
+                    private const string Root = PopupsLoc.Root + "/Expeditions";
+                    public const string CloseBtn = Root + PopupsLoc.CloseButton;
 
-                        public const string NextRunTime = Root + "/bg/timeLeftBg/timeLeftText";
+                    public const string NextRunTimeTxt = Root + "/bg/timeLeftBg/timeLeftText";
 
-                        private const string ExpeditionsParents = Root + "/bg/expeditionsParent";
+                    private const string ExpeditionsParents = Root + "/bg/expeditionsParent";
 
-                        public const string Current = ExpeditionsParents + "/activeExpeditionParent/activeExpedition";
+                    public const string ActiveExpedition =
+                        ExpeditionsParents + "/activeExpeditionParent/activeExpedition";
 
-                        public const string Pending =
-                            ExpeditionsParents +
-                            "/pendingExpeditionsParent/expeditionsScroll/Viewport/grid/expeditionPending0";
-                    }
+                    public const string ClaimBtn = ActiveExpedition + "/claimButton";
+
+                    public const string CurrentRunTimeTxt =
+                        ActiveExpedition + "/expeditionProgressBg/timeLeftText";
+
+                    public const string StartBtn =
+                        ExpeditionsParents +
+                        "/pendingExpeditionsParent/expeditionsScroll/Viewport/grid/expeditionPending0/startButton";
                 }
             }
         }
