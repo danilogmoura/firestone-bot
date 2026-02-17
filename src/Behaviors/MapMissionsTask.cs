@@ -16,6 +16,8 @@ public class MapMissionsTask : BotTask
 {
     private MelonPreferences_Entry<string> _timeOrder;
 
+    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.MapMissions;
+
     protected override void OnConfigure(MelonPreferences_Category category)
     {
         if (_timeOrder != null) return;

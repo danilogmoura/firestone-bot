@@ -29,7 +29,7 @@ public static class BotSettings
     // Safe Properties
     public static bool AutoStart => _autoStart?.Value ?? false;
     public static float StartBotDelay => Mathf.Clamp(_startBotDelay.Value, 10.0f, 120.0f);
-    public static float ScanInterval => Mathf.Clamp(_scanInterval.Value, 1f, 3600.0f);
+    public static float ScanInterval => Mathf.Clamp(_scanInterval.Value, 5.0f, 3600.0f);
     public static float InteractionDelay => Mathf.Clamp(_interactionDelay.Value, 0.5f, 5.0f);
     public static bool DebugMode => _debugMode?.Value ?? false;
 
