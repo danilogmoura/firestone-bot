@@ -22,3 +22,6 @@ global.json
 
 # Ignore analysis and reports directory
 Reports/
+
+## --- Source Files (No Modifications) ---
+src/Utilities/Polyfills.cs
