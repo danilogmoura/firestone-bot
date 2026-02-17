@@ -7,8 +7,8 @@ namespace Firebot.GameModel.Features.Map;
 
 public static class MapMission
 {
-    public static DateTime NextRunTime => new GameText(Paths.MenusLoc.CanvasLoc.MapLoc.NextRunTime).Time;
+    public static DateTime NextRunTime => new GameText(Paths.MenusLoc.CanvasLoc.MapLoc.NextRunTimeTxt).Time;
 
     public static IEnumerator Close =>
-        new GameButton(Paths.MenusLoc.CanvasLoc.MapLoc.Close).Click();
+        new GameButton(Paths.MenusLoc.CanvasLoc.MapLoc.CloseBtn).Click();
 }
