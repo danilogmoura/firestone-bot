@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Firebot.Core.Tasks;
@@ -80,7 +81,16 @@ public static class BotManager
 
             if (readyTask != null)
             {
+                var stopwatch = Stopwatch.StartNew();
+                Logger.Info(
+                    $"[Task] Started: {readyTask.SectionTitle} (Priority: {readyTask.Priority}, NextRunTime: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss})");
+
                 yield return RunSafe(readyTask.Execute(), $"Task {readyTask.SectionTitle}");
+
+                stopwatch.Stop();
+                Logger.Info(
+                    $"[Task] Finished: {readyTask.SectionTitle} in {stopwatch.Elapsed.TotalSeconds:0.###}s (NextRunTime: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss})");
+
                 yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
             }
 
