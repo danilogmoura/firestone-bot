@@ -3,7 +3,7 @@ using System.Collections;
 using Firebot.GameModel.Primitives;
 using Firebot.Infrastructure;
 
-namespace Firebot.GameModel.Features.Engineer.Tools;
+namespace Firebot.GameModel.Features.Town.Engineer.Tools;
 
 public static class EngineerSubmenu
 {
