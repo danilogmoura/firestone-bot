@@ -7,6 +7,7 @@ using System.Reflection;
 using Firebot.Core.Tasks;
 using MelonLoader;
 using UnityEngine;
+using static Firebot.Core.BotSettings;
 
 namespace Firebot.Core;
 
@@ -18,7 +19,7 @@ public static class BotManager
 
     public static void Initialize()
     {
-        var configPath = BotSettings.ConfigPath;
+        var configPath = ConfigPath;
         const string targetNamespace = "Firebot.Behaviors";
 
         _tasks.Clear();
@@ -45,7 +46,7 @@ public static class BotManager
                 Logger.Debug($"[Loader] Failed to load {type.Name}: {e.GetType().Name} - {e.Message}");
             }
 
-        _tasks = _tasks.OrderBy(t => t.Priority).ToList();
+        _tasks = _tasks.ToList();
     }
 
     public static void Start()
@@ -68,22 +69,29 @@ public static class BotManager
 
     private static IEnumerator BotSchedulerLoop()
     {
-        if (BotSettings.AutoStart) yield return new WaitForSeconds(BotSettings.StartBotDelay);
+        if (AutoStart) yield return new WaitForSeconds(StartBotDelay);
 
         yield return RunSafe(Watchdog.ForceClearAll(), "Initial Watchdog cleanup");
 
         while (IsRunning)
         {
-            var readyTask = _tasks.Where(t => t.IsReady())
-                .OrderBy(t => t.Priority)
-                .ThenBy(t => t.NextRunTime)
-                .FirstOrDefault();
+            BotTask readyTask = null;
+            var earliest = DateTime.MaxValue;
+
+            foreach (var task in _tasks)
+            {
+                if (!task.IsReady()) continue;
+                if (task.NextRunTime >= earliest) continue;
+
+                earliest = task.NextRunTime;
+                readyTask = task;
+            }
 
             if (readyTask != null)
             {
                 var stopwatch = Stopwatch.StartNew();
                 Logger.Info(
-                    $"[Task] Started: {readyTask.SectionTitle} (Priority: {readyTask.Priority}, NextRunTime: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss})");
+                    $"[Task] Started: {readyTask.SectionTitle} (NextRunTime: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss})");
 
                 yield return RunSafe(readyTask.Execute(), $"Task {readyTask.SectionTitle}");
 
@@ -94,7 +102,7 @@ public static class BotManager
                 yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(ScanInterval);
         }
     }
 
