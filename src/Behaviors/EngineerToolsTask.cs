@@ -9,15 +9,12 @@ public class EngineerToolsTask : BotTask
 {
     public override IEnumerator Execute()
     {
-        yield return MainHUD.TownButton.Click();
-        yield return TownHUD.EngineerButton.Click();
-        yield return GaragePopup.EngineerButton.Click();
+        yield return Notifications.Engineer;
 
-        yield return EngineerSubmenu.ClaimToolsButton.Click();
+        yield return EngineerSubmenu.ClaimTools;
         NextRunTime = EngineerSubmenu.FindNextRunTime;
 
-        yield return EngineerSubmenu.CloseButton.Click();
-        yield return GaragePopup.CloseButton.Click();
-        yield return TownHUD.CloseButton.Click();
+        yield return EngineerSubmenu.Close;
+        yield return GaragePopup.Close;
     }
 }

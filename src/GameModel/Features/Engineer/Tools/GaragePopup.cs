@@ -1,11 +1,14 @@
-﻿using Firebot.GameModel.Primitives;
+﻿using System.Collections;
+using Firebot.GameModel.Primitives;
 using Firebot.Infrastructure;
 
 namespace Firebot.GameModel.Features.Engineer.Tools;
 
 public static class GaragePopup
 {
-    public static GameButton CloseButton => new(Paths.MenusLoc.CanvasLoc.EngineerLoc.GarageLoc.Close);
+    public static IEnumerator Close =>
+        new GameButton(Paths.MenusLoc.CanvasLoc.EngineerLoc.GarageLoc.Close).Click();
 
-    public static GameButton EngineerButton => new(Paths.MenusLoc.CanvasLoc.EngineerLoc.GarageLoc.EngineerBtn);
+    public static IEnumerator ClickEngineer =>
+        new GameButton(Paths.MenusLoc.CanvasLoc.EngineerLoc.GarageLoc.EngineerBtn).Click();
 }

@@ -59,7 +59,7 @@ public static class Paths
             public static class PopupsLoc
             {
                 public const string Root = CanvasLoc.Root + "/popups";
-                public const string CloseButton = "/bg/closeButton"; // Sufixo comum
+                public const string CloseButton = "/bg/closeButton";
             }
 
             public static class MapMissionsLoc

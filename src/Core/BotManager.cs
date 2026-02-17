@@ -83,15 +83,15 @@ public static class BotManager
 
             if (readyTask != null)
             {
-                var sw = Stopwatch.StartNew();
-                Logger.Info(
-                    $"[TASK START] {readyTask.SectionTitle} (priority: {readyTask.Priority})");
+                var stopwatch = Stopwatch.StartNew();
+                Logger.Info($"[TASK START] {readyTask.SectionTitle} (priority: {readyTask.Priority})");
 
                 yield return readyTask.Execute();
+                yield return Watchdog.ForceClearAll();
 
-                sw.Stop();
+                stopwatch.Stop();
                 Logger.Info(
-                    $"[TASK END] {readyTask.SectionTitle} finished in {sw.Elapsed.TotalSeconds:F2}s (nextRun: {readyTask.NextRunTime.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)})");
+                    $"[TASK END] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:F2}s (nextRun: {readyTask.NextRunTime.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)})");
             }
 
             yield return new WaitForSeconds(1f);
