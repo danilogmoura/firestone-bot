@@ -32,15 +32,10 @@ public class MapMissionsTask : BotTask
     {
         yield return Notifications.MapMissions;
 
-        var toCollect = ScanMissions().Where(m => m.IsCompleted).ToList();
-        foreach (var mission in toCollect)
+        foreach (var mission in ScanMissions(m => m.IsCompleted))
             yield return mission.Select();
 
-        var pending = ScanMissions().Where(mission => !mission.IsActive && !mission.IsCompleted);
-        var toStart = IsAscending()
-            ? pending.OrderBy(mission => mission.TimeRequired).ToList()
-            : pending.OrderByDescending(m => m.TimeRequired).ToList();
-        foreach (var mission in toStart)
+        foreach (var mission in ScanMissions(mission => !mission.IsActive && !mission.IsCompleted, true))
         {
             yield return mission.Select();
 
@@ -55,32 +50,33 @@ public class MapMissionsTask : BotTask
 
         DateTime? earliest = null;
         yield return FindEarliestMissionProgress(value => earliest = value);
-        NextRunTime = earliest ?? MapMissionHUD.MissionRefresh.Time;
+        NextRunTime = earliest ?? MapMission.MissionRefresh;
 
-        yield return MapMissionHUD.CloseButton.Click();
+        yield return MapMission.Close;
     }
 
-    private IEnumerable<MissionPin> ScanMissions()
+    private IEnumerable<MissionPin> ScanMissions(Func<MissionPin, bool> filter = null, bool sortByTime = false)
     {
-        Debug("[SCAN] Starting Mission Pin discovery...");
         var missionRoot = new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.Root);
+        var results = missionRoot.GetChildren().Where(root => root.IsVisible())
+            .SelectMany(parent => parent.GetChildren().Where(child => child.IsVisible()))
+            .Select(pin => new MissionPin(parent: pin))
+            .Where(mission => filter == null || filter(mission))
+            .ToList();
 
-        foreach (var category in missionRoot.GetChildren())
-        {
-            if (!category.IsVisible()) continue;
-            foreach (var pinElement in category.GetChildren())
-            {
-                if (!pinElement.IsVisible()) continue;
-                yield return new MissionPin(parent: pinElement);
-            }
-        }
+        if (sortByTime)
+            results = IsAscending()
+                ? results.OrderBy(m => m.TimeRequired).ToList()
+                : results.OrderByDescending(m => m.TimeRequired).ToList();
+
+        foreach (var mission in results) yield return mission;
     }
 
     private IEnumerator FindEarliestMissionProgress(Action<DateTime?> setEarliest)
     {
         DateTime? earliest = null;
 
-        foreach (var mission in ScanMissions().Where(mission => mission.IsActive))
+        foreach (var mission in ScanMissions(mission => mission.IsActive))
         {
             yield return mission.Select();
 
@@ -95,5 +91,14 @@ public class MapMissionsTask : BotTask
     }
 
     private bool IsAscending()
-        => string.Equals(_timeOrder?.Value?.Trim(), "asc", StringComparison.OrdinalIgnoreCase);
+    {
+        var value = _timeOrder?.Value?.Trim();
+        if (string.IsNullOrEmpty(value)) return false;
+
+        if (string.Equals(value, "asc", StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(value, "desc", StringComparison.OrdinalIgnoreCase)) return false;
+
+        Debug($"[FAILED] Invalid mission_time_order '{value}'. Using default 'desc'.");
+        return false;
+    }
 }

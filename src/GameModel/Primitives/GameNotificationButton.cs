@@ -3,7 +3,6 @@ using System.Collections;
 using Firebot.GameModel.Base;
 using Il2Cpp;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Firebot.Core.BotSettings;
 
@@ -17,22 +16,15 @@ public class GameNotificationButton : GameButton
     public override IEnumerator Click()
     {
         if (TryGetComponent(out NotificationInteraction interaction))
-        {
-            var pointerData = new PointerEventData(EventSystem.current)
-            {
-                button = PointerEventData.InputButton.Left
-            };
-
             try
             {
-                interaction.notificationButton.OnPointerClick(pointerData);
+                interaction.notificationButton.onClick.Invoke();
                 Debug($"[QUICK ACCESS] Triggered via NotificationInteraction. Path: {Path}");
             }
             catch (Exception e)
             {
                 Debug($"[QUICK ACCESS] Error calling NotificationInteraction: {e.Message}. Path: {Path}");
             }
-        }
         else if (TryGetComponent(out Button button))
             try
             {
