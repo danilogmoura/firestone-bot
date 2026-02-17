@@ -1,7 +1,7 @@
 ﻿using System;
-using Firebot.Core;
 using Firebot.GameModel.Base;
 using Firebot.GameModel.Primitives;
+using Firebot.Infrastructure;
 
 namespace Firebot.GameModel.Features.MapMissions.Missions;
 

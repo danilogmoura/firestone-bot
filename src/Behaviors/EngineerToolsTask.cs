@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using Firebot.Core.Tasks;
 using Firebot.GameModel.Features.Engineer.Tools;
 using Firebot.GameModel.Shared;
 
-namespace Firebot.Behaviors.Tasks;
+namespace Firebot.Behaviors;
 
 public class EngineerToolsTask : BotTask
 {

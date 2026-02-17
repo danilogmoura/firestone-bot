@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
-using Firebot.Core;
 using Firebot.GameModel.Base;
 using Firebot.GameModel.Primitives;
+using Firebot.Infrastructure;
 using Il2Cpp;
 using UnityEngine;
 using UnityEngine.EventSystems;

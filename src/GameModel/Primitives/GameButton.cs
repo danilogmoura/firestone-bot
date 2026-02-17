@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Firebot.GameModel.Base;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +10,7 @@ namespace Firebot.GameModel.Primitives;
 public class GameButton : GameElement
 {
     public GameButton(string path = null, GameElement parent = null, Transform transform = null) :
-        base(path, parent, transform)
-    { }
+        base(path, parent, transform) { }
 
     private bool IsClickable(out Button button)
     {
@@ -24,16 +24,14 @@ public class GameButton : GameElement
     public IEnumerator Click()
     {
         if (IsClickable(out var button))
-        {
             try
             {
                 button.onClick.Invoke();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 Debug($"[FAILED] Click threw exception: {e.Message}. Path: {Path}");
             }
-        }
         else
         {
             if (button != null)

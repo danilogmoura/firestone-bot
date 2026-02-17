@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using Firebot.Behaviors;
+using Firebot.Core.Tasks;
 using MelonLoader;
 using UnityEngine;
 
@@ -20,7 +20,7 @@ public static class BotManager
     public static void Initialize()
     {
         var configPath = BotSettings.ConfigPath;
-        const string targetNamespace = "Firebot.Behaviors.Tasks";
+        const string targetNamespace = "Firebot.Behaviors";
 
         _tasks.Clear();
 
