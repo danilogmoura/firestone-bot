@@ -30,7 +30,7 @@ public class MapMissionsTask : BotTask
 
     public override IEnumerator Execute()
     {
-        yield return MainHUD.MapButton.Click();
+        yield return Notifications.MapMissions;
 
         var toCollect = ScanMissions().Where(m => m.IsCompleted).ToList();
         foreach (var mission in toCollect)

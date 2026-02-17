@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Firebot.Core.Tasks;
-using Firebot.GameModel.Features.MapMissions;
 using Firebot.GameModel.Features.MapMissions.WarfrontCampaign;
 using Firebot.GameModel.Shared;
 using UnityEngine;
@@ -12,13 +11,10 @@ public class WarfrontCampaignLoot : BotTask
 {
     public override IEnumerator Execute()
     {
-        yield return MainHUD.MapButton.Click();
-        yield return MapMissionHUD.WarfrontCampaignButton.Click();
-        yield return WarfrontLoot.ClaimToolsButton.Click();
+        yield return Notifications.WarfrontCampaign;
+        yield return WarfrontLoot.ClaimTools;
 
         NextRunTime = WarfrontLoot.FindNextRunTime;
-
         yield return new WaitForSeconds(InteractionDelay);
-        yield return MapMissionHUD.CloseButton.Click();
     }
 }
