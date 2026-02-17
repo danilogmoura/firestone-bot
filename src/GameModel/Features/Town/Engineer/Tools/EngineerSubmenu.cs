@@ -8,11 +8,11 @@ namespace Firebot.GameModel.Features.Town.Engineer.Tools;
 public static class EngineerSubmenu
 {
     public static IEnumerator Close =>
-        new GameButton(Paths.MenusLoc.CanvasLoc.EngineerLoc.SubmenuLoc.Close).Click();
+        new GameButton(Paths.MenusLoc.CanvasLoc.TownLoc.EngineerLoc.SubmenuLoc.Close).Click();
 
     public static IEnumerator ClaimTools =>
-        new GameButton(Paths.MenusLoc.CanvasLoc.EngineerLoc.SubmenuLoc.ClaimTools).Click();
+        new GameButton(Paths.MenusLoc.CanvasLoc.TownLoc.EngineerLoc.SubmenuLoc.ClaimTools).Click();
 
-    public static DateTime FindNextRunTime =>
-        new GameText(Paths.MenusLoc.CanvasLoc.EngineerLoc.SubmenuLoc.Cooldown).Time;
+    public static DateTime NextRunTime =>
+        new GameText(Paths.MenusLoc.CanvasLoc.TownLoc.EngineerLoc.SubmenuLoc.NextRunTime).Time;
 }

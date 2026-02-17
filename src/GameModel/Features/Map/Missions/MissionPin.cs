@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static Firebot.Core.BotSettings;
 
-namespace Firebot.GameModel.Features.MapMissions.Missions;
+namespace Firebot.GameModel.Features.Map.Missions;
 
 public class MissionPin : GameElement
 {
@@ -16,13 +16,13 @@ public class MissionPin : GameElement
         : base(path, parent, transform) { }
 
     public DateTime TimeRequired =>
-        new GameText(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.TimeReq, this).Time;
+        new GameText(Paths.MenusLoc.CanvasLoc.MapLoc.MissionsLoc.PinLoc.TimeReq, this).Time;
 
     public bool IsActive =>
-        new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.ActiveIcon, this).IsVisible();
+        new GameElement(Paths.MenusLoc.CanvasLoc.MapLoc.MissionsLoc.PinLoc.ActiveIcon, this).IsVisible();
 
     public bool IsCompleted =>
-        new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.Tick, this).IsVisible();
+        new GameElement(Paths.MenusLoc.CanvasLoc.MapLoc.MissionsLoc.PinLoc.Tick, this).IsVisible();
 
     public IEnumerator Select()
     {

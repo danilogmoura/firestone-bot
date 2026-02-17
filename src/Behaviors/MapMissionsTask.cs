@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Firebot.Core.Tasks;
 using Firebot.GameModel.Base;
-using Firebot.GameModel.Features.MapMissions;
-using Firebot.GameModel.Features.MapMissions.Missions;
+using Firebot.GameModel.Features.Map;
+using Firebot.GameModel.Features.Map.Missions;
 using Firebot.GameModel.Shared;
 using Firebot.Infrastructure;
 using MelonLoader;
@@ -52,14 +52,14 @@ public class MapMissionsTask : BotTask
 
         DateTime? earliest = null;
         yield return FindEarliestMissionProgress(value => earliest = value);
-        NextRunTime = earliest ?? MapMission.MissionRefresh;
+        NextRunTime = earliest ?? MapMission.NextRunTime;
 
         yield return MapMission.Close;
     }
 
     private IEnumerable<MissionPin> ScanMissions(Func<MissionPin, bool> filter = null, bool sortByTime = false)
     {
-        var missionRoot = new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.Root);
+        var missionRoot = new GameElement(Paths.MenusLoc.CanvasLoc.MapLoc.MissionsLoc.PinLoc.Root);
         var results = missionRoot.GetChildren().Where(root => root.IsVisible())
             .SelectMany(parent => parent.GetChildren().Where(child => child.IsVisible()))
             .Select(pin => new MissionPin(parent: pin))
@@ -82,7 +82,7 @@ public class MapMissionsTask : BotTask
         {
             yield return mission.Select();
 
-            var progress = MissionPreview.MissionProgress;
+            var progress = MissionPreview.NextRunTime;
             if (!earliest.HasValue || progress < earliest.Value)
                 earliest = progress;
 

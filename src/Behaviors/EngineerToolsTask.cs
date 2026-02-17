@@ -14,7 +14,7 @@ public class EngineerToolsTask : BotTask
     {
         yield return Notifications.Engineer;
         yield return EngineerSubmenu.ClaimTools;
-        NextRunTime = EngineerSubmenu.FindNextRunTime;
+        NextRunTime = EngineerSubmenu.NextRunTime;
         yield return EngineerSubmenu.Close;
     }
 }

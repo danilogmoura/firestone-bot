@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Firebot.Core.Tasks;
-using Firebot.GameModel.Features.MapMissions;
-using Firebot.GameModel.Features.MapMissions.WarfrontCampaign;
+using Firebot.GameModel.Features.Map;
+using Firebot.GameModel.Features.Map.WarfrontCampaign;
 using Firebot.GameModel.Shared;
 using Firebot.Infrastructure;
 
@@ -15,7 +15,7 @@ public class WarfrontCampaignLoot : BotTask
     {
         yield return Notifications.WarfrontCampaign;
         yield return WarfrontLoot.ClaimTools;
-        NextRunTime = WarfrontLoot.FindNextRunTime;
+        NextRunTime = WarfrontLoot.NextRunTime;
         yield return MapMission.Close;
     }
 }
