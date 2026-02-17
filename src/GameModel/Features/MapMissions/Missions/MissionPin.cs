@@ -24,7 +24,7 @@ public class MissionPin : GameElement
     public bool IsCompleted =>
         new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PinLoc.Tick, this).IsVisible();
 
-    public IEnumerator OnClick()
+    public IEnumerator Select()
     {
         if (!IsVisible())
         {

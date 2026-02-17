@@ -34,7 +34,7 @@ public class MapMissionsTask : BotTask
 
         var toCollect = ScanMissions().Where(m => m.IsCompleted).ToList();
         foreach (var mission in toCollect)
-            yield return mission.OnClick();
+            yield return mission.Select();
 
         var pending = ScanMissions().Where(mission => !mission.IsActive && !mission.IsCompleted);
         var toStart = IsAscending()
@@ -42,16 +42,15 @@ public class MapMissionsTask : BotTask
             : pending.OrderByDescending(m => m.TimeRequired).ToList();
         foreach (var mission in toStart)
         {
-            yield return mission.OnClick();
+            yield return mission.Select();
 
             if (MissionPreview.IsNotEnoughSquads)
             {
-                Debug("[TASK] Stopping: No more squads available.");
-                yield return MissionPreview.CloseButton.Click();
+                yield return MissionPreview.Close;
                 break;
             }
 
-            yield return MissionPreview.StartMissionButton.Click();
+            yield return MissionPreview.StartMission;
         }
 
         DateTime? earliest = null;
@@ -83,13 +82,13 @@ public class MapMissionsTask : BotTask
 
         foreach (var mission in ScanMissions().Where(mission => mission.IsActive))
         {
-            yield return mission.OnClick();
+            yield return mission.Select();
 
             var progress = MissionPreview.MissionProgress;
             if (!earliest.HasValue || progress < earliest.Value)
                 earliest = progress;
 
-            yield return MissionPreview.CloseButton.Click();
+            yield return MissionPreview.Close;
         }
 
         setEarliest(earliest);

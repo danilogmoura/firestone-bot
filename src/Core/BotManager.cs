@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Firebot.Core.Tasks;
@@ -71,8 +69,7 @@ public static class BotManager
     {
         if (BotSettings.AutoStart) yield return new WaitForSeconds(BotSettings.StartBotDelay);
 
-        Logger.Info("Performing initial popup cleanup to ensure a consistent UI state before scheduling tasks...");
-        yield return Watchdog.ForceClearAll();
+        yield return RunSafe(Watchdog.ForceClearAll(), "Initial Watchdog cleanup");
 
         while (IsRunning)
         {
@@ -83,18 +80,40 @@ public static class BotManager
 
             if (readyTask != null)
             {
-                var stopwatch = Stopwatch.StartNew();
-                Logger.Info($"[TASK START] {readyTask.SectionTitle} (priority: {readyTask.Priority})");
-
-                yield return readyTask.Execute();
-                yield return Watchdog.ForceClearAll();
-
-                stopwatch.Stop();
-                Logger.Info(
-                    $"[TASK END] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:F2}s (nextRun: {readyTask.NextRunTime.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)})");
+                yield return RunSafe(readyTask.Execute(), $"Task {readyTask.SectionTitle}");
+                yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
             }
 
             yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private static IEnumerator RunSafe(IEnumerator routine, string context)
+    {
+        if (routine == null)
+        {
+            Logger.Debug($"[FAILED] {context} returned null routine.");
+            yield break;
+        }
+
+        while (true)
+        {
+            object current = null;
+            bool movedNext;
+
+            try
+            {
+                movedNext = routine.MoveNext();
+                if (movedNext) current = routine.Current;
+            }
+            catch (Exception e)
+            {
+                Logger.Debug($"[FAILED] {context} threw: {e.GetType().Name} - {e.Message}");
+                yield break;
+            }
+
+            if (!movedNext) yield break;
+            yield return current;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Firebot.GameModel.Base;
 using Firebot.GameModel.Primitives;
 using Firebot.Infrastructure;
@@ -7,10 +8,11 @@ namespace Firebot.GameModel.Features.MapMissions.Missions;
 
 public static class MissionPreview
 {
-    public static GameButton CloseButton => new(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PreviewLoc.Close);
+    public static IEnumerator Close =>
+        new GameButton(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PreviewLoc.Close).Click();
 
-    public static GameButton StartMissionButton =>
-        new(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PreviewLoc.StartBtn);
+    public static IEnumerator StartMission =>
+        new GameButton(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PreviewLoc.StartBtn).Click();
 
     public static bool IsNotEnoughSquads =>
         new GameElement(Paths.MenusLoc.CanvasLoc.MapMissionsLoc.MissionsLoc.PreviewLoc.NotEnoughSquads).IsVisible();
