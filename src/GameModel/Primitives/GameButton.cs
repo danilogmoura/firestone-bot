@@ -21,7 +21,7 @@ public class GameButton : GameElement
         return false;
     }
 
-    public IEnumerator Click()
+    public virtual IEnumerator Click()
     {
         if (IsClickable(out var button))
             try

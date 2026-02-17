@@ -86,7 +86,8 @@ public class GameElement
 
     public virtual bool IsVisible()
     {
-        var success = Root != null && Root.gameObject.activeInHierarchy;
+        var currentRoot = Root;
+        var success = currentRoot != null && currentRoot.gameObject.activeInHierarchy;
 
         if (!success)
             DebugOnce($"hidden:{Path}", $"[FAILED] Element is hidden or inactive. Path: {Path}");
@@ -151,7 +152,6 @@ public class GameElement
     private void DebugOnce(string key, string message, [CallerMemberName] string member = "",
         [CallerLineNumber] int line = 0)
     {
-        if (_loggedFailures.Add(key))
-            Debug(message, member, line);
+        if (_loggedFailures.Add(key)) Debug(message, member, line);
     }
 }
