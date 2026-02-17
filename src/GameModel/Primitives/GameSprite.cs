@@ -12,16 +12,11 @@ public class GameSprite : GameElement
     {
         get
         {
-            if (!IsVisible())
-            {
-                Debug($"Read SpriteName ignored: Element invisible/inactive. Path: {Path}");
-                return string.Empty;
-            }
+            if (!IsVisible()) return string.Empty;
 
             if (TryGetComponent(out SpriteRenderer sprite))
             {
                 var name = sprite.sprite != null ? sprite.sprite.name : "null_sprite";
-                Debug($"SpriteName read: '{name}'. Path: {Path}");
                 return name;
             }
 
@@ -34,10 +29,7 @@ public class GameSprite : GameElement
         get
         {
             if (TryGetComponent(out SpriteRenderer sr))
-            {
-                Debug($"Sprite Color read: {sr.color}. Path: {Path}");
                 return sr.color;
-            }
 
             return Color.white;
         }
@@ -48,10 +40,7 @@ public class GameSprite : GameElement
         get
         {
             if (TryGetComponent(out SpriteRenderer sr))
-            {
-                Debug($"Renderer state: {sr.enabled}. Path: {Path}");
                 return sr.enabled;
-            }
 
             return false;
         }
@@ -62,10 +51,7 @@ public class GameSprite : GameElement
         get
         {
             if (TryGetComponent(out SpriteRenderer sr))
-            {
-                Debug($"SortingOrder read: {sr.sortingOrder}. Path: {Path}");
                 return sr.sortingOrder;
-            }
 
             return 0;
         }

@@ -8,33 +8,34 @@ namespace Firebot.GameModel.Base;
 public class GameElement
 {
     private readonly string _className;
+    private readonly HashSet<string> _loggedFailures = new();
 
     public GameElement(string path = null, GameElement parent = null, Transform transform = null)
     {
         _className = GetType().Name;
 
         if (transform != null)
-            Path = GetGameObjectPath(transform);
+        {
+            var transformPath = GetGameObjectPath(transform);
+            Path = BuildPath(transformPath, path);
+        }
         else if (parent != null)
         {
             var parentPath = !string.IsNullOrEmpty(parent.Path) ? parent.Path : GetGameObjectPath(parent.Root);
-            if (!string.IsNullOrEmpty(parentPath))
-                Path = string.IsNullOrEmpty(path) ? parentPath.Trim('/') : $"{parentPath.Trim('/')}/{path.Trim('/')}";
-            else
-                Path = path?.Trim('/');
+            Path = BuildPath(parentPath, path);
         }
         else
             Path = path?.Trim('/');
 
         if (!string.IsNullOrEmpty(Path) && Path.StartsWith("/")) Path = Path[1..];
 
-        Debug(!string.IsNullOrEmpty(Path)
-            ? $"[SUCCESS] GameElement initialized. Path: {Path}"
-            : "[FAILED] GameElement initialized with empty path.");
+        if (string.IsNullOrEmpty(Path))
+            DebugOnce("init-empty-path", "[FAILED] GameElement initialized with empty path.");
     }
 
     protected string Path { get; }
 
+    // Always resolve from Path; do not cache transforms.
     protected Transform Root
     {
         get
@@ -42,7 +43,7 @@ public class GameElement
             var resolved = ResolvePath(Path);
 
             if (resolved == null && !string.IsNullOrEmpty(Path))
-                Debug($"[FAILED] Critical: Could not resolve Transform. Path: {Path}");
+                DebugOnce($"root-resolve:{Path}", $"[FAILED] Critical: Could not resolve Transform. Path: {Path}");
 
             return resolved;
         }
@@ -59,7 +60,7 @@ public class GameElement
         {
             var obj = GameObject.Find(path);
             if (obj == null)
-                Debug($"[FAILED] Root Object not found in scene: {path}");
+                DebugOnce($"root-missing:{path}", $"[FAILED] Root Object not found in scene: {path}");
             return obj?.transform;
         }
 
@@ -68,7 +69,8 @@ public class GameElement
 
         if (rootObj == null)
         {
-            Debug($"[FAILED] Root '{rootName}' missing. Hierarchy search aborted. Path: {path}");
+            DebugOnce($"root-missing:{rootName}",
+                $"[FAILED] Root '{rootName}' missing. Hierarchy search aborted. Path: {path}");
             return null;
         }
 
@@ -76,7 +78,8 @@ public class GameElement
         var result = rootObj.transform.Find(relativePath);
 
         if (result == null)
-            Debug($"[FAILED] Path broken: '{rootName}' exists, but child '{relativePath}' is missing. Full: {path}");
+            DebugOnce($"path-broken:{path}",
+                $"[FAILED] Path broken: '{rootName}' exists, but child '{relativePath}' is missing. Full: {path}");
 
         return result;
     }
@@ -86,7 +89,7 @@ public class GameElement
         var success = Root != null && Root.gameObject.activeInHierarchy;
 
         if (!success)
-            Debug($"[FAILED] Element is hidden or inactive. Path: {Path}");
+            DebugOnce($"hidden:{Path}", $"[FAILED] Element is hidden or inactive. Path: {Path}");
 
         return success;
     }
@@ -99,7 +102,8 @@ public class GameElement
 
         var success = currentRoot.TryGetComponent(out component);
         if (!success)
-            Debug($"[FAILED] Component <{typeof(T).Name}> missing on: {currentRoot.name}. Path: {Path}");
+            DebugOnce($"component-missing:{typeof(T).Name}:{Path}",
+                $"[FAILED] Component <{typeof(T).Name}> missing on: {currentRoot.name}. Path: {Path}");
 
         return success;
     }
@@ -109,7 +113,7 @@ public class GameElement
         var currentRoot = Root;
         if (currentRoot == null)
         {
-            Debug($"[FAILED] Cannot get children: Root is null. Path: {Path}");
+            DebugOnce($"children-root-null:{Path}", $"[FAILED] Cannot get children: Root is null. Path: {Path}");
             yield break;
         }
 
@@ -130,6 +134,24 @@ public class GameElement
         return path;
     }
 
+    private static string BuildPath(string basePath, string path)
+    {
+        if (string.IsNullOrEmpty(basePath))
+            return path?.Trim('/');
+
+        if (string.IsNullOrEmpty(path))
+            return basePath.Trim('/');
+
+        return $"{basePath.Trim('/')}/{path.Trim('/')}";
+    }
+
     protected void Debug(string message, [CallerMemberName] string member = "", [CallerLineNumber] int line = 0)
         => Logger.Debug($"[{_className}::{member}:{line}] {message}");
+
+    private void DebugOnce(string key, string message, [CallerMemberName] string member = "",
+        [CallerLineNumber] int line = 0)
+    {
+        if (_loggedFailures.Add(key))
+            Debug(message, member, line);
+    }
 }
