@@ -1,4 +1,4 @@
-﻿namespace Firebot.Core;
+﻿namespace Firebot.Infrastructure;
 
 public static class Paths
 {

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
+using Firebot.Core.Tasks;
 using Firebot.GameModel.Features.MapMissions;
 using Firebot.GameModel.Features.MapMissions.WarfrontCampaign;
 using Firebot.GameModel.Shared;
 using UnityEngine;
 using static Firebot.Core.BotSettings;
 
-namespace Firebot.Behaviors.Tasks;
+namespace Firebot.Behaviors;
 
 public class WarfrontCampaignLoot : BotTask
 {

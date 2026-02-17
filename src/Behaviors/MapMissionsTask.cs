@@ -2,14 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Firebot.Core;
+using Firebot.Core.Tasks;
 using Firebot.GameModel.Base;
 using Firebot.GameModel.Features.MapMissions;
 using Firebot.GameModel.Features.MapMissions.Missions;
 using Firebot.GameModel.Shared;
+using Firebot.Infrastructure;
 using MelonLoader;
 
-namespace Firebot.Behaviors.Tasks;
+namespace Firebot.Behaviors;
 
 public class MapMissionsTask : BotTask
 {
