@@ -33,24 +33,11 @@ public static class Paths
             public const string OracleRituals = Root + "/OracleRituals";
             public const string MapMissions = Root + "/MapMissions";
         }
-
-        public static class MainHudLoc
-        {
-            public const string Root = BattleLoc.Root + "/battleMain/battleCanvas/SafeArea";
-            private const string Buttons = Root + "/rightSideUI/menuButtons";
-
-            public const string TownButton = Buttons + "/townButton";
-            public const string MapButton = Buttons + "/mapButton";
-            public const string GuildButton = Buttons + "/guildButton";
-            public const string StoreButton = Buttons + "/storeButton";
-            public const string PathOfGloryButton = Root + "/bottomSideUIDesktop/pathOfGloryButton";
-            public const string EventsButton = Root + "/bottomSideUIDesktop/eventsButton";
-        }
     }
 
     public static class MenusLoc
     {
-        public const string Root = "menusRoot";
+        private const string Root = "menusRoot";
 
         public static class CanvasLoc
         {
@@ -64,24 +51,15 @@ public static class Paths
 
             public static class MapMissionsLoc
             {
-                public const string Root = CanvasLoc.Root + "/menus/WorldMap";
+                private const string Root = CanvasLoc.Root + "/menus/WorldMap";
                 private const string Sub = Root + "/submenus/mapMissionsSubmenu";
+                public const string Close = Root + "/closeButton";
 
-                public static class HUDLoc
-                {
-                    private const string Root = MapMissionsLoc.Root;
-                    public const string Close = Root + "/closeButton";
-
-                    public const string Refresh =
-                        Sub + "/bottomLeftUI/missionRefreshCanvas/missionRefreshBg/missionRefreshText";
-
-                    public const string WarfrontBtn = Root + "/submenuButtons/warfrontCampaignButton";
-                }
+                public const string MissionRefresh =
+                    Sub + "/bottomLeftUI/missionRefreshCanvas/missionRefreshBg/missionRefreshText";
 
                 public static class MissionsLoc
                 {
-                    public const string ActiveGrid = Sub + "/activeMissionsCanvas/activeMissions/Viewport/grid";
-
                     public static class PreviewLoc
                     {
                         private const string Root = PopupsLoc.Root + "/PreviewMission";
@@ -109,19 +87,6 @@ public static class Paths
                     public const string NextLoot = LootRoot + "/nextLootTimeLeft";
                     public const string Claim = LootRoot + "/claimButton";
                 }
-            }
-
-            public static class TownHUDLoc
-            {
-                private const string Root = CanvasLoc.Root + "/menus/TownIrongard";
-                private const string Hub = Root + "/townBg/parent";
-
-                public const string Engineer = Hub + "/engineer";
-                public const string MagicQuarters = Hub + "/magicQuarters";
-                public const string Library = Hub + "/library";
-                public const string Alchemist = Hub + "/alchemist";
-                public const string Oracle = Hub + "/oracle";
-                public const string Close = Root + "/closeButton";
             }
 
             public static class EngineerLoc
