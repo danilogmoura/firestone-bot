@@ -4,7 +4,6 @@ using Firebot.GameModel.Base;
 using Firebot.GameModel.Primitives;
 using Firebot.Infrastructure;
 using UnityEngine;
-using static Firebot.Core.BotSettings;
 
 namespace Firebot.Core;
 
@@ -51,18 +50,14 @@ public static class Watchdog
     public static IEnumerator ForceClearAll()
     {
         for (var i = 0; i < 3; i++)
-        {
             foreach (var path in EnumerateNuisancePaths())
             {
                 var gameButton = new GameButton(path);
 
                 if (!gameButton.IsVisible()) continue;
-                Debug.Log($"[Watchdog] Fechando popup: {path}");
 
+                Debug.Log($"[Watchdog] Fechando popup: {path}");
                 yield return gameButton.Click();
             }
-
-            yield return new WaitForSeconds(InteractionDelay);
-        }
     }
 }
