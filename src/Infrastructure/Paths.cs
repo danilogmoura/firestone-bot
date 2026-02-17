@@ -91,13 +91,6 @@ public static class Paths
 
             public static class EngineerLoc
             {
-                public static class GarageLoc
-                {
-                    private const string Root = PopupsLoc.Root + "/GarageSelection";
-                    public const string Close = Root + "/bg/closeButton";
-                    public const string EngineerBtn = Root + "/bg/engineer";
-                }
-
                 public static class SubmenuLoc
                 {
                     private const string Root = CanvasLoc.Root + "/menus/Engineer";
