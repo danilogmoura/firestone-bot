@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Firebot.Core.Tasks;
-using Firebot.GameModel.Features.Town.Engineer.Tools;
+using Firebot.GameModel.Features.Town.MagicQuarters;
+using Firebot.GameModel.Primitives;
 using Firebot.GameModel.Shared;
 using Firebot.Infrastructure;
 using MelonLoader;
@@ -14,43 +15,107 @@ public class MagicQuartersTask : BotTask
 
     public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.GuardianTrainingBtn;
 
+    public override IEnumerator Execute()
+    {
+        yield return Notifications.GuardianTraining;
+
+        var preferredIndex = GetGuardianIndex();
+        var useStrangeDust = GetUseStrangeDust();
+        var trainBtn = MagicQuarters.TrainBtn;
+
+        if (!trainBtn.IsClickable())
+        {
+            NextRunTime = MagicQuarters.NextRunTime;
+            yield break;
+        }
+
+        var guardianIndex = FindAvailableGuardian(preferredIndex);
+
+        if (guardianIndex >= 0)
+        {
+            var child = MagicQuarters.Guardians.GetChild(guardianIndex);
+            var guardianBtn = new GameButton(parent: child);
+            yield return TryTrainGuardian(guardianBtn, trainBtn, useStrangeDust);
+        }
+        else yield return MagicQuarters.Close;
+    }
+
     protected override void OnConfigure(MelonPreferences_Category category)
     {
         if (_guardianIndex != null) return;
 
         _guardianIndex = category.CreateEntry(
             "guardian_index",
-            1,
+            0,
             "Guardian Index",
-            "Select guardian index for training. Use 0-3. Default is 1.\n" +
-            "0=Grace, 1=Vermilion, 2=Ankaa, 3=Azhar."
+            "Select guardian index for training. Use 0-3. Default is 0.\n" +
+            "0=Vermilion, 1=Grace, 2=Ankaa, 3=Azhar"
         );
 
         _useStrangeDust = category.CreateEntry(
             "use_strange_dust",
             false,
             "Use Strange Dust",
-            "Use Strange Dust for training. Default is false."
+            "Use 'Strange Dust' for training. Default is false."
         );
     }
 
-    public override IEnumerator Execute()
+    private int FindAvailableGuardian(int preferredIndex)
     {
-        _ = GetGuardianIndex();
-        _ = GetUseStrangeDust();
-        yield return Notifications.Engineer;
-        yield return Engineer.Claim;
-        NextRunTime = Engineer.NextRunTime;
-        yield return Engineer.Close;
+        var result = TryGuardianAtIndex(preferredIndex);
+        if (result >= 0) return result;
+
+        for (var i = 0; i <= 3; i++)
+        {
+            if (i == preferredIndex) continue;
+
+            result = TryGuardianAtIndex(i);
+            if (result >= 0) return result;
+        }
+
+        return 0;
     }
+
+    private int TryGuardianAtIndex(int index)
+    {
+        var child = MagicQuarters.Guardians.GetChild(index);
+
+        var guardian = new Guardian(parent: child);
+        if (guardian.IsVisible() && guardian.IsUnlocked)
+            return index;
+
+        return 0;
+    }
+
+    private IEnumerator TryTrainGuardian(GameButton guardianBtn, GameButton trainBtn, bool useStrangeDust)
+    {
+        yield return guardianBtn.Click();
+        yield return trainBtn.Click();
+        yield return ApplyEnlightenment(useStrangeDust);
+
+        NextRunTime = MagicQuarters.NextRunTime;
+
+        yield return MagicQuarters.CloseLockedPopup;
+        yield return MagicQuarters.Close;
+    }
+
+    private IEnumerator ApplyEnlightenment(bool useStrangeDust)
+    {
+        if (!useStrangeDust) yield break;
+
+        var enlightenmentBtn = Guardian.EnlightenmentBtn;
+        while (enlightenmentBtn.IsClickable()) yield return enlightenmentBtn.Click();
+    }
+
 
     private int GetGuardianIndex()
     {
-        var value = _guardianIndex?.Value ?? 1;
+        var value = _guardianIndex?.Value ?? 0;
+
         if (value >= 0 && value <= 3) return value;
 
-        Debug($"[FAILED] Invalid guardian_index '{value}'. Using default '1'.");
-        return 1;
+        Debug($"[FAILED] Invalid guardian_index '{value}'. Using default '0'.");
+        return 0;
     }
 
     private bool GetUseStrangeDust()

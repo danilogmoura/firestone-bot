@@ -12,13 +12,15 @@ public class GameButton : GameElement
     public GameButton(string path = null, GameElement parent = null, Transform transform = null) :
         base(path, parent, transform) { }
 
+    public bool IsClickable() => IsClickable(out _);
+
     private bool IsClickable(out Button button)
     {
         button = null;
         if (!IsVisible()) return false;
 
-        if (TryGetComponent(out button)) return button.enabled && button.interactable;
-        return false;
+        if (!TryGetComponent(out button)) return false;
+        return button.enabled && button.interactable;
     }
 
     public virtual IEnumerator Click()

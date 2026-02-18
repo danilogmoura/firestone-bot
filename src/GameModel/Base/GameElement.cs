@@ -124,6 +124,8 @@ public class GameElement
             yield return new GameElement(transform: currentRoot.GetChild(i));
     }
 
+    public GameElement GetChild(int i) => new(transform: Root.GetChild(i));
+
     private static string GetGameObjectPath(Transform transform)
     {
         if (transform == null) return string.Empty;
