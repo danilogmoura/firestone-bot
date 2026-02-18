@@ -108,7 +108,9 @@ public static class Paths
                 {
                     private const string Root = CanvasLoc.Root + "/menus/MagicQuarters";
 
-                    public const string GuardoianList = Root + "/guardianList";
+                    public const string CloseBtn = Root + "/closeButton";
+
+                    public const string Guardoians = Root + "/guardianList";
 
                     private const string UnlockedGuadian = Root + "/submenus/bg/infoSubmenu/activities/unlocked";
 
@@ -118,23 +120,15 @@ public static class Paths
 
                     public const string NextRunTimeTxt = TrainBtn + "/cooldownOn/cooldownTimeLeft";
 
-                    // Config helper for guardian_index (Magic Quarters):
-                    // Index -> Guardian (matches Paths.MenusLoc.CanvasLoc.TownLoc.MagicQuarters.GuardoianList)
-                    // 0 -> Grace
-                    // 1 -> Vermilion (default)
-                    // 2 -> Ankaa
-                    // 3 -> Azhar
+                    public const string
+                        GuardianStarsIcon =
+                            "/starsParent"; // Relative to each guardian button, e.g. guardianList/guardian0/starsParent
 
-                    private static readonly string[] Guardians =
+                    public static class LockedGuardianLoc
                     {
-                        "guardian (0)",
-                        "guardian (1)",
-                        "guardian (2)",
-                        "guardian (3)"
-                    };
-
-                    public static string GuardianByIndex(int index) =>
-                        $"{GuardoianList}/{Guardians[index]}";
+                        private const string Root = PopupsLoc.Root + "/LockedGuardian";
+                        public const string CloseBtn = Root + "/bg/closeButton";
+                    }
                 }
             }
 
