@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using Firebot.Core.Tasks;
-using Firebot.GameModel.Features.Town;
+using Firebot.GameModel.Features.Town.Engineer;
 using Firebot.GameModel.Shared;
 using Firebot.Infrastructure;
 
