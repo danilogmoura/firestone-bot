@@ -4,7 +4,7 @@ public static class Paths
 {
     public static class Watchdog
     {
-        private const string CanvasRoot = MenusLoc.CanvasLoc.Root;
+        private const string CanvasRoot = "menusRoot/menuCanvasParent/SafeArea/menuCanvas";
         public const string EventsRoot = CanvasRoot + "/events";
         public const string PopupsRoot = CanvasRoot + "/popups";
         public const string MenusRoot = CanvasRoot + "/menus";
@@ -41,7 +41,7 @@ public static class Paths
 
         public static class CanvasLoc
         {
-            public const string Root = MenusLoc.Root + "/menuCanvasParent/SafeArea/menuCanvas";
+            private const string Root = MenusLoc.Root + "/menuCanvasParent/SafeArea/menuCanvas";
 
             private static class PopupsLoc
             {
@@ -107,17 +107,11 @@ public static class Paths
                 public static class MagicQuarters
                 {
                     private const string Root = CanvasLoc.Root + "/menus/MagicQuarters";
-
                     public const string CloseBtn = Root + "/closeButton";
-
                     public const string Guardoians = Root + "/guardianList";
-
                     private const string UnlockedGuadian = Root + "/submenus/bg/infoSubmenu/activities/unlocked";
-
                     public const string EnlightenmentBtn = UnlockedGuadian + "/enlightenment/enlightenmentButton";
-
                     public const string TrainBtn = UnlockedGuadian + "/train/trainButton";
-
                     public const string NextRunTimeTxt = TrainBtn + "/cooldownOn/cooldownTimeLeft";
 
                     public const string
@@ -128,6 +122,48 @@ public static class Paths
                     {
                         private const string Root = PopupsLoc.Root + "/LockedGuardian";
                         public const string CloseBtn = Root + "/bg/closeButton";
+                    }
+                }
+
+                public static class LibraryLoc
+                {
+                    private const string Root = CanvasLoc.Root + "/menus/Library";
+                    public const string CloseBtn = Root + "/closeButton";
+
+                    public static class ResearchPanelLoc
+                    {
+                        public const string Root = LibraryLoc.Root + "/submenus/firestoneResearch/researchPanel";
+
+                        public const string SelectResearchTable = Root + "/selectResearchTable";
+
+                        public const string ClaimBtn = "/container/claimButton";
+
+                        public const string NextRunTimeTxt =
+                            "/container/researchInfo/progressBarBg/timeLeftText";
+                    }
+
+                    public static class NodeLoc
+                    {
+                        public const string Root = LibraryLoc.Root +
+                                                   "/submenus/firestoneResearch/researchScrollView/viewport/content/submenus";
+
+                        public const string Glow = "/glow";
+
+                        public const string ProgressBar = "/progressBarBg";
+
+                        public const string CompletedTxt = "/genericText";
+                    }
+
+                    public static class PreviewLoc
+                    {
+                        private const string Root = PopupsLoc.Root + "/FirestoneResearchPreview";
+
+                        public const string UnlockedTxt = Root + "/bg/innerBg/unlocked";
+
+                        public const string MaxedTxt = Root + "/bg/innerBg/maxed";
+
+                        public const string ActivateBtn =
+                            Root + "/bg/innerBg/unlocked/buttonHolder/researchActivateButton";
                     }
                 }
             }

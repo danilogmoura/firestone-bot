@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -124,7 +125,18 @@ public class GameElement
             yield return new GameElement(transform: currentRoot.GetChild(i));
     }
 
-    public GameElement GetChild(int i) => new(transform: Root.GetChild(i));
+    public GameElement GetChild(int i)
+    {
+        try
+        {
+            return new GameElement(transform: Root.GetChild(i));
+        }
+        catch (Exception e)
+        {
+            Debug($" [EXCEPTION] Failed to get child at index {i}. Path: {Path}. Exception: {e}");
+            return null;
+        }
+    }
 
     private static string GetGameObjectPath(Transform transform)
     {
