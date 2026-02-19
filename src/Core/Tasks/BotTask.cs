@@ -47,12 +47,9 @@ public abstract class BotTask
         _category = MelonPreferences.CreateCategory(sectionId, $"{SectionTitle} Settings");
         _category.SetFilePath(configPath);
 
-        _enabledEntry = _category.CreateEntry("enabled", true, "Enable Module",
-            $"Enables or disables the {SectionTitle} automation module." +
-            $"\nWhen disabled, this module will be ignored during the execution loop.");
-
-        OnConfigure(_category);
-        _category.SaveToFile();
+        _enabledEntry = _category.CreateEntry("enabled", true, "Enable Task",
+            $"Enables or disables the {SectionTitle} automation task." +
+            $"\nWhen disabled, this task will be ignored during the execution loop.");
 
         OnConfigure(_category);
         _category.SaveToFile();
