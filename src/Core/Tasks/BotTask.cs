@@ -23,6 +23,8 @@ public abstract class BotTask
 
     public DateTime NextRunTime { get; protected set; } = DateTime.MinValue;
 
+    public DateTime? LastRunTime { get; set; }
+
     public virtual string NotificationPath => null;
 
     public bool IsEnabled => _enabledEntry == null || _enabledEntry.Value;

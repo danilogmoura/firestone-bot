@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Firebot.Core;
 
@@ -52,5 +53,23 @@ public static class TimeParser
         return duration == TimeSpan.Zero
             ? DateTime.MinValue
             : DateTime.Now.Add(duration).AddSeconds(bufferSeconds);
+    }
+
+    /// <summary>
+    ///     Formats a TimeSpan as a friendly string like "1h 2m 3s", omitting zero units.
+    /// </summary>
+    public static string FormatFriendlyDuration(TimeSpan span)
+    {
+        if (span.TotalSeconds < 0)
+            span = TimeSpan.Zero;
+
+        var parts = new List<string>();
+        if (span.Hours > 0 || span.Days > 0)
+            parts.Add($"{span.Days * 24 + span.Hours}h");
+        if (span.Minutes > 0)
+            parts.Add($"{span.Minutes}m");
+        if (span.Seconds > 0 || parts.Count == 0)
+            parts.Add($"{span.Seconds}s");
+        return string.Join(" ", parts);
     }
 }
