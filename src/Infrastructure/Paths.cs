@@ -15,7 +15,7 @@ public static class Paths
 
     public static class BattleLoc
     {
-        public const string Root = "battleRoot";
+        private const string Root = "battleRoot";
 
         public static class NotificationsLoc
         {
