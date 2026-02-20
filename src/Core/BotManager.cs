@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Firebot.Core.Tasks;
+using Firebot.Utilities;
 using MelonLoader;
 using UnityEngine;
 using static Firebot.Core.BotSettings;
@@ -94,19 +95,21 @@ public static class BotManager
 
             if (notificationTask != null) readyTask = notificationTask;
 
+
             if (readyTask != null)
             {
                 yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup before {readyTask.SectionTitle}");
 
                 var stopwatch = Stopwatch.StartNew();
-                Logger.Info(
-                    $"[Task] Started: {readyTask.SectionTitle} (NextRunTime: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss})");
 
                 yield return RunSafe(readyTask.Execute(), $"Task {readyTask.SectionTitle}");
+                readyTask.LastRunTime = DateTime.Now;
 
                 stopwatch.Stop();
-                Logger.Info(
-                    $"[Task] Finished: {readyTask.SectionTitle} in {stopwatch.Elapsed.TotalSeconds:0.###}s (NextRunTime: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss})");
+
+                Console.WriteLine();
+                Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
+                PrintTasksStatusTable();
 
                 yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
             }
@@ -122,6 +125,7 @@ public static class BotManager
             Logger.Debug($"[FAILED] {context} returned null routine.");
             yield break;
         }
+
 
         var timeoutSeconds = MaxTaskRuntime;
         var timeoutEnabled = timeoutSeconds > 0f;
@@ -152,5 +156,31 @@ public static class BotManager
             if (!movedNext) yield break;
             yield return current;
         }
+    }
+
+    private static void PrintTasksStatusTable()
+    {
+        var now = DateTime.Now;
+        Logger.Info($"[Bot Status] Task Table - {now:MM/dd/yyyy HH:mm:ss}");
+        Logger.Info("| Next Run            | Time Left   | Task                      | Status        | Last Run            |");
+        Logger.Info("|---------------------|-------------|---------------------------|---------------|---------------------|");
+
+        var ordered = _tasks.OrderBy(t => t.NextRunTime).ToList();
+        foreach (var t in ordered)
+        {
+            var status = GetTaskStatus(t);
+            var nextRun = t.NextRunTime.ToString("MM/dd/yyyy HH:mm:ss");
+            var lastRun = t.LastRunTime?.ToString("MM/dd/yyyy HH:mm:ss") ?? "-";
+            var name = t.SectionTitle;
+            var timeLeft = TimeParser.FormatFriendlyDuration(t.NextRunTime - now);
+            Logger.Info($"| {nextRun,-19} | {timeLeft,-11} | {name,-25} | {status,-13} | {lastRun,-19} |");
+        }
+    }
+
+    private static string GetTaskStatus(BotTask t)
+    {
+        if (t.IsNotificationVisible()) return "Notification";
+        if (t.IsReady()) return "Ready";
+        return "Waiting";
     }
 }
