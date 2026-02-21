@@ -180,7 +180,7 @@ public static class Paths
                     {
                         private const string Root = GuildShopLoc.Root + "/bg/submenus/supplies/items/freePickaxe";
 
-                        public const string ClaimBtn = Root + "/claimBg/claimButton";
+                        public const string ClaimBtn = Root;
 
                         public const string NextRunTimeTxt = Root + "/nextFreeObj/progressBarBg/timeLeftText";
                     }
