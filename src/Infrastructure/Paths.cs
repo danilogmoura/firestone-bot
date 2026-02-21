@@ -170,6 +170,22 @@ public static class Paths
 
             public static class GuildLoc
             {
+                public static class GuildShopLoc
+                {
+                    private const string Root = CanvasLoc.Root + "/menus/GuildShop";
+
+                    public const string CloseBtn = Root + "/closeButton";
+
+                    public static class FreePickaxeLoc
+                    {
+                        private const string Root = GuildShopLoc.Root + "/bg/submenus/supplies/items/freePickaxe";
+
+                        public const string ClaimBtn = Root + "/claimBg/claimButton";
+
+                        public const string NextRunTimeTxt = Root + "/nextFreeObj/progressBarBg/timeLeftText";
+                    }
+                }
+
                 public static class ExpeditionLoc
                 {
                     private const string Root = PopupsLoc.Root + "/Expeditions";
