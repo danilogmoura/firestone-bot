@@ -159,23 +159,9 @@ enabled = true
 
 ## Roadmap & Next Steps
 
-Current version: **v0.2.0-Alpha**.
-The short-term focus is on stabilizing the core execution and expanding automation for new mechanics.
-
-### v0.2.1 - Stability & Observability (Next)
-*Focus on "housekeeping". Improving the handler and logs is a prerequisite for bug-free new automations.*
-- [ ] **Core:** Refactoring and improved control of the `AutomationHandler`.
-- [ ] **Debug:** Implementation of full log traceability (to ease error identification in new features).
-
-### v0.2.2 - Rewards & Customization
-*A quick release focused on daily routines and giving control to the user.*
-- [ ] **Feature:** Daily Rewards automation.
-- [ ] **Logic:** Implement configurable priority system for Mission Map.
-- [ ] **Logic:** Implement configurable priority system for Guardian Training.
-- [ ] **Optimization:** Restructuring of the **Firestone Tree** logic with added priority choices.
-
 ### v0.3.0 - Gameplay Expansion (Feature Update)
 *The big feature jump, utilizing the new structure created in previous versions.*
+- [ ] **Feature:** Daily Rewards automation.
 - [ ] **Feature:** Alchemist automation.
 - [ ] **Feature:** Liberation automation.
 
