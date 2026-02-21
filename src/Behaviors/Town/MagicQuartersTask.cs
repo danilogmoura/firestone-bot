@@ -22,13 +22,6 @@ public class MagicQuartersTask : BotTask
         var preferredIndex = GetGuardianIndex();
         var useStrangeDust = GetUseStrangeDust();
         var trainBtn = MagicQuarters.TrainBtn;
-
-        if (!trainBtn.IsClickable())
-        {
-            NextRunTime = MagicQuarters.NextRunTime;
-            yield break;
-        }
-
         var guardianIndex = FindAvailableGuardian(preferredIndex);
 
         if (guardianIndex >= 0)
@@ -37,7 +30,10 @@ public class MagicQuartersTask : BotTask
             var guardianBtn = new GameButton(parent: child);
             yield return TryTrainGuardian(guardianBtn, trainBtn, useStrangeDust);
         }
-        else yield return MagicQuarters.Close;
+
+        NextRunTime = MagicQuarters.NextRunTime;
+        yield return MagicQuarters.CloseLockedPopup;
+        yield return MagicQuarters.Close;
     }
 
     protected override void OnConfigure(MelonPreferences_Category category)
@@ -92,11 +88,6 @@ public class MagicQuartersTask : BotTask
         yield return guardianBtn.Click();
         yield return trainBtn.Click();
         yield return ApplyEnlightenment(useStrangeDust);
-
-        NextRunTime = MagicQuarters.NextRunTime;
-
-        yield return MagicQuarters.CloseLockedPopup;
-        yield return MagicQuarters.Close;
     }
 
     private IEnumerator ApplyEnlightenment(bool useStrangeDust)
