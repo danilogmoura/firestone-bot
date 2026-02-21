@@ -47,7 +47,7 @@ By default, press **F7** to start or stop the bot during gameplay.
 ## Installation (From Source)
 1. Clone the repository:
    ```bash
-   git clone https://github.com/danilogmoura/firebot.git
+   git clone https://github.com/danilogmoura/firestone-bot.git
    ```
 2. Navigate to the project directory:
    ```bash
