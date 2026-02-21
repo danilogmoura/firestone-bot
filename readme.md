@@ -69,7 +69,14 @@ Default toggle key: **F7** (changeable via `shortcut_key`).
 
 For now, all configuration must be done directly in this file. A graphical configuration interface will be implemented in the future.
 
+
 Here is a list of the current config options (and their default values):
+
+---
+
+## Example: Bot Info Log
+
+![Bot Info Log Example](docs/bot-log-example.png)
 
 ```toml
 [firebot_settings]
