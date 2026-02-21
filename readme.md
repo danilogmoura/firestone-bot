@@ -74,10 +74,6 @@ Here is a list of the current config options (and their default values):
 
 ---
 
-## Example: Bot Info Log
-
-![Bot Info Log Example](docs/bot-log-example.png)
-
 ```toml
 [firebot_settings]
 # Determines if the bot logic should be initialized and started automatically upon game launch.
@@ -161,6 +157,11 @@ enabled = true
 # When disabled, this task will be ignored during the execution loop.
 enabled = true
 ```
+
+## Example: Bot Info Log
+
+![Bot Info Log Example](docs/bot-log-example.png)
+
 
 ---
 

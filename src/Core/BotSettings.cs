@@ -22,7 +22,7 @@ public static class BotSettings
     {
         get
         {
-            if (string.IsNullOrEmpty(_configPath)) _configPath = Path.Combine("UserData", "FirebotPreferencesTMP.cfg");
+            if (string.IsNullOrEmpty(_configPath)) _configPath = Path.Combine("UserData", "FirebotPreferences.cfg");
             return _configPath;
         }
     }
