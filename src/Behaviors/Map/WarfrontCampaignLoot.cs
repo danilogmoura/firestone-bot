@@ -9,7 +9,7 @@ namespace Firebot.Behaviors.Map;
 
 public class WarfrontCampaignLoot : BotTask
 {
-    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.WarfrontCampaignBtn;
+    // public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.WarfrontCampaignBtn;
 
     public override IEnumerator Execute()
     {

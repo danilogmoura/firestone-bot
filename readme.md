@@ -104,7 +104,22 @@ enabled = true
 # Enables or disables the Firestone Research automation task.
 # When disabled, this task will be ignored during the execution loop.
 enabled = true
-# FIRESTONE RESEARCH TALENT TREE PRIORITY CONFIGURATION. This setting controls which talents are researched first based on their tree position. TALENT IDs ARE ASSIGNED BY INDEX (ordered top to bottom, left to right within each tree screen). Valid IDs for user input range from 1 to 16. You may specify any combination of IDs from 1 to 16, in any order you prefer. The bot will follow the exact order you provide. TREE I EXAMPLE - ID 1=Attribute damage, ID 2=Attribute health, ID 3=Attribute armor, ID 4=Fist fight, ID 5=Guardian power, ID 6=Projectiles, ID 7=Raining gold, ID 8=Critical loot Bonus, ID 9=Critical loot Chance, ID 10=Weaklings, ID 11=Expose Weakness, ID 12=Medal of honor, ID 13=Firestone Finder, ID 14=Trainer Skills, ID 15=Skip wave, ID 16=Expeditioner. HOW TO USE: Enter comma-separated IDs in priority order (integers between 1-16). The bot will research talents in the exact sequence provided. If a priority talent is unavailable (locked/completed), the bot will try the next priority. If all priorities are unavailable or if this field is empty, the bot will select any available talent automatically. EXAMPLES: '2,1,4' = Research Attribute health first, then Attribute damage, then Fist fight. '7,8,9' = Research Raining gold first, then Critical loot Bonus, then Critical loot Chance. '13' = Only research Firestone Finder, fallback to any available if completed. '5,12,1,16,3,8,10,2,14,7,4,15,6,13,9,11' = Example using all 16 IDs in a random order, each ID only once. Default: empty (no priority, bot selects any available talent)
+# FIRESTONE RESEARCH TALENT TREE PRIORITY CONFIGURATION. 
+# This setting controls which talents are researched first based on their tree position. 
+# TALENT IDs ARE ASSIGNED BY INDEX (ordered top to bottom, left to right within each tree screen). 
+# Valid IDs for user input range from 1 to 16. 
+# You may specify any combination of IDs from 1 to 16, in any order you prefer. The bot will follow the exact order you provide. 
+# TREE I EXAMPLE - ID 1=Attribute damage, ID 2=Attribute health, ID 3=Attribute armor, ID 4=Fist fight, ID 5=Guardian power, ID 6=Projectiles, 
+# ID 7=Raining gold, ID 8=Critical loot Bonus, ID 9=Critical loot Chance, ID 10=Weaklings, ID 11=Expose Weakness, 
+# ID 12=Medal of honor, ID 13=Firestone Finder, ID 14=Trainer Skills, ID 15=Skip wave, ID 16=Expeditioner. 
+# HOW TO USE: Enter comma-separated IDs in priority order (integers between 1-16). The bot will research talents in the exact sequence provided. 
+# If a priority talent is unavailable (locked/completed), the bot will try the next priority. 
+# If all priorities are unavailable or if this field is empty, the bot will select any available talent automatically. 
+# EXAMPLES: '2,1,4' = Research Attribute health first, then Attribute damage, then Fist fight. 
+# '7,8,9' = Research Raining gold first, then Critical loot Bonus, then Critical loot Chance. 
+# '13' = Only research Firestone Finder, fallback to any available if completed. 
+# '5,12,1,16,3,8,10,2,14,7,4,15,6,13,9,11' = Example using all 16 IDs in a random order, each ID only once. 
+# Default: empty (no priority, bot selects any available talent)
 research_priority = ""
 
 [magic_quarters]
