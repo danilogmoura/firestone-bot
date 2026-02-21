@@ -81,66 +81,62 @@ auto_start = false
 start_bot_delay = 10.0
 # The interval (in seconds) between each BotManager verification cycle.
 # Lower values make the bot more responsive but may impact FPS performance.
-# Clamped between 1.0 and 3600.0 seconds.
-scan_interval = 2.0
+# Clamped between 5.0 and 3600.0 seconds.
+scan_interval = 5.0
 # The delay (in seconds) between individual UI interactions (clicks, transitions).
 # Ensures the game processes the command before the next action is taken. 
 # Clamped between 0.5 and 5.0 seconds.
 interaction_delay = 1.0
+# Maximum time (in seconds) a single task is allowed to run before it is aborted.
+# Clamped between 10.0 and 3600.0 seconds.
+max_task_runtime = 120.0
 # Enables verbose logging and StackTrace display in the console for easier bug identification.
 debug_mode = false
 # The physical key used to manually toggle the bot's execution state during gameplay.
-# Default: "F7"
 shortcut_key = "F7"
 
-[oracle_rituals]
-# Enables or disables the Oracle Rituals automation module.
-# When disabled, this module will be ignored during the execution loop.
-enabled = true
-
-[mission_map]
-# Enables or disables the Mission Map automation module.
-# When disabled, this module will be ignored during the execution loop.
-enabled = true
-
-[close_event_promotional]
-# Enables or disables the Close Event Promotional automation module.
-# When disabled, this module will be ignored during the execution loop.
-enabled = true
-
-[offline_popup_progress]
-# Enables or disables the Offline Popup Progress automation module.
-# When disabled, this module will be ignored during the execution loop.
-enabled = true
-
-[guardian_training]
-# Enables or disables the Guardian Training automation module.
-# When disabled, this module will be ignored during the execution loop.
+[engineer_tools]
+# Enables or disables the Engineer Tools automation task.
+# When disabled, this task will be ignored during the execution loop.
 enabled = true
 
 [firestone_research]
-# Enables or disables the Firestone Research automation module.
-# When disabled, this module will be ignored during the execution loop.
+# Enables or disables the Firestone Research automation task.
+# When disabled, this task will be ignored during the execution loop.
 enabled = true
+# FIRESTONE RESEARCH TALENT TREE PRIORITY CONFIGURATION. This setting controls which talents are researched first based on their tree position. TALENT IDs ARE ASSIGNED BY INDEX (ordered top to bottom, left to right within each tree screen). Valid IDs for user input range from 1 to 16. You may specify any combination of IDs from 1 to 16, in any order you prefer. The bot will follow the exact order you provide. TREE I EXAMPLE - ID 1=Attribute damage, ID 2=Attribute health, ID 3=Attribute armor, ID 4=Fist fight, ID 5=Guardian power, ID 6=Projectiles, ID 7=Raining gold, ID 8=Critical loot Bonus, ID 9=Critical loot Chance, ID 10=Weaklings, ID 11=Expose Weakness, ID 12=Medal of honor, ID 13=Firestone Finder, ID 14=Trainer Skills, ID 15=Skip wave, ID 16=Expeditioner. HOW TO USE: Enter comma-separated IDs in priority order (integers between 1-16). The bot will research talents in the exact sequence provided. If a priority talent is unavailable (locked/completed), the bot will try the next priority. If all priorities are unavailable or if this field is empty, the bot will select any available talent automatically. EXAMPLES: '2,1,4' = Research Attribute health first, then Attribute damage, then Fist fight. '7,8,9' = Research Raining gold first, then Critical loot Bonus, then Critical loot Chance. '13' = Only research Firestone Finder, fallback to any available if completed. '5,12,1,16,3,8,10,2,14,7,4,15,6,13,9,11' = Example using all 16 IDs in a random order, each ID only once. Default: empty (no priority, bot selects any available talent)
+research_priority = ""
 
-[free_pickaxes]
-# Enables or disables the Free Pickaxes automation module.
-# When disabled, this module will be ignored during the execution loop.
+[magic_quarters]
+# Enables or disables the Magic Quarters automation task.
+# When disabled, this task will be ignored during the execution loop.
+enabled = true
+# Select guardian index for training. Use 0-3. Default is 0.
+# 0=Vermilion, 1=Grace, 2=Ankaa, 3=Azhar
+guardian_index = 0
+# Use 'Strange Dust' for training. Default is false.
+use_strange_dust = false
+
+[map_missions]
+# Enables or disables the Map Missions automation task.
+# When disabled, this task will be ignored during the execution loop.
+enabled = true
+# Sort missions by time required. Use 'asc' (shorter first) or 'desc' (longer first).
+mission_time_order = "desc"
+
+[warfront_campaign_loot]
+# Enables or disables the Warfront Campaign Loot automation task.
+# When disabled, this task will be ignored during the execution loop.
 enabled = true
 
 [expedition]
-# Enables or disables the Expedition automation module.
-# When disabled, this module will be ignored during the execution loop.
+# Enables or disables the Expedition automation task.
+# When disabled, this task will be ignored during the execution loop.
 enabled = true
 
-[tools_production]
-# Enables or disables the Tools Production automation module.
-# When disabled, this module will be ignored during the execution loop.
-enabled = true
-
-[warfront_campaign_scrolls]
-# Enables or disables the Warfront Campaign Scrolls automation module.
-# When disabled, this module will be ignored during the execution loop.
+[free_pickaxes]
+# Enables or disables the Free Pickaxes automation task.
+# When disabled, this task will be ignored during the execution loop.
 enabled = true
 ```
 
