@@ -1,6 +1,11 @@
+
 # Firebot
 
-Firebot is a bot designed for the game Firestone Idle RPG. This bot aims to enhance the gaming experience by automating various tasks and providing useful features for players.
+Automation bot for Firestone Idle RPG, enhancing gameplay by automating repetitive tasks using MelonLoader.
+
+Firebot can run in the background and supports any game language, making it flexible for all players.
+
+This bot aims to enhance the gaming experience by automating various tasks and providing useful features for players.
 
 ---
 
