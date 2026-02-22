@@ -40,7 +40,7 @@ public static class Paths
             public const string CharacterLevel = Root + "/characterLevelBg/characterLevel";
         }
     }
-
+    
     public static class MenusLoc
     {
         private const string Root = "menusRoot";
