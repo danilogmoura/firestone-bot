@@ -181,13 +181,17 @@ public static class Paths
 
                     public static class RitualLoc
                     {
-                        public const string Root = OracleLoc.Root + "/submenus/bg/ritualSubmenu/ritualsGrid";
+                        private const string Root = OracleLoc.Root + "/submenus/bg/ritualSubmenu";
+
+                        public const string Rituals = Root + "/ritualsGrid";
 
                         public const string ClaimBtn = "/claimButton";
 
-                        public const string NextRunTimeTxt = "/ritualProgressBg/timeLeftText";
+                        public const string CurrentRunTimeTxt = "/ritualProgressBg/timeLeftText";
 
                         public const string StartBtn = "/startButton";
+
+                        public const string NextRunTimeTxt = OracleLoc.Root + "/timeBg/timeLeft";
                     }
                 }
             }
