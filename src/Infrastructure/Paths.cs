@@ -15,12 +15,11 @@ public static class Paths
 
     public static class BattleLoc
     {
-        private const string Root = "battleRoot";
+        private const string Root = "battleRoot/battleMain/battleCanvas/SafeArea";
 
         public static class NotificationsLoc
         {
-            private const string Root = BattleLoc.Root +
-                                        "/battleMain/battleCanvas/SafeArea/leftSideUI/notifications/Viewport/grid";
+            public const string Root = BattleLoc.Root + "/leftSideUI/notifications/Viewport/grid";
 
             public const string EngineerBtn = Root + "/Engineer";
             public const string WarfrontCampaignBtn = Root + "/WarfrontCampaign";
@@ -32,6 +31,13 @@ public static class Paths
             public const string ExperimentsBtn = Root + "/Experiments";
             public const string OracleRitualsBtn = Root + "/OracleRituals";
             public const string MapMissionsBtn = Root + "/MapMissions";
+        }
+
+        public static class PlayerAvatarLoc
+        {
+            private const string Root = BattleLoc.Root + "/topLeftSideUI/playerAvatar";
+
+            public const string CharacterLevel = Root + "/characterLevelBg/characterLevel";
         }
     }
 
