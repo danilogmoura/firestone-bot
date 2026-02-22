@@ -166,6 +166,24 @@ public static class Paths
                             Root + "/bg/innerBg/unlocked/buttonHolder/researchActivateButton";
                     }
                 }
+
+                public static class OracleLoc
+                {
+                    private const string Root = CanvasLoc.Root + "/menus/Oracle";
+
+                    public const string CloseBtn = Root + "/closeButton";
+
+                    public static class RitualLoc
+                    {
+                        public const string Root = OracleLoc.Root + "/submenus/bg/ritualSubmenu/ritualsGrid";
+
+                        public const string ClaimBtn = "/claimButton";
+
+                        public const string NextRunTimeTxt = "/ritualProgressBg/timeLeftText";
+
+                        public const string StartBtn = "/startButton";
+                    }
+                }
             }
 
             public static class GuildLoc

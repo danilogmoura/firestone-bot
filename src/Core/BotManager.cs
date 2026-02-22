@@ -179,6 +179,7 @@ public static class BotManager
 
     private static string GetTaskStatus(BotTask t)
     {
+        if (!t.IsEnabled) return "Disabled";
         if (t.IsNotificationVisible()) return "Notification";
         if (t.IsReady()) return "Ready";
         return "Waiting";
