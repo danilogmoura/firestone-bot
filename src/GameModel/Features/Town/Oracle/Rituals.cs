@@ -9,7 +9,7 @@ namespace Firebot.GameModel.Features.Town.Oracle;
 
 public class Rituals : GameElement
 {
-    public Rituals() : base(Paths.MenusLoc.CanvasLoc.TownLoc.OracleLoc.RitualLoc.Root) { }
+    public Rituals() : base(Paths.MenusLoc.CanvasLoc.TownLoc.OracleLoc.RitualLoc.Rituals) { }
 
     public IEnumerator Claim()
     {
@@ -29,7 +29,7 @@ public class Rituals : GameElement
 
         foreach (var child in GetChildren().Where(child => child.IsVisible()))
         {
-            var dateTime = new GameText(Paths.MenusLoc.CanvasLoc.TownLoc.OracleLoc.RitualLoc.NextRunTimeTxt, child);
+            var dateTime = new GameText(Paths.MenusLoc.CanvasLoc.TownLoc.OracleLoc.RitualLoc.CurrentRunTimeTxt, child);
             if (!dateTime.IsVisible()) continue;
             if (!earliest.HasValue || dateTime.Time < earliest.Value) earliest = dateTime.Time;
         }
