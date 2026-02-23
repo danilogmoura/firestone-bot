@@ -16,7 +16,7 @@ public class OracleTask : BotTask
         var rituals = new Rituals();
         yield return rituals.Claim();
         yield return rituals.Start();
-        NextRunTime = rituals.NextRunTime();
+        NextRunTime = rituals.CurrentRunTime();
         yield return Oracle.Close;
     }
 }

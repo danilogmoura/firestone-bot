@@ -40,7 +40,7 @@ public static class Paths
             public const string CharacterLevel = Root + "/characterLevelBg/characterLevel";
         }
     }
-    
+
     public static class MenusLoc
     {
         private const string Root = "menusRoot";
@@ -191,7 +191,7 @@ public static class Paths
 
                         public const string StartBtn = "/startButton";
 
-                        public const string NextRunTimeTxt = OracleLoc.Root + "/timeBg/timeLeft";
+                        public const string NextRunTimeTxt = Root + "/timeBg/timeLeft";
                     }
                 }
             }

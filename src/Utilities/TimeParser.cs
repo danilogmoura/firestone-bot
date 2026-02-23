@@ -15,7 +15,28 @@ public static class TimeParser
         @"(?:(?<days>\d+)d\s*)?(?:(?<h>\d+):(?<m>\d+):(?<s>\d+)|(?<m_only>\d+):(?<s_only>\d+))",
         RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-    public static TimeSpan Parse(string raw)
+    /// <summary>
+    ///     Extracts and parses a duration (e.g., 03:40:52) from a string with variable text.
+    ///     Returns TimeSpan.Zero if no time pattern is found.
+    /// </summary>
+    private static TimeSpan ParseFrom(string raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw)) return TimeSpan.Zero;
+
+        var match = Regex.Match(raw, @"(\d+d\s*)?(\d{1,2}:\d{2}:\d{2}|\d{1,2}:\d{2})");
+        if (!match.Success) return TimeSpan.Zero;
+
+        return Parse(match.Value);
+    }
+
+    public static DateTime ParseFromText(string raw, double bufferSeconds = 0)
+    {
+        var duration = ParseFrom(raw);
+        Logger.Debug($"Raw: '{raw}' -> Parsed: {duration} -> Date: {DateTime.Now.Add(duration):HH:mm:ss}");
+        return duration == TimeSpan.Zero ? DateTime.MinValue : DateTime.Now.Add(duration).AddSeconds(bufferSeconds);
+    }
+
+    private static TimeSpan Parse(string raw)
     {
         if (string.IsNullOrWhiteSpace(raw)) return TimeSpan.Zero;
 
