@@ -4,6 +4,7 @@ using System.Linq;
 using Firebot.GameModel.Base;
 using Firebot.GameModel.Primitives;
 using Firebot.Infrastructure;
+using Firebot.Utilities;
 
 namespace Firebot.GameModel.Features.Town.Oracle;
 
@@ -23,7 +24,7 @@ public class Rituals : GameElement
             yield return new GameButton(Paths.MenusLoc.CanvasLoc.TownLoc.OracleLoc.RitualLoc.StartBtn, child).Click();
     }
 
-    public DateTime NextRunTime()
+    public DateTime CurrentRunTime()
     {
         DateTime? earliest = null;
 
@@ -31,9 +32,16 @@ public class Rituals : GameElement
         {
             var dateTime = new GameText(Paths.MenusLoc.CanvasLoc.TownLoc.OracleLoc.RitualLoc.CurrentRunTimeTxt, child);
             if (!dateTime.IsVisible()) continue;
-            if (!earliest.HasValue || dateTime.Time < earliest.Value) earliest = dateTime.Time;
+            earliest = dateTime.Time;
+            break;
         }
 
-        return earliest.GetValueOrDefault();
+        return earliest ?? NextRunTime();
+    }
+
+    private static DateTime NextRunTime()
+    {
+        var text = new GameText(Paths.MenusLoc.CanvasLoc.TownLoc.OracleLoc.RitualLoc.NextRunTimeTxt).GetParsedText();
+        return TimeParser.ParseFromText(text);
     }
 }
