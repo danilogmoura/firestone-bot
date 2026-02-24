@@ -13,6 +13,9 @@ public class GameText : GameElement
 
     public DateTime Time => TimeParser.ParseExpectedTime(GetParsedText());
 
+    public DateTime TimeMultiplier(double multiplier = 1) =>
+        TimeParser.ParseExpectedTime(GetParsedText(), multiplier: multiplier);
+
     public string GetParsedText()
     {
         if (!IsVisible()) return string.Empty;
