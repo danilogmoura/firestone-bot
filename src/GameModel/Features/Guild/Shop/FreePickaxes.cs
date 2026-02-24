@@ -11,5 +11,5 @@ public static class FreePickaxes
         new GameButton(Paths.MenusLoc.CanvasLoc.GuildLoc.GuildShopLoc.FreePickaxeLoc.ClaimBtn).Click();
 
     public static DateTime NextRunTime =>
-        new GameText(Paths.MenusLoc.CanvasLoc.GuildLoc.GuildShopLoc.FreePickaxeLoc.NextRunTimeTxt).Time;
+        new GameText(Paths.MenusLoc.CanvasLoc.GuildLoc.GuildShopLoc.FreePickaxeLoc.NextRunTimeTxt).TimeMultiplier(5);
 }

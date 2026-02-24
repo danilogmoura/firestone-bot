@@ -65,15 +65,16 @@ public static class TimeParser
         return new TimeSpan(days, hours, minutes, seconds);
     }
 
-    public static DateTime ParseExpectedTime(string raw, double bufferSeconds = 0)
+    public static DateTime ParseExpectedTime(string raw, double bufferSeconds = 0, double multiplier = 1)
     {
         var duration = Parse(raw);
-
-        Logger.Debug($"Raw: '{raw}' -> Parsed: {duration} -> Date: {DateTime.Now.Add(duration):HH:mm:ss}");
+        var multiplied = TimeSpan.FromTicks((long)(duration.Ticks * multiplier));
+        
+        Logger.Debug($"Raw: '{raw}' -> Parsed: {duration} -> Multiplied: {multiplied} -> Date: {DateTime.Now.Add(multiplied):HH:mm:ss}");
 
         return duration == TimeSpan.Zero
             ? DateTime.MinValue
-            : DateTime.Now.Add(duration).AddSeconds(bufferSeconds);
+            : DateTime.Now.Add(multiplied).AddSeconds(bufferSeconds);
     }
 
     /// <summary>
