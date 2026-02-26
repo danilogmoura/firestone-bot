@@ -57,7 +57,7 @@ public static class BotManager
 
         IsRunning = true;
         _botRoutineHandle = MelonCoroutines.Start(BotSchedulerLoop());
-        Logger.Info($"Started. Tasks loaded: {_tasks.Count}");
+        Logger.Info($"Started. Tasks loaded: {_tasks.Count(t => t.IsEnabled)}");
     }
 
     public static void Stop()
@@ -163,16 +163,14 @@ public static class BotManager
     {
         var now = DateTime.Now;
         Logger.Info($"[Bot Status] Task Table - {now:MM/dd/yyyy HH:mm:ss}");
-        Logger.Info(
-            "| Next Run            | Time Left   | Task                      | Status        | Last Run            |");
-        Logger.Info(
-            "|---------------------|-------------|---------------------------|---------------|---------------------|");
+        Logger.Info("| Next Run            | Time Left   | Task                      | Status        | Last Run            |");
+        Logger.Info("|---------------------|-------------|---------------------------|---------------|---------------------|");
 
         var ordered = _tasks.OrderBy(t => t.NextRunTime).ToList();
         foreach (var t in ordered)
         {
             var status = GetTaskStatus(t);
-            var nextRun = t.NextRunTime.ToString("MM/dd/yyyy HH:mm:ss");
+            var nextRun = t.IsEnabled ? t.NextRunTime.ToString("MM/dd/yyyy HH:mm:ss") : "-";
             var lastRun = t.LastRunTime?.ToString("MM/dd/yyyy HH:mm:ss") ?? "-";
             var name = t.SectionTitle;
             var timeLeft = TimeParser.FormatFriendlyDuration(t.NextRunTime - now);
