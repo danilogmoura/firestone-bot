@@ -5,11 +5,17 @@ public static class Paths
     public static class Watchdog
     {
         private const string CanvasRoot = "menusRoot/menuCanvasParent/SafeArea/menuCanvas";
+
         public const string EventsRoot = CanvasRoot + "/events";
+
         public const string PopupsRoot = CanvasRoot + "/popups";
+
         public const string MenusRoot = CanvasRoot + "/menus";
+
         public const string CloseSuffix = "/bg/closeButton";
+
         public const string CollectSuffix = "/bg/collectButton";
+
         public const string MenuCloseSuffix = "/closeButton";
     }
 
@@ -22,14 +28,23 @@ public static class Paths
             public const string Root = BattleLoc.Root + "/leftSideUI/notifications/Viewport/grid";
 
             public const string EngineerBtn = Root + "/Engineer";
+
             public const string WarfrontCampaignBtn = Root + "/WarfrontCampaign";
+
             public const string FreePickaxesBtn = Root + "/FreePickaxes";
+
             public const string ExpeditionsBtn = Root + "/Expeditions";
+
             public const string QuestsBtn = Root + "/Quests";
+
             public const string GuardianTrainingBtn = Root + "/GuardianTraining";
+
             public const string FirestoneResearchBtn = Root + "/FirestoneResearch";
+
             public const string ExperimentsBtn = Root + "/Experiments";
+
             public const string OracleRitualsBtn = Root + "/OracleRituals";
+
             public const string MapMissionsBtn = Root + "/MapMissions";
         }
 
@@ -52,13 +67,16 @@ public static class Paths
             private static class PopupsLoc
             {
                 public const string Root = CanvasLoc.Root + "/popups";
+
                 public const string CloseBtn = "/bg/closeButton";
             }
 
             public static class MapLoc
             {
                 private const string Root = CanvasLoc.Root + "/menus/WorldMap";
+
                 private const string Sub = Root + "/submenus/mapMissionsSubmenu";
+
                 public const string CloseBtn = Root + "/closeButton";
 
                 public const string NextRunTimeTxt =
@@ -69,8 +87,14 @@ public static class Paths
                     public static class PreviewLoc
                     {
                         private const string Root = PopupsLoc.Root + "/PreviewMission";
+
                         public const string CloseBtn = Root + PopupsLoc.CloseBtn;
+
                         public const string StartBtn = Root + "/bg/managementBg/container/startMissionButton";
+
+                        public const string SpeedUpBtn = Root + "/bg/managementBg/container/speedUpButton";
+
+                        public const string SpeedUpFinishDesc = SpeedUpBtn + "/finishDesc";
 
                         public const string NotEnoughSquadsTxt =
                             Root + "/bg/managementBg/previewMissionNotEnoughSquads";
@@ -83,16 +107,28 @@ public static class Paths
                     public static class PinLoc
                     {
                         public const string Root = MenusLoc.Root + "/mapRoot/mapElements/missions";
+
                         public const string ActiveIcon = "/missionActiveIcon";
+
                         public const string TimeReq = "/missionBg/missionTimeBg/missionTimeReq";
+
                         public const string Tick = "/missionBg/completedTick";
+                    }
+
+                    public static class MissionRewardsLoc
+                    {
+                        private const string Root = PopupsLoc.Root + "/MissionRewards";
+
+                        public const string CloseBtn = Root + PopupsLoc.CloseBtn;
                     }
                 }
 
                 public static class WarfrontLoc
                 {
                     private const string LootRoot = Root + "/submenus/warfrontCampaignSubmenu/loot";
+
                     public const string NextRunTimeTxt = LootRoot + "/nextLootTimeLeft";
+
                     public const string ClaimBtn = LootRoot + "/claimButton";
                 }
             }
@@ -113,11 +149,17 @@ public static class Paths
                 public static class MagicQuarters
                 {
                     private const string Root = CanvasLoc.Root + "/menus/MagicQuarters";
+
                     public const string CloseBtn = Root + "/closeButton";
+
                     public const string Guardoians = Root + "/guardianList";
+
                     private const string UnlockedGuadian = Root + "/submenus/bg/infoSubmenu/activities/unlocked";
+
                     public const string EnlightenmentBtn = UnlockedGuadian + "/enlightenment/enlightenmentButton";
+
                     public const string TrainBtn = UnlockedGuadian + "/train/trainButton";
+
                     public const string NextRunTimeTxt = TrainBtn + "/cooldownOn/cooldownTimeLeft";
 
                     public const string
@@ -127,7 +169,7 @@ public static class Paths
                     {
                         private const string Root = PopupsLoc.Root + "/LockedGuardian";
 
-                        public const string CloseBtn = Root + "/bg/closeButton";
+                        public const string CloseBtn = Root + PopupsLoc.CloseBtn;
                     }
                 }
 
@@ -149,7 +191,7 @@ public static class Paths
 
                         public const string SpeedUpBtn = "/container/speedUpButton";
 
-                        public const string SpeedUpFinishDesc = "/container/speedUpButton/finishDesc";
+                        public const string SpeedUpFinishDesc = SpeedUpBtn + "/finishDesc";
                     }
 
                     public static class NodeLoc
