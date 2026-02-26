@@ -15,8 +15,10 @@ public static class BotSettings
     private static MelonPreferences_Entry<float> _maxTaskRuntime;
     private static MelonPreferences_Entry<bool> _debugMode;
     private static MelonPreferences_Entry<KeyCode> _shortcutKey;
+    private static MelonPreferences_Entry<float> _freeSpeedupSeconds;
 
     private static string _configPath;
+    public static float FreeSpeedupSeconds => Mathf.Clamp(_freeSpeedupSeconds.Value, 30.0f, 600.0f);
 
     public static string ConfigPath
     {
@@ -72,6 +74,15 @@ public static class BotSettings
         _shortcutKey = _category.CreateEntry("shortcut_key", KeyCode.F7, "Shortcut Key",
             "The physical key used to manually toggle the bot's execution state during gameplay.");
 
+        _freeSpeedupSeconds = _category.CreateEntry(
+            "free_speedup_seconds",
+            180.0f,
+            "Free Speedup Threshold (seconds)",
+            "Some timers in the game can be sped up for free if the remaining time is below this threshold (default: 180 seconds = 3 minutes). " +
+            "Developers may change this value in the future, or you may want to adjust it to account for lag or game updates. " +
+            "Affects firestone researches, missions, experiments, and map reset timers. " +
+            "If the remaining time is less than or equal to this value, the speedup is free (no gems required)."
+        );
         _category.SaveToFile();
         Logger.Info($"System Initialized. Configuration: {ConfigPath}");
     }
