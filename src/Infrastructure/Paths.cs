@@ -256,6 +256,8 @@ public static class Paths
 
                         public const string ClaimBtn = Root;
 
+                        public const string QuantityTxt = Root + "/claimBg/itemBg/itemQuantity";
+
                         public const string NextRunTimeTxt = Root + "/nextFreeObj/progressBarBg/timeLeftText";
                     }
                 }
