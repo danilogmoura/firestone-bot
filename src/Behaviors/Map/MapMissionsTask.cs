@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Firebot.Core;
 using Firebot.Core.Tasks;
 using Firebot.GameModel.Base;
 using Firebot.GameModel.Features.Map;
@@ -34,10 +35,25 @@ public class MapMissionsTask : BotTask
     {
         yield return Notifications.MapMissions;
 
-        foreach (var mission in ScanMissions(m => m.IsCompleted))
-            yield return mission.Select();
+        foreach (var mission in ScanMissions(m => m.IsActive))
+        {
+            if (mission.IsCompleted)
+                yield return mission.Select();
+            else
+            {
+                yield return mission.Select();
+                var speedUpBtn = MissionPreview.SpeedUpBtn;
 
-        foreach (var mission in ScanMissions(mission => !mission.IsActive && !mission.IsCompleted, true))
+                if (speedUpBtn.IsVisible() && MissionPreview.CanSpeedUp)
+                    yield return speedUpBtn.Click();
+
+                yield return MissionRewardsPopup.Close;
+            }
+
+            yield return MissionPreview.Close;
+        }
+
+        foreach (var mission in ScanMissions(m => !m.IsActive && !m.IsCompleted, true))
         {
             yield return mission.Select();
 
@@ -84,7 +100,7 @@ public class MapMissionsTask : BotTask
 
             var progress = MissionPreview.NextRunTime;
             if (!earliest.HasValue || progress < earliest.Value)
-                earliest = progress;
+                earliest = progress.AddSeconds(-BotSettings.FreeSpeedupSeconds);
 
             yield return MissionPreview.Close;
         }
