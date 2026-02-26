@@ -121,12 +121,12 @@ public static class Paths
                     public const string NextRunTimeTxt = TrainBtn + "/cooldownOn/cooldownTimeLeft";
 
                     public const string
-                        GuardianStarsIcon =
-                            "/starsParent"; // Relative to each guardian button, e.g. guardianList/guardian0/starsParent
+                        GuardianStarsIcon = "/starsParent";
 
                     public static class LockedGuardianLoc
                     {
                         private const string Root = PopupsLoc.Root + "/LockedGuardian";
+
                         public const string CloseBtn = Root + "/bg/closeButton";
                     }
                 }
@@ -134,6 +134,7 @@ public static class Paths
                 public static class LibraryLoc
                 {
                     private const string Root = CanvasLoc.Root + "/menus/Library";
+
                     public const string CloseBtn = Root + "/closeButton";
 
                     public static class ResearchPanelLoc
@@ -144,8 +145,11 @@ public static class Paths
 
                         public const string ClaimBtn = "/container/claimButton";
 
-                        public const string NextRunTimeTxt =
-                            "/container/researchInfo/progressBarBg/timeLeftText";
+                        public const string NextRunTimeTxt = "/container/researchInfo/progressBarBg/timeLeftText";
+
+                        public const string SpeedUpBtn = "/container/speedUpButton";
+
+                        public const string SpeedUpFinishDesc = "/container/speedUpButton/finishDesc";
                     }
 
                     public static class NodeLoc
@@ -217,6 +221,7 @@ public static class Paths
                 public static class ExpeditionLoc
                 {
                     private const string Root = PopupsLoc.Root + "/Expeditions";
+
                     public const string CloseBtn = Root + PopupsLoc.CloseBtn;
 
                     public const string NextRunTimeTxt = Root + "/bg/timeLeftBg/timeLeftText";
