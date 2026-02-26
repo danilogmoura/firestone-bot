@@ -41,4 +41,17 @@ public abstract class StringUtils
         // Regex pattern: Lookbehind for "not start of line", Lookahead for "uppercase letter"
         return Regex.Replace(cleaned, @"(?<!^)(?=[A-Z])", " ").Trim();
     }
+
+    /// <summary>
+    ///     Attempts to extract the first integer found in a string.
+    ///     Example: "x5" returns 5, "abc123def" returns 123.
+    ///     Returns true if an integer was found, false otherwise.
+    /// </summary>
+    public static bool TryParseIntFromString(string input, out int value)
+    {
+        value = 0;
+        if (string.IsNullOrWhiteSpace(input)) return false;
+        var digits = new string(input.Where(char.IsDigit).ToArray());
+        return int.TryParse(digits, out value);
+    }
 }
