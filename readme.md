@@ -10,6 +10,7 @@ This bot aims to enhance the gaming experience by automating various tasks and p
 ---
 
 ## About
+
 This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https://github.com/LavaGang/MelonLoader) **Nightly V0.7.2+**.
 
 > **Note:** Firebot is currently supported only on **Windows**. The mod works with Firestone Idle RPG in **any game language**, at **any resolution**, and can run in the **background**.
@@ -17,6 +18,7 @@ This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https
 ---
 
 ## Features
+
 - **Offline Progress**: Automatically claims offline progress rewards
 - **Tools Production** (Engineer): Automatically collects produced tools from the Engineer
 - **Warfront Campaign**: Automatically collects Warfront campaign scrolls
@@ -45,11 +47,15 @@ By default, press **F7** to start or stop the bot during gameplay.
 ---
 
 ## Installation (From Source)
+
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/danilogmoura/firestone-bot.git
    ```
+
 2. Navigate to the project directory:
+
    ```bash
    cd firebot
    ```
@@ -58,6 +64,7 @@ By default, press **F7** to start or stop the bot during gameplay.
     - By default, the path is set to `C:\Program Files (x86)\Steam\Firestone` (Windows). If your game is installed elsewhere, change the `<GameRoot>` property in this file to the correct path.
     - You can also set the environment variable `COMMON_DIR` to override the base directory. In this case, the game path will be `$(COMMON_DIR)\Firestone`.
       - Example:
+
           ```xml
           <GameRoot>C:\Program Files (x86)\Steam\Firestone</GameRoot>
           ```
@@ -66,14 +73,13 @@ By default, press **F7** to start or stop the bot during gameplay.
 
 ---
 
-## CONFIG:
+## CONFIG
 
 The bot configuration file can be found at `Firestone/UserData/FirebotPreferences.cfg`.
 
 Default toggle key: **F7** (changeable via `shortcut_key`).
 
 For now, all configuration must be done directly in this file. A graphical configuration interface will be implemented in the future.
-
 
 Here is a list of the current config options (and their default values):
 
@@ -102,6 +108,8 @@ max_task_runtime = 120.0
 debug_mode = false
 # The physical key used to manually toggle the bot's execution state during gameplay.
 shortcut_key = "F7"
+# Some timers in the game can be sped up for free if the remaining time is below this threshold (default: 180 seconds = 3 minutes). Developers may change this value in the future, or you may want to adjust it to account for lag or game updates. Affects firestone researches, missions, experiments, and map reset timers. If the remaining time is less than or equal to this value, the speedup is free (no gems required).
+free_speedup_seconds = 180.0
 
 [engineer_tools]
 # Enables or disables the Engineer Tools automation task.
@@ -140,6 +148,11 @@ guardian_index = 0
 # Use 'Strange Dust' for training. Default is false.
 use_strange_dust = false
 
+[oracle]
+# Enables or disables the Oracle automation task.
+# When disabled, this task will be ignored during the execution loop.
+enabled = false
+
 [map_missions]
 # Enables or disables the Map Missions automation task.
 # When disabled, this task will be ignored during the execution loop.
@@ -161,24 +174,28 @@ enabled = true
 # Enables or disables the Free Pickaxes automation task.
 # When disabled, this task will be ignored during the execution loop.
 enabled = true
+# Minimum number of free pickaxes required before claiming. Set to 1 to claim as soon as available, or up to 30 to wait for maximum. Default is 30 (wait for maximum).
+pickaxe_claim_threshold = 30
 ```
 
 ## Example: Bot Info Log
 
 ![Bot Info Log Example](docs/bot-log-example.png)
 
-
 ---
 
 ## Roadmap & Next Steps
 
 ### v0.3.0 - Gameplay Expansion (Feature Update)
+
 *The big feature jump, utilizing the new structure created in previous versions.*
+
 - [ ] **Feature:** Daily Rewards automation.
 - [ ] **Feature:** Alchemist automation.
 - [ ] **Feature:** Liberation automation.
 
 ### Future Plans (v0.4.0+)
+
 - [ ] **UI:** Full in-game configuration interface (No more `.cfg` files needed).
 
 ---
@@ -188,6 +205,7 @@ enabled = true
 Found a bug or have an idea for a new feature? Please open a ticket on our GitHub Issue Tracker!
 
 **Before submitting a bug report:**
+
 1. Check if the issue has already been reported.
 2. Ensure you are using the latest version of Firebot.
 3. Attach your **MelonLoader Log** file (`MelonLoader/Latest.log`) if the game crashed or the bot failed.
@@ -197,6 +215,7 @@ Found a bug or have an idea for a new feature? Please open a ticket on our GitHu
 ---
 
 ## Contributing
+
 Contributions are welcome! Please submit a pull request or open an issue for suggestions or improvements.
 
 ## Disclaimer: Not a Cheat
