@@ -14,6 +14,11 @@ public static class MissionPreview
     public static IEnumerator StartMission =>
         new GameButton(Paths.MenusLoc.CanvasLoc.MapLoc.MissionsLoc.PreviewLoc.StartBtn).Click();
 
+    public static GameButton SpeedUpBtn => new(Paths.MenusLoc.CanvasLoc.MapLoc.MissionsLoc.PreviewLoc.SpeedUpBtn);
+
+    public static bool CanSpeedUp =>
+        !new GameElement(Paths.MenusLoc.CanvasLoc.MapLoc.MissionsLoc.PreviewLoc.SpeedUpFinishDesc).IsVisible();
+
     public static bool IsNotEnoughSquads =>
         new GameElement(Paths.MenusLoc.CanvasLoc.MapLoc.MissionsLoc.PreviewLoc.NotEnoughSquadsTxt).IsVisible();
 
