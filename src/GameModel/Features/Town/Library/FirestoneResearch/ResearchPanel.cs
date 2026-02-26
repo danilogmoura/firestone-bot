@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Firebot.Core;
 using Firebot.GameModel.Base;
 using Firebot.GameModel.Primitives;
 using Firebot.Infrastructure;
@@ -46,7 +47,7 @@ public class ResearchPanel : GameElement
             {
                 var time = new GameText(
                         Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.NextRunTimeTxt, child).Time
-                    .AddSeconds(-160);
+                    .AddSeconds(-BotSettings.FreeSpeedupSeconds);
 
                 if (time < minTime) minTime = time;
             }
