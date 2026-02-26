@@ -114,12 +114,12 @@ free_speedup_seconds = 180.0
 [engineer_tools]
 # Enables or disables the Engineer Tools automation task.
 # When disabled, this task will be ignored during the execution loop.
-enabled = true
+enabled = false
 
 [firestone_research]
 # Enables or disables the Firestone Research automation task.
 # When disabled, this task will be ignored during the execution loop.
-enabled = true
+enabled = false
 # FIRESTONE RESEARCH TALENT TREE PRIORITY CONFIGURATION. 
 # This setting controls which talents are researched first based on their tree position. 
 # TALENT IDs ARE ASSIGNED BY INDEX (ordered top to bottom, left to right within each tree screen). 
@@ -141,7 +141,7 @@ research_priority = ""
 [magic_quarters]
 # Enables or disables the Magic Quarters automation task.
 # When disabled, this task will be ignored during the execution loop.
-enabled = true
+enabled = false
 # Select guardian index for training. Use 0-3. Default is 0.
 # 0=Vermilion, 1=Grace, 2=Ankaa, 3=Azhar
 guardian_index = 0
@@ -156,24 +156,24 @@ enabled = false
 [map_missions]
 # Enables or disables the Map Missions automation task.
 # When disabled, this task will be ignored during the execution loop.
-enabled = true
+enabled = false
 # Sort missions by time required. Use 'asc' (shorter first) or 'desc' (longer first).
 mission_time_order = "desc"
 
 [warfront_campaign_loot]
 # Enables or disables the Warfront Campaign Loot automation task.
 # When disabled, this task will be ignored during the execution loop.
-enabled = true
+enabled = false
 
 [expedition]
 # Enables or disables the Expedition automation task.
 # When disabled, this task will be ignored during the execution loop.
-enabled = true
+enabled = false
 
 [free_pickaxes]
 # Enables or disables the Free Pickaxes automation task.
 # When disabled, this task will be ignored during the execution loop.
-enabled = true
+enabled = false
 # Minimum number of free pickaxes required before claiming. Set to 1 to claim as soon as available, or up to 30 to wait for maximum. Default is 30 (wait for maximum).
 pickaxe_claim_threshold = 30
 ```
