@@ -18,9 +18,24 @@ public class ResearchPanel : GameElement
     {
         foreach (var child in GetChildren())
             if (child.IsVisible() && child.Name.StartsWith("researchSlot"))
+            {
+                var speedBtn = new GameButton(
+                    Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.SpeedUpBtn, child);
+
+                var canClaim = !new GameElement(
+                    Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.SpeedUpFinishDesc, child).IsVisible();
+
+                if (speedBtn.IsVisible() && canClaim)
+                {
+                    Debug("[INFO] Claiming completed research.");
+                    yield return speedBtn.Click();
+                    yield break;
+                }
+
                 yield return new GameButton(
                         Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.ClaimBtn, child)
                     .Click();
+            }
     }
 
     public DateTime NextRunTime()
@@ -30,7 +45,9 @@ public class ResearchPanel : GameElement
             if (child.IsVisible() && child.Name.StartsWith("researchSlot"))
             {
                 var time = new GameText(
-                    Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.NextRunTimeTxt, child).Time;
+                        Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.NextRunTimeTxt, child).Time
+                    .AddSeconds(-160);
+
                 if (time < minTime) minTime = time;
             }
 
