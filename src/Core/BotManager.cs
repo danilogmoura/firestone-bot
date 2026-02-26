@@ -57,7 +57,7 @@ public static class BotManager
 
         IsRunning = true;
         _botRoutineHandle = MelonCoroutines.Start(BotSchedulerLoop());
-        Logger.Debug($"Started. Tasks loaded: {_tasks.Count}");
+        Logger.Info($"Started. Tasks loaded: {_tasks.Count}");
     }
 
     public static void Stop()
@@ -65,7 +65,7 @@ public static class BotManager
         if (!IsRunning) return;
         IsRunning = false;
         if (_botRoutineHandle != null) MelonCoroutines.Stop(_botRoutineHandle);
-        Logger.Debug("Stopped.");
+        Logger.Info("Stopped.");
     }
 
     private static IEnumerator BotSchedulerLoop()
@@ -108,7 +108,8 @@ public static class BotManager
                 stopwatch.Stop();
 
                 Console.WriteLine();
-                Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
+                Logger.Info(
+                    $"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
                 PrintTasksStatusTable();
 
                 yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
@@ -162,8 +163,10 @@ public static class BotManager
     {
         var now = DateTime.Now;
         Logger.Info($"[Bot Status] Task Table - {now:MM/dd/yyyy HH:mm:ss}");
-        Logger.Info("| Next Run            | Time Left   | Task                      | Status        | Last Run            |");
-        Logger.Info("|---------------------|-------------|---------------------------|---------------|---------------------|");
+        Logger.Info(
+            "| Next Run            | Time Left   | Task                      | Status        | Last Run            |");
+        Logger.Info(
+            "|---------------------|-------------|---------------------------|---------------|---------------------|");
 
         var ordered = _tasks.OrderBy(t => t.NextRunTime).ToList();
         foreach (var t in ordered)
