@@ -2,7 +2,6 @@
 using Firebot.Core.Tasks;
 using Firebot.GameModel.Features.Guild.Shop;
 using Firebot.GameModel.Shared;
-using Firebot.Infrastructure;
 using MelonLoader;
 
 namespace Firebot.Behaviors.Guild;
@@ -10,7 +9,6 @@ namespace Firebot.Behaviors.Guild;
 public class FreePickaxesTask : BotTask
 {
     private MelonPreferences_Entry<int> _pickaxeClaimThreshold;
-    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.FreePickaxesBtn;
 
     public int PickaxeClaimThreshold => _pickaxeClaimThreshold?.Value ?? 1;
 
