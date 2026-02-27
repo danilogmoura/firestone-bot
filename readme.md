@@ -108,8 +108,8 @@ max_task_runtime = 120.0
 debug_mode = false
 # The physical key used to manually toggle the bot's execution state during gameplay.
 shortcut_key = "F7"
-# Some timers in the game can be sped up for free if the remaining time is below this threshold (default: 180 seconds = 3 minutes). Developers may change this value in the future, or you may want to adjust it to account for lag or game updates. Affects firestone researches, missions, experiments, and map reset timers. If the remaining time is less than or equal to this value, the speedup is free (no gems required).
-free_speedup_seconds = 180.0
+# Some timers in the game can be sped up for free if the remaining time is below this threshold (default: 170 seconds = 2 minutes and 50 seconds). The maximum allowed value is 180 seconds (3 minutes). Adjust this value to account for lag or future game changes. Affects firestone researches, missions, experiments, and map reset timers. If the remaining time is less than or equal to this value, the speedup is free (no gems required).
+free_speedup_seconds = 170.0
 
 [engineer_tools]
 # Enables or disables the Engineer Tools automation task.
