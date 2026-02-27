@@ -20,9 +20,7 @@ public static class BotManager
 
     public static void Initialize()
     {
-        var configPath = ConfigPath;
         const string targetNamespace = "Firebot.Behaviors";
-
         _tasks.Clear();
 
         var assembly = Assembly.GetExecutingAssembly();
@@ -37,7 +35,7 @@ public static class BotManager
                 var task = (BotTask)Activator.CreateInstance(type);
                 if (task != null)
                 {
-                    task.InitializeConfig(configPath);
+                    task.InitializeConfig(ConfigPath);
                     _tasks.Add(task);
                     Logger.Debug($"[Loader] Registered task: {task.SectionTitle}");
                 }
@@ -108,8 +106,7 @@ public static class BotManager
                 stopwatch.Stop();
 
                 Console.WriteLine();
-                Logger.Info(
-                    $"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
+                Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
                 PrintTasksStatusTable();
 
                 yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
