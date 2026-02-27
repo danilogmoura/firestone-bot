@@ -54,6 +54,22 @@ public static class Paths
 
             public const string CharacterLevel = Root + "/characterLevelBg/characterLevel";
         }
+
+        public static class BottomSideUIDesktopLoc
+        {
+            private const string Root = BattleLoc.Root + "/bottomSideUIDesktop";
+
+            public static class LeaderPanelLoc
+            {
+                private const string Root = BottomSideUIDesktopLoc.Root + "/leaderPanel";
+
+                public const string HotKeyOneBtn = Root + "/abilityBattle (0)";
+
+                public const string HotKeyTwoBtn = Root + "/abilityBattle (1)";
+
+                public const string HotKeyThreeBtn = Root + "/abilityBattle (2)";
+            }
+        }
     }
 
     public static class MenusLoc
