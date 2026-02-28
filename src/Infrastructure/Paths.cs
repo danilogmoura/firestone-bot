@@ -256,6 +256,24 @@ public static class Paths
                         public const string NextRunTimeTxt = Root + "/timeBg/timeLeft";
                     }
                 }
+
+                public static class AlchemistLoc
+                {
+                    private const string Root = CanvasLoc.Root + "/menus/Alchemist";
+
+                    public const string CloseBtn = Root + "/closeButton";
+
+                    public static class ExperimentsLoc
+                    {
+                        public const string Root = AlchemistLoc.Root + "/submenus/bg/experimentsSubmenu/experiments";
+
+                        public const string StartBtn = "/startExperiment";
+
+                        public const string ClaimBtn = "/claimButton";
+
+                        public const string NextRunTimeTxt = "/progressBarBg/timeLeftText";
+                    }
+                }
             }
 
             public static class GuildLoc
