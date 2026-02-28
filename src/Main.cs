@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Firebot.BotAttack;
 using Firebot.Core;
 using MelonLoader;
 using UnityEngine;
@@ -25,6 +26,7 @@ public class Main : MelonMod
     {
         BotSettings.Initialize();
         BotManager.Initialize();
+        AutoSkill.Initialize();
 
         LoggerInstance.Msg("Firebot System Initialized.");
     }
@@ -43,11 +45,14 @@ public class Main : MelonMod
 
     public override void OnUpdate()
     {
-        if (!_isGameReady || !Input.GetKeyDown(BotSettings.ShortcutKey)) return;
+        if (_isGameReady && Input.GetKeyDown(BotSettings.ShortcutKey))
+        {
+            if (BotManager.IsRunning)
+                BotManager.Stop();
+            else
+                BotManager.Start();
+        }
 
-        if (BotManager.IsRunning)
-            BotManager.Stop();
-        else
-            BotManager.Start();
+        AutoSkill.Update();
     }
 }
