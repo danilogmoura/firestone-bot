@@ -18,7 +18,7 @@ public static class BotSettings
     private static MelonPreferences_Entry<float> _freeSpeedupSeconds;
 
     private static string _configPath;
-    public static float FreeSpeedupSeconds => Mathf.Clamp(_freeSpeedupSeconds.Value, 30.0f, 180.0f);
+    public static float FreeSpeedupSeconds => Mathf.Clamp(_freeSpeedupSeconds.Value, 0.0f, 180.0f);
 
     public static string ConfigPath
     {
