@@ -108,9 +108,9 @@ public static class Paths
 
                         public const string StartBtn = Root + "/bg/managementBg/container/startMissionButton";
 
-                        public const string SpeedUpBtn = Root + "/bg/managementBg/container/speedUpButton";
+                        public const string SpeedupBtn = Root + "/bg/managementBg/container/speedUpButton";
 
-                        public const string SpeedUpFinishDesc = SpeedUpBtn + "/finishDesc";
+                        public const string SpeedupFinishDesc = SpeedupBtn + "/finishDesc";
 
                         public const string NotEnoughSquadsTxt =
                             Root + "/bg/managementBg/previewMissionNotEnoughSquads";
@@ -205,9 +205,9 @@ public static class Paths
 
                         public const string NextRunTimeTxt = "/container/researchInfo/progressBarBg/timeLeftText";
 
-                        public const string SpeedUpBtn = "/container/speedUpButton";
+                        public const string SpeedupBtn = "/container/speedUpButton";
 
-                        public const string SpeedUpFinishDesc = SpeedUpBtn + "/finishDesc";
+                        public const string SpeedupFinishDesc = SpeedupBtn + "/finishDesc";
                     }
 
                     public static class NodeLoc
@@ -272,6 +272,10 @@ public static class Paths
                         public const string ClaimBtn = "/claimButton";
 
                         public const string NextRunTimeTxt = "/progressBarBg/timeLeftText";
+
+                        public const string SpeedupBtn = "/speedUpButton";
+
+                        public const string SpeedupFinishDesc = SpeedupBtn + "/finishDesc";
                     }
                 }
             }
