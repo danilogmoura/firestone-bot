@@ -28,9 +28,9 @@ public class Experiments : GameElement
                 if (button.IsClickable()) yield return button.Click();
             }
 
-            var claimBtnPath = $"/{Type}{resource}/{Paths.MenusLoc.CanvasLoc.TownLoc.AlchemistLoc.ExperimentsLoc.StartBtn}";
+            var claimBtnPath = $"/{Slot}{resource}/{Paths.MenusLoc.CanvasLoc.TownLoc.AlchemistLoc.ExperimentsLoc.ClaimBtn}";
             var gameButton = new GameButton(claimBtnPath, this);
-            yield return gameButton.Click();
+            if (gameButton.IsClickable()) yield return gameButton.Click();
         }
     }
 
@@ -38,7 +38,11 @@ public class Experiments : GameElement
     {
         foreach (var resource in experimentResources)
         {
-            var path = $"/{Slot}{resource}/{Paths.MenusLoc.CanvasLoc.TownLoc.AlchemistLoc.ExperimentsLoc.ClaimBtn}";
+            var gePath = $"/{Slot}{resource}";
+            var experimentSlot = new GameElement(gePath, this);
+            if (experimentSlot.IsVisible()) continue; // Skip if experiment slot is already visible (i.e. experiment is active)
+            
+            var path = $"/{Type}{resource}/{Paths.MenusLoc.CanvasLoc.TownLoc.AlchemistLoc.ExperimentsLoc.StartBtn}";
             var gameButton = new GameButton(path, this);
             if (gameButton.IsClickable()) yield return gameButton.Click();
         }
