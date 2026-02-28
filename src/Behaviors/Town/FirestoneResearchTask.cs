@@ -62,12 +62,9 @@ public class FirestoneResearchTask : BotTask
                         break;
                     }
 
-            if (!started && ResearchPanel.HasEmptySlot)
-            {
-                yield return SelectAnyWithPreview(node);
-
-                if (ResearchPanel.HasEmptySlot) break;
-            }
+            if (started || !ResearchPanel.HasEmptySlot) continue;
+            yield return SelectAnyWithPreview(node);
+            if (ResearchPanel.HasEmptySlot) break;
         }
     }
 
@@ -130,13 +127,10 @@ public class FirestoneResearchTask : BotTask
             .Select(x => int.Parse(x).ToString())
             .ToArray();
 
-        if (priorities.Length == 0)
-        {
-            Debug(
-                $"[FAILED] Invalid research_priority '{value}'. All values must be integers between 1-16. No priority set.");
-            return null;
-        }
+        if (priorities.Length != 0) return priorities;
+        
+        Debug($"[FAILED] Invalid research_priority '{value}'. All values must be integers between 1-16. No priority set.");
+        return null;
 
-        return priorities;
     }
 }
