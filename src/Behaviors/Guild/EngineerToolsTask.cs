@@ -8,7 +8,7 @@ namespace Firebot.Behaviors.Guild;
 
 public class ExpeditionTask : BotTask
 {
-    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.ExpeditionsBtn;
+    protected override string NotificationPath => Paths.BattleLoc.NotificationsLoc.ExpeditionsBtn;
 
     public override IEnumerator Execute()
     {

@@ -8,7 +8,7 @@ namespace Firebot.Behaviors.Town;
 
 public class OracleTask : BotTask
 {
-    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.OracleRitualsBtn;
+    protected override string NotificationPath => Paths.BattleLoc.NotificationsLoc.OracleRitualsBtn;
 
     public override IEnumerator Execute()
     {

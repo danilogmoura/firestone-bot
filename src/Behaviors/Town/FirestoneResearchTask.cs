@@ -11,7 +11,7 @@ namespace Firebot.Behaviors.Town;
 public class FirestoneResearchTask : BotTask
 {
     private MelonPreferences_Entry<string> _researchPriority;
-    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.FirestoneResearchBtn;
+    protected override string NotificationPath => Paths.BattleLoc.NotificationsLoc.FirestoneResearchBtn;
 
     public override IEnumerator Execute()
     {

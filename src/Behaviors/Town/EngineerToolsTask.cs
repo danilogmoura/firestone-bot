@@ -8,7 +8,7 @@ namespace Firebot.Behaviors.Town;
 
 public class EngineerToolsTask : BotTask
 {
-    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.EngineerBtn;
+    protected override string NotificationPath => Paths.BattleLoc.NotificationsLoc.EngineerBtn;
 
     public override IEnumerator Execute()
     {
