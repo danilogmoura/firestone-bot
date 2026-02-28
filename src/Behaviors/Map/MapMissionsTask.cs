@@ -42,10 +42,10 @@ public class MapMissionsTask : BotTask
             else
             {
                 yield return mission.Select();
-                var speedUpBtn = MissionPreview.SpeedUpBtn;
+                var speedupBtn = MissionPreview.SpeedupBtn;
 
-                if (speedUpBtn.IsVisible() && MissionPreview.CanSpeedUp)
-                    yield return speedUpBtn.Click();
+                if (speedupBtn.IsVisible() && MissionPreview.CanSpeedup)
+                    yield return speedupBtn.Click();
 
                 yield return MissionRewardsPopup.Close;
             }
