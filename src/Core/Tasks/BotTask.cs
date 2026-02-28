@@ -19,7 +19,7 @@ public abstract class BotTask
         _className = GetType().Name;
     }
 
-    public virtual string SectionTitle => Humanize(GetType().Name);
+    public string SectionTitle => Humanize(GetType().Name);
 
     public DateTime NextRunTime { get; protected set; } = DateTime.MinValue;
 
