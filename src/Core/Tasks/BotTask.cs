@@ -25,7 +25,7 @@ public abstract class BotTask
 
     public DateTime? LastRunTime { get; set; }
 
-    public virtual string NotificationPath => null;
+    protected virtual string NotificationPath => null;
 
     public bool IsEnabled => _enabledEntry != null && _enabledEntry.Value;
 

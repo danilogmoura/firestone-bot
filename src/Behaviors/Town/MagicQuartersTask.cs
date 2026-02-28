@@ -13,7 +13,7 @@ public class MagicQuartersTask : BotTask
     private MelonPreferences_Entry<int> _guardianIndex;
     private MelonPreferences_Entry<bool> _useStrangeDust;
 
-    public override string NotificationPath => Paths.BattleLoc.NotificationsLoc.GuardianTrainingBtn;
+    protected override string NotificationPath => Paths.BattleLoc.NotificationsLoc.GuardianTrainingBtn;
 
     public override IEnumerator Execute()
     {
