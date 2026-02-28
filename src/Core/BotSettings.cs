@@ -80,6 +80,7 @@ public static class BotSettings
             "Free Speedup Threshold (seconds)",
             "Some timers in the game can be sped up for free if the remaining time is below this threshold (default: 170 seconds = 2 minutes and 50 seconds). " +
             "The maximum allowed value is 180 seconds (3 minutes). " +
+            "Set to 0 to disable free speedup. " +
             "Adjust this value to account for lag or future game changes. " +
             "Affects firestone researches, missions, experiments, and map reset timers. " +
             "If the remaining time is less than or equal to this value, the speedup is free (no gems required)."
