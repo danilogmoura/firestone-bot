@@ -21,10 +21,10 @@ public class ResearchPanel : GameElement
             if (child.IsVisible() && child.Name.StartsWith("researchSlot"))
             {
                 var speedBtn = new GameButton(
-                    Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.SpeedUpBtn, child);
+                    Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.SpeedupBtn, child);
 
                 var canClaim = !new GameElement(
-                    Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.SpeedUpFinishDesc, child).IsVisible();
+                    Paths.MenusLoc.CanvasLoc.TownLoc.LibraryLoc.ResearchPanelLoc.SpeedupFinishDesc, child).IsVisible();
 
                 if (speedBtn.IsVisible() && canClaim)
                 {
