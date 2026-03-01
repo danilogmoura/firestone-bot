@@ -108,8 +108,21 @@ max_task_runtime = 120.0
 debug_mode = false
 # The physical key used to manually toggle the bot's execution state during gameplay.
 shortcut_key = "F7"
-# Some timers in the game can be sped up for free if the remaining time is below this threshold (default: 170 seconds = 2 minutes and 50 seconds). The maximum allowed value is 180 seconds (3 minutes). Adjust this value to account for lag or future game changes. Affects firestone researches, missions, experiments, and map reset timers. If the remaining time is less than or equal to this value, the speedup is free (no gems required).
+# Some timers in the game can be sped up for free if the remaining time is below this threshold (default: 170 seconds = 2 minutes and 50 seconds). The maximum allowed value is 180 seconds (3 minutes). Set to 0 to disable free speedup. Adjust this value to account for lag or future game changes. Affects firestone researches, missions, experiments, and map reset timers. If the remaining time is less than or equal to this value, the speedup is free (no gems required).
 free_speedup_seconds = 170.0
+
+[alchemist]
+# Enables or disables the Alchemist automation task.
+# When disabled, this task will be ignored during the execution loop.
+enabled = false
+# ALCHEMIST EXPERIMENT RESOURCE CONFIGURATION. 
+# This setting controls which experiment resources are used. 
+# Valid IDs: 0=Dragon blood, 1=Strange dust, 2=Exotic coin. 
+# Enter comma-separated IDs (e.g. '0,1,2'). 
+# Any value other than 0, 1, or 2 will be ignored. 
+# Default: empty (no resources, bot selects any available resource). 
+# EXAMPLES: '0,1' = Use Dragon blood and Strange dust. '2' = Only use Exotic coin.
+resource_type = ""
 
 [engineer_tools]
 # Enables or disables the Engineer Tools automation task.
@@ -176,6 +189,14 @@ enabled = false
 enabled = false
 # Minimum number of free pickaxes required before claiming. Set to 1 to claim as soon as available, or up to 30 to wait for maximum. Default is 30 (wait for maximum).
 pickaxe_claim_threshold = 30
+
+[auto_skill]
+# The physical key used to manually toggle the AutoSkill execution state during gameplay. Default: F8.
+shortcut_key = "F8"
+# Enables or disables the AutoSkill automation task. When disabled, this task will be ignored during the execution loop. Default: false.
+enabled = false
+# Combo sequence as comma-separated numbers. Example: '1' will spam hotkey 1, '2,1,2' will execute hotkey 2, then 1, then 2, and repeat. Only values 1, 2, or 3 are valid. Default: 1.
+combo_sequence = "1"
 ```
 
 ## Example: Bot Info Log
