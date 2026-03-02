@@ -8,7 +8,7 @@ using MelonLoader;
 using UnityEngine;
 using Logger = Firebot.Core.Logger;
 
-namespace Firebot.BotAttack;
+namespace Firebot.BotActions;
 
 public static class AutoSkill
 {

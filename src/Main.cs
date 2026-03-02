@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Firebot.BotAttack;
+using Firebot.BotActions;
 using Firebot.Core;
 using MelonLoader;
 using UnityEngine;

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Logger = Firebot.Core.Logger;
 
-namespace Firebot.BotAttack;
+namespace Firebot.BotActions;
 
 public class Hotkey
 {
