@@ -64,11 +64,11 @@ public class AlchemistTask : BotTask
     {
         yield return Notifications.Experiments;
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         var resources = GetResourceTypes();
         var experiments = new Experiments();
         yield return experiments.Claim(resources);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         yield return experiments.Start(resources);
         NextRunTime = experiments.NextRunTime(resources);
         yield return Alchemist.Close;
