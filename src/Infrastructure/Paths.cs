@@ -91,7 +91,7 @@ public static class Paths
 
                 public static class UpgradesLoc
                 {
-                    private const string Root = CanvasLoc.Root + "/menus/Upgrades/";
+                    public const string Root = CanvasLoc.Root + "/menus/Upgrades/";
 
                     public const string CloseBtn = Root + "/closeButton";
 
@@ -100,6 +100,12 @@ public static class Paths
                     public const string BuyBtn = "/buyButton";
 
                     public const string LvlUpBtn = "/lvlUpButton";
+
+                    public const string ChangeLevelUpModeButton = Root + "/changeLevelUpModeButton";
+
+                    public const string GuardianUpgradeBtn = UpgradesList + "/guardianSlot/lvlUpButton";
+
+                    public const string GuardianUpgradeLvlTxt = GuardianUpgradeBtn + "/lvlUpNum";
                 }
             }
 
