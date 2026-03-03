@@ -13,14 +13,12 @@ namespace Firebot.BotActions;
 public static class AutoSkill
 {
     private static MelonPreferences_Entry<string> _comboSequence;
-
     private static List<Hotkey> _comboHotkeys;
     private static bool _isRunning;
-    private static object _routineHandle;
-
+    private static object _autoSkillRoutineHandle;
+    private static bool _isInitialized;
     private static MelonPreferences_Entry<KeyCode> _shortcutKey;
     private static MelonPreferences_Entry<bool> _isEnabled;
-
     private static bool IsEnabled => _isEnabled?.Value ?? false;
 
     private static KeyCode ShortcutKey =>
@@ -30,6 +28,7 @@ public static class AutoSkill
 
     public static void Initialize()
     {
+        if (_isInitialized) return;
         var clazzName = StringUtils.Humanize(nameof(AutoSkill));
         var sectionId = clazzName.Replace(" ", "_").ToLowerInvariant();
 
@@ -57,8 +56,10 @@ public static class AutoSkill
             "Combo sequence as comma-separated numbers. Example: '1' will spam hotkey 1, '2,1,2' will execute hotkey 2, then 1, then 2, and repeat. Only values 1, 2, or 3 are valid. Default: 1."
         );
 
-        ParseComboSequence();
+        section.SaveToFile();
+        _isInitialized = true;
 
+        ParseComboSequence();
         Logger.Info("AutoSkill configuration initialized.");
     }
 
@@ -94,7 +95,7 @@ public static class AutoSkill
     {
         if (!IsEnabled || _isRunning) return;
         _isRunning = true;
-        _routineHandle = MelonCoroutines.Start(ComboLoop());
+        _autoSkillRoutineHandle = MelonCoroutines.Start(ComboLoop());
     }
 
     public static void Update()
@@ -111,8 +112,8 @@ public static class AutoSkill
     {
         if (!_isRunning) return;
         _isRunning = false;
-        if (_routineHandle != null) MelonCoroutines.Stop(_routineHandle);
-        _routineHandle = null;
+        if (_autoSkillRoutineHandle != null) MelonCoroutines.Stop(_autoSkillRoutineHandle);
+        _autoSkillRoutineHandle = null;
     }
 
     private static IEnumerator ComboLoop()
