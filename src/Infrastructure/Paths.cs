@@ -48,13 +48,6 @@ public static class Paths
             public const string MapMissionsBtn = Root + "/MapMissions";
         }
 
-        public static class PlayerAvatarLoc
-        {
-            private const string Root = BattleLoc.Root + "/topLeftSideUI/playerAvatar";
-
-            public const string CharacterLevel = Root + "/characterLevelBg/characterLevel";
-        }
-
         public static class BottomSideUIDesktopLoc
         {
             private const string Root = BattleLoc.Root + "/bottomSideUIDesktop";
@@ -69,6 +62,13 @@ public static class Paths
 
                 public const string HotKeyThreeBtn = Root + "/abilityBattle (2)";
             }
+
+            public static class MenuButtonsLoc
+            {
+                private const string Root = BottomSideUIDesktopLoc.Root + "/menuButtons";
+
+                public const string UpgradesBtn = Root + "/upgradesButtonUI";
+            }
         }
     }
 
@@ -79,6 +79,29 @@ public static class Paths
         public static class CanvasLoc
         {
             private const string Root = MenusLoc.Root + "/menuCanvasParent/SafeArea/menuCanvas";
+
+            public static class MainSceneLoc
+            {
+                public static class PlayerAvatarLoc
+                {
+                    // private const string Root = BattleLoc.Root + "/topLeftSideUI/playerAvatar";
+
+                    // public const string CharacterLevel = Root + "/characterLevelBg/characterLevel";
+                }
+
+                public static class UpgradesLoc
+                {
+                    private const string Root = CanvasLoc.Root + "/menus/Upgrades/";
+
+                    public const string CloseBtn = Root + "/closeButton";
+
+                    public const string UpgradesList = Root + "/upgradesList";
+
+                    public const string BuyBtn = "/buyButton";
+
+                    public const string LvlUpBtn = "/lvlUpButton";
+                }
+            }
 
             private static class PopupsLoc
             {
