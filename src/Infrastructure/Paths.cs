@@ -103,9 +103,7 @@ public static class Paths
 
                     public const string ChangeLevelUpModeButton = Root + "/changeLevelUpModeButton";
 
-                    public const string GuardianUpgradeBtn = UpgradesList + "/guardianSlot/lvlUpButton";
-
-                    public const string GuardianUpgradeLvlTxt = GuardianUpgradeBtn + "/lvlUpNum";
+                    public const string ChangeLevelUpModeBtnTxt = ChangeLevelUpModeButton + "/text";
                 }
             }
 
