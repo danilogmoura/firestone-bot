@@ -124,6 +124,11 @@ enabled = false
 # EXAMPLES: '0,1' = Use Dragon blood and Strange dust. '2' = Only use Exotic coin.
 resource_type = ""
 
+[daily_rewards]
+# Enables or disables the Daily Rewards automation task.
+# When disabled, this task will be ignored during the execution loop.
+enabled = false
+
 [engineer_tools]
 # Enables or disables the Engineer Tools automation task.
 # When disabled, this task will be ignored during the execution loop.
@@ -197,6 +202,24 @@ shortcut_key = "F8"
 enabled = false
 # Combo sequence as comma-separated numbers. Example: '1' will spam hotkey 1, '2,1,2' will execute hotkey 2, then 1, then 2, and repeat. Only values 1, 2, or 3 are valid. Default: 1.
 combo_sequence = "1"
+
+[auto_upgrade]
+# The physical key used to manually toggle the AutoUpgrade execution state during gameplay. Default: F6.
+shortcut_key = "F6"
+# Enables or disables the AutoUpgrade automation task. When disabled, this task will be ignored during the execution loop. Default: false.
+enabled = false
+# AUTOUPGRADE TARGET SLOT CONFIGURATION. 
+# This setting controls which upgrade slots (heroes/skills) will be upgraded. 
+# SLOT IDs ARE ZERO-BASED and range from 0 to 6. 
+# ORIENTATION: Slot numbering follows the list from top to bottom. 
+# SLOT MAP: 0 = Base upgrade, 1 = Guardian, 2 to 6 = Heroes. 
+# TASK PRIORITY: Main bot tasks always have priority over AutoUpgrade. 
+# AUTO PAUSE/RESUME: When a main task is approaching, AutoUpgrade pauses about 30 seconds before that task runs, allows the task to execute, and then resumes automatically. 
+# HOW TO USE: Enter comma-separated slot IDs to select the targets to upgrade. 
+# EXAMPLES: '0,6' = only slots 0 and 6 will be upgraded. '3,1,5' = only slots 3, 1 and 5. 
+# If empty, AutoUpgrade will upgrade all visible slots. 
+# Invalid values are ignored.
+upgrade_target_slots = ""
 ```
 
 ## Example: Bot Info Log
@@ -211,8 +234,8 @@ combo_sequence = "1"
 
 *The big feature jump, utilizing the new structure created in previous versions.*
 
-- [ ] **Feature:** Daily Rewards automation.
-- [ ] **Feature:** Alchemist automation.
+- [x] **Feature:** Daily Rewards automation.
+- [x] **Feature:** Alchemist automation.
 - [ ] **Feature:** Liberation automation.
 
 ### Future Plans (v0.4.0+)
