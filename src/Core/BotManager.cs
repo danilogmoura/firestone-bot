@@ -14,20 +14,24 @@ namespace Firebot.Core;
 
 public static class BotManager
 {
-    private static List<BotTask> _tasks = new();
+    private const double AutoUpgradeMinExecutionWindowSeconds = 30d;
+    private static readonly List<BotTask> Tasks = new();
     private static object _botRoutineHandle;
+    private static bool _shouldPauseAutoUpgrade;
     public static bool IsRunning { get; private set; }
+    private static bool IsTaskExecuting { get; set; }
+
+    public static bool ShouldPauseAutoUpgrade() => IsRunning && (_shouldPauseAutoUpgrade || IsTaskExecuting);
 
     public static void Initialize()
     {
         const string targetNamespace = "Firebot.Behaviors";
-        _tasks.Clear();
+        Tasks.Clear();
 
         var assembly = Assembly.GetExecutingAssembly();
         var taskTypes = assembly.GetTypes()
             .Where(task => task.Namespace != null && task.Namespace.StartsWith(targetNamespace) &&
-                           task.IsSubclassOf(typeof(BotTask)) && !task.IsAbstract)
-            .ToList();
+                           task.IsSubclassOf(typeof(BotTask)) && !task.IsAbstract);
 
         foreach (var type in taskTypes)
             try
@@ -36,32 +40,32 @@ public static class BotManager
                 if (task != null)
                 {
                     task.InitializeConfig(ConfigPath);
-                    _tasks.Add(task);
-                    Logger.Debug($"[Loader] Registered task: {task.SectionTitle}");
+                    Tasks.Add(task);
                 }
             }
             catch (Exception e)
             {
-                Logger.Debug($"[Loader] Failed to load {type.Name}: {e.GetType().Name} - {e.Message}");
+                Logger.Info($"[Loader] Failed to load {type.Name}: {e.GetType().Name} - {e.Message}");
             }
-
-        _tasks = _tasks.ToList();
     }
 
     public static void Start()
     {
         if (IsRunning) return;
-        if (_tasks.Count == 0) Initialize();
+        if (Tasks.Count == 0) Initialize();
 
         IsRunning = true;
+        _shouldPauseAutoUpgrade = false;
         _botRoutineHandle = MelonCoroutines.Start(BotSchedulerLoop());
-        Logger.Info($"Started. Tasks loaded: {_tasks.Count(t => t.IsEnabled)}");
+        Logger.Info($"Started. Tasks loaded: {Tasks.Count(t => t.IsEnabled)}");
     }
 
     public static void Stop()
     {
         if (!IsRunning) return;
         IsRunning = false;
+        IsTaskExecuting = false;
+        _shouldPauseAutoUpgrade = false;
         if (_botRoutineHandle != null) MelonCoroutines.Stop(_botRoutineHandle);
         Logger.Info("Stopped.");
     }
@@ -75,9 +79,13 @@ public static class BotManager
             BotTask notificationTask = null;
             BotTask readyTask = null;
             var earliest = DateTime.MaxValue;
+            var nextEnabledTaskRun = DateTime.MaxValue;
 
-            foreach (var task in _tasks)
+            foreach (var task in Tasks)
             {
+                if (task.IsEnabled && task.NextRunTime < nextEnabledTaskRun)
+                    nextEnabledTaskRun = task.NextRunTime;
+
                 if (notificationTask == null && task.IsNotificationVisible())
                 {
                     notificationTask = task;
@@ -93,23 +101,32 @@ public static class BotManager
 
             if (notificationTask != null) readyTask = notificationTask;
 
+            var hasNearTask = nextEnabledTaskRun != DateTime.MaxValue &&
+                              (nextEnabledTaskRun - DateTime.Now).TotalSeconds <= AutoUpgradeMinExecutionWindowSeconds;
+            _shouldPauseAutoUpgrade = notificationTask != null || readyTask != null || hasNearTask;
 
             if (readyTask != null)
             {
-                yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup before {readyTask.SectionTitle}");
+                IsTaskExecuting = true;
+                try
+                {
+                    yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup before {readyTask.SectionTitle}");
+                    var stopwatch = Stopwatch.StartNew();
 
-                var stopwatch = Stopwatch.StartNew();
+                    yield return RunSafe(readyTask.Execute(), $"Task {readyTask.SectionTitle}");
+                    readyTask.LastRunTime = DateTime.Now;
 
-                yield return RunSafe(readyTask.Execute(), $"Task {readyTask.SectionTitle}");
-                readyTask.LastRunTime = DateTime.Now;
+                    stopwatch.Stop();
 
-                stopwatch.Stop();
-
-                Console.WriteLine();
-                Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
-                PrintTasksStatusTable();
-
-                yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
+                    Console.WriteLine();
+                    Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
+                    PrintTasksStatusTable();
+                    yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
+                }
+                finally
+                {
+                    IsTaskExecuting = false;
+                }
             }
 
             yield return new WaitForSeconds(ScanInterval);
@@ -120,10 +137,9 @@ public static class BotManager
     {
         if (routine == null)
         {
-            Logger.Debug($"[FAILED] {context} returned null routine.");
+            Logger.Info($"[FAILED] {context} returned null routine.");
             yield break;
         }
-
 
         var timeoutSeconds = MaxTaskRuntime;
         var timeoutEnabled = timeoutSeconds > 0f;
@@ -136,7 +152,7 @@ public static class BotManager
 
             if (timeoutEnabled && stopwatch.Elapsed.TotalSeconds > timeoutSeconds)
             {
-                Logger.Debug($"[FAILED] {context} timed out after {timeoutSeconds:0.###}s.");
+                Logger.Info($"[FAILED] {context} timed out after {timeoutSeconds:0.###}s.");
                 yield break;
             }
 
@@ -147,7 +163,7 @@ public static class BotManager
             }
             catch (Exception e)
             {
-                Logger.Debug($"[FAILED] {context} threw: {e.GetType().Name} - {e.Message}");
+                Logger.Info($"[FAILED] {context} threw: {e.GetType().Name} - {e.Message}");
                 yield break;
             }
 
@@ -163,8 +179,7 @@ public static class BotManager
         Logger.Info("| Next Run            | Time Left   | Task                      | Status        | Last Run            |");
         Logger.Info("|---------------------|-------------|---------------------------|---------------|---------------------|");
 
-        var ordered = _tasks.OrderBy(t => t.NextRunTime).ToList();
-        foreach (var t in ordered)
+        foreach (var t in Tasks.OrderBy(t => t.NextRunTime))
         {
             var status = GetTaskStatus(t);
             var nextRun = t.IsEnabled ? t.NextRunTime.ToString("MM/dd/yyyy HH:mm:ss") : "-";
@@ -179,7 +194,6 @@ public static class BotManager
     {
         if (!t.IsEnabled) return "Disabled";
         if (t.IsNotificationVisible()) return "Notification";
-        if (t.IsReady()) return "Ready";
-        return "Waiting";
+        return t.IsReady() ? "Ready" : "Waiting";
     }
 }

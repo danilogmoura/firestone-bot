@@ -27,6 +27,7 @@ public class Main : MelonMod
         BotSettings.Initialize();
         BotManager.Initialize();
         AutoSkill.Initialize();
+        AutoUpgrade.Initialize();
 
         LoggerInstance.Msg("Firebot System Initialized.");
     }
@@ -39,20 +40,18 @@ public class Main : MelonMod
         {
             if (BotSettings.AutoStart) BotManager.Start();
         }
-        else
-            BotManager.Stop();
+        else BotManager.Stop();
     }
 
     public override void OnUpdate()
     {
         if (_isGameReady && Input.GetKeyDown(BotSettings.ShortcutKey))
         {
-            if (BotManager.IsRunning)
-                BotManager.Stop();
-            else
-                BotManager.Start();
+            if (BotManager.IsRunning) BotManager.Stop();
+            else BotManager.Start();
         }
 
         AutoSkill.Update();
+        AutoUpgrade.Update();
     }
 }
