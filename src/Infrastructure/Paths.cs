@@ -46,6 +46,19 @@ public static class Paths
             public const string OracleRitualsBtn = Root + "/OracleRituals";
 
             public const string MapMissionsBtn = Root + "/MapMissions";
+
+            public const string OraclesGiftBtn = Root + "/OraclesGift";
+
+            public const string MysteryBoxBtn = Root + "/MysteryBox";
+
+            public const string CheckInBtn = Root + "/CheckIn";
+        }
+
+        public static class PlayerAvatarLoc
+        {
+            private const string Root = BattleLoc.Root + "/topLeftSideUI/playerAvatar";
+
+            public const string CharacterLevel = Root + "/characterLevelBg/characterLevel";
         }
 
         public static class BottomSideUIDesktopLoc
@@ -82,13 +95,6 @@ public static class Paths
 
             public static class MainSceneLoc
             {
-                public static class PlayerAvatarLoc
-                {
-                    // private const string Root = BattleLoc.Root + "/topLeftSideUI/playerAvatar";
-
-                    // public const string CharacterLevel = Root + "/characterLevelBg/characterLevel";
-                }
-
                 public static class UpgradesLoc
                 {
                     public const string Root = CanvasLoc.Root + "/menus/Upgrades/";
@@ -112,6 +118,44 @@ public static class Paths
                 public const string Root = CanvasLoc.Root + "/popups";
 
                 public const string CloseBtn = "/bg/closeButton";
+            }
+
+            public static class StoreLoc
+            {
+                private const string Root = CanvasLoc.Root + "/menus/Store";
+
+                private const string RootSubMenus = Root + "/bg/submenus";
+
+                public const string CloseBtn = Root + "/closeButton";
+
+                public static class MysteryBoxLoc
+                {
+                    public const string MysteryBoxBtn =
+                        RootSubMenus + "/valueBundle/Scroll View/Viewport/bundles/mysteryBox";
+
+                    public const string NextRunTimeTxt = MysteryBoxBtn + "/Graphics/renewText";
+                }
+
+                public static class CheckInLoc
+                {
+                    private const string Root = RootSubMenus + "/dailyRewards/Viewport/transparentFrame";
+
+                    public const string CheckInBtn = Root + "/checkIn";
+
+                    public const string NextRunTimeTxt = Root + "/textHolder/timer";
+                }
+            }
+
+            public static class OracleStoreLoc
+            {
+                public const string Root = CanvasLoc.Root + "/menus/OracleStore";
+
+                public const string CloseBtn = Root + "/closeButton";
+
+                public const string OraclesGift =
+                    Root + "/bg/submenus/valueBundles/Scroll View/Viewport/items/oraclesGift";
+
+                public const string OraclesGiftRenewTxt = OraclesGift + "/Graphics/renewText";
             }
 
             public static class MapLoc
