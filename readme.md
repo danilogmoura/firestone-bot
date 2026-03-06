@@ -38,7 +38,7 @@ This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https
 
 ## Downloads
 
-- **MelonLoader (Nightly V0.7.2+)**: <https://github.com/LavaGang/MelonLoader>
+- **MelonLoader (Nightly V0.7.2+)**: <https://github.com/LavaGang/MelonLoader/releases/latest>
 - **Latest Firebot Release**: <https://github.com/danilogmoura/firestone-bot/releases/latest>
 
 ---
