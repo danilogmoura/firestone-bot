@@ -59,33 +59,6 @@ By default, press **F7** to start or stop the bot during gameplay.
 
 ---
 
-## Installation (From Source)
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/danilogmoura/firestone-bot.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd firebot
-   ```
-
-3. Configure the path to your Firestone Idle RPG game directory by editing the `src/Directory.Build.props` file if needed:
-    - By default, the path is set to `C:\Program Files (x86)\Steam\Firestone` (Windows). If your game is installed elsewhere, change the `<GameRoot>` property in this file to the correct path.
-    - You can also set the environment variable `COMMON_DIR` to override the base directory. In this case, the game path will be `$(COMMON_DIR)\Firestone`.
-      - Example:
-
-          ```xml
-          <GameRoot>C:\Program Files (x86)\Steam\Firestone</GameRoot>
-          ```
-
-4. Build the project using your preferred method (e.g., Visual Studio, command line).
-
----
-
 ## CONFIG
 
 The bot configuration file can be found at `Firestone/UserData/FirebotPreferences.cfg`.
@@ -238,6 +211,33 @@ upgrade_target_slots = ""
 ## Example: Bot Info Log
 
 ![Bot Info Log Example](docs/bot-log-example.png)
+
+---
+
+## Installation (From Source)
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/danilogmoura/firestone-bot.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd firebot
+   ```
+
+3. Configure the path to your Firestone Idle RPG game directory by editing the `src/Directory.Build.props` file if needed:
+    - By default, the path is set to `C:\Program Files (x86)\Steam\Firestone` (Windows). If your game is installed elsewhere, change the `<GameRoot>` property in this file to the correct path.
+    - You can also set the environment variable `COMMON_DIR` to override the base directory. In this case, the game path will be `$(COMMON_DIR)\Firestone`.
+      - Example:
+
+          ```xml
+          <GameRoot>C:\Program Files (x86)\Steam\Firestone</GameRoot>
+          ```
+
+4. Build the project using your preferred method (e.g., Visual Studio, command line).
 
 ---
 
