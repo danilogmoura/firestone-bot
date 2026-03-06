@@ -36,11 +36,18 @@ This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https
 
 ---
 
+## Downloads
+
+- **MelonLoader (Nightly V0.7.2+)**: <https://github.com/LavaGang/MelonLoader>
+- **Latest Firebot Release**: <https://github.com/danilogmoura/firestone-bot/releases/latest>
+
+---
+
 ## How to Use (Pre-built Release)
 
 If you want to use the pre-built mod, follow these steps:
 
-1. **Download** the latest release from the [Releases](https://github.com/yourusername/firestone-bot/releases) page (e.g., `v0.2.2-alpha.zip`).
+1. **Download** the latest release from the [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) page (e.g., `v0.2.7-alpha.zip`).
 
 2. **Extract** the contents of the zip file into the root folder of Firestone Idle RPG (where the game executable is located).
    - The zip file already contains the `Mods`, `UserData`, and `UserLibs` folders with all necessary files.
