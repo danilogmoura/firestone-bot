@@ -19,14 +19,20 @@ This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https
 
 ## Features
 
-- **Offline Progress**: Automatically claims offline progress rewards
-- **Tools Production** (Engineer): Automatically collects produced tools from the Engineer
-- **Warfront Campaign**: Automatically collects Warfront campaign scrolls
-- **Missions**: Manages missions automatically - claims completed mission rewards and starts new missions with available squads
-- **Expeditions**: Manages expeditions - claims completed expedition rewards and starts new expeditions when available
-- **Firestone Research** (Library): Automatically starts research and claims completed research
-- **Oracle Rituals**: Claims completed rituals and starts new rituals when available
-- **Guardian Training** (Magic Quarters): Automatically initiates guardian training
+- **Core Bot Controls**: Toggle the main bot with `shortcut_key` (default `F7`), optionally auto-start on launch (`auto_start`), and fine-tune loop timing with `start_bot_delay`, `scan_interval`, `interaction_delay`, and `max_task_runtime`.
+- **Daily Rewards**: Claims daily rewards automatically when available (`[daily_rewards].enabled`).
+- **Engineer Tools**: Collects produced tools from the Engineer as soon as they are ready (`[engineer_tools].enabled`).
+- **Warfront Campaign Loot**: Claims available Warfront campaign scroll rewards (`[warfront_campaign_loot].enabled`).
+- **Map Missions**: Claims completed missions and starts new ones using available squads; mission selection order is configurable with `mission_time_order` (`asc`/`desc`).
+- **Expedition Management**: Claims completed expeditions and starts new expeditions automatically (`[expedition].enabled`).
+- **Firestone Research** (Library): Starts/claims research automatically and supports custom talent priority with `research_priority` (IDs `1-16`).
+- **Oracle Rituals**: Claims completed rituals and starts new rituals when possible (`[oracle].enabled`).
+- **Guardian Training** (Magic Quarters): Starts guardian training automatically with configurable guardian (`guardian_index`) and resource usage (`use_strange_dust`).
+- **Alchemist**: Runs alchemist experiments automatically and can restrict resources via `resource_type` (`0=Dragon blood`, `1=Strange dust`, `2=Exotic coin`).
+- **Free Pickaxes**: Claims free pickaxes automatically once `pickaxe_claim_threshold` is reached (`1-30`).
+- **AutoSkill**: Uses Leader skills automatically and allows creating custom Leader combos, with its own toggle key (`[auto_skill].shortcut_key`, default `F8`) and editable `combo_sequence` (`1-3`).
+- **AutoUpgrade**: Independent upgrade automation with its own toggle key (`[auto_upgrade].shortcut_key`, default `F6`) and optional slot targeting via `upgrade_target_slots` (`0-6`).
+- **Free Speedup Support**: Uses free speedups (no gems) when remaining time is at or below `free_speedup_seconds` (`0-180`) for supported timers.
 
 ---
 
