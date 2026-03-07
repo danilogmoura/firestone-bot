@@ -6,7 +6,7 @@ using Firebot.GameModel.Shared;
 
 namespace Firebot.Behaviors.Map;
 
-public class WarfrontCampaignLoot : BotTask
+public class WarfrontCampaignLootTask : BotTask
 {
     public override IEnumerator Execute()
     {
