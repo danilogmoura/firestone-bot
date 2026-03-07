@@ -212,11 +212,44 @@ public static class Paths
 
                 public static class WarfrontLoc
                 {
-                    private const string LootRoot = Root + "/submenus/warfrontCampaignSubmenu/loot";
+                    private const string Root = MapLoc.Root + "/submenus/warfrontCampaignSubmenu";
 
-                    public const string NextRunTimeTxt = LootRoot + "/nextLootTimeLeft";
+                    private const string LootBtn = Root + "/loot";
 
-                    public const string ClaimBtn = LootRoot + "/claimButton";
+                    public const string NextRunTimeTxt = LootBtn + "/nextLootTimeLeft";
+
+                    public const string ClaimBtn = LootBtn + "/claimButton";
+
+                    public const string DailyMissionsBtn = Root + "/dailyMissionsButton";
+
+                    public static class DailyMissionsLoc
+                    {
+                        public static class DailyMissionsPopup
+                        {
+                            private const string Root = PopupsLoc.Root + "/WFDailyMissions";
+
+                            public const string CloseBtn = Root + PopupsLoc.CloseBtn;
+
+                            public const string OpenBtn = Root + "/bg/liberationMissions/openButton";
+
+                            public const string NextRunTimeTxt = Root + "/bg/timeLeftMain/timeLeftText";
+                        }
+
+                        public static class LiberationMissionsPopup
+                        {
+                            private const string Root = PopupsLoc.Root + "/WFLiberationMissions";
+
+                            public const string CloseBtn = Root + PopupsLoc.CloseBtn;
+
+                            public const string Missions = Root + "/bg/missionsScrollView/Viewport/missionGrid";
+
+                            public const string FightBtn = "/fightButton";
+
+                            public const string Locked = "/locked";
+
+                            public const string WonTxt = "/wonText";
+                        }
+                    }
                 }
             }
 
@@ -225,6 +258,7 @@ public static class Paths
                 public static class EngineerLoc
                 {
                     private const string Root = CanvasLoc.Root + "/menus/Engineer";
+
                     public const string CloseBtn = Root + "/closeButton";
 
                     public const string ClaimBtn =
