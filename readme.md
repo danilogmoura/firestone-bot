@@ -1,17 +1,15 @@
 
 # Firebot
 
-Automation bot for Firestone Idle RPG, enhancing gameplay by automating repetitive tasks using MelonLoader.
+Automation bot for Firestone Idle RPG, focused on automating repetitive tasks through MelonLoader.
 
-Firebot can run in the background and supports any game language, making it flexible for all players.
-
-This bot aims to enhance the gaming experience by automating various tasks and providing useful features for players.
+Firebot runs in the background and supports any game language.
 
 ---
 
 ## About
 
-This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https://github.com/LavaGang/MelonLoader) **Nightly V0.7.2+**.
+This project is a mod for Firestone Idle RPG using [MelonLoader](https://github.com/LavaGang/MelonLoader).
 
 > **Note:** Firebot is currently supported only on **Windows**. It works with Firestone installations from **Steam** and **Epic Games**. The mod works in **any game language**, at **any resolution**, and can run in the **background**.
 
@@ -19,35 +17,35 @@ This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https
 
 ## Features
 
-- **Core Bot Controls**: Toggle the main bot with `shortcut_key` (default `F7`), optionally auto-start on launch (`auto_start`), and fine-tune loop timing with `start_bot_delay`, `scan_interval`, `interaction_delay`, and `max_task_runtime`.
-- **Daily Rewards**: Claims daily rewards automatically when available (`[daily_rewards].enabled`).
-- **Engineer Tools**: Collects produced tools from the Engineer as soon as they are ready (`[engineer_tools].enabled`).
-- **Warfront Campaign Loot**: Claims available Warfront campaign scroll rewards (`[warfront_campaign_loot].enabled`).
-- **Map Missions**: Claims completed missions and starts new ones using available squads; mission selection order is configurable with `mission_time_order` (`asc`/`desc`).
-- **Expedition Management**: Claims completed expeditions and starts new expeditions automatically (`[expedition].enabled`).
-- **Firestone Research** (Library): Starts/claims research automatically and supports custom talent priority with `research_priority` (IDs `1-16`).
-- **Oracle Rituals**: Claims completed rituals and starts new rituals when possible (`[oracle].enabled`).
-- **Guardian Training** (Magic Quarters): Starts guardian training automatically with configurable guardian (`guardian_index`) and resource usage (`use_strange_dust`).
-- **Alchemist**: Runs alchemist experiments automatically and can restrict resources via `resource_type` (`0=Dragon blood`, `1=Strange dust`, `2=Exotic coin`).
-- **Free Pickaxes**: Claims free pickaxes automatically once `pickaxe_claim_threshold` is reached (`1-30`).
-- **AutoSkill**: Uses Leader skills automatically and allows creating custom Leader combos, with its own toggle key (`[auto_skill].shortcut_key`, default `F8`) and editable `combo_sequence` (`1-3`).
-- **AutoUpgrade**: Independent upgrade automation with its own toggle key (`[auto_upgrade].shortcut_key`, default `F6`) and optional slot targeting via `upgrade_target_slots` (`0-6`).
-- **Free Speedup Support**: Uses free speedups (no gems) when remaining time is at or below `free_speedup_seconds` (`0-180`) for supported timers.
+- **Easy Start/Stop**: Turn the bot on or off during gameplay with a hotkey (default `F7`).
+- **Automatic Daily Rewards**: Collects daily rewards for you when they are available.
+- **Engineer Collection**: Picks up ready Engineer tools automatically.
+- **Warfront Rewards**: Collects available Warfront campaign scroll rewards.
+- **Map Missions on Auto**: Collects finished missions and starts new ones with available squads.
+- **Expeditions on Auto**: Finishes and restarts expeditions automatically.
+- **Library Research Automation**: Starts and collects Firestone research, with optional priority order.
+- **Oracle Automation**: Collects completed rituals and starts new ones when possible.
+- **Guardian Training Automation**: Starts training in Magic Quarters automatically.
+- **Alchemist Automation**: Runs alchemist experiments and can focus on specific resources.
+- **Free Pickaxe Claiming**: Claims free pickaxes automatically based on your preferred quantity.
+- **AutoSkill Mode**: Uses leader skills automatically, with its own key and combo setup.
+- **AutoUpgrade Mode**: Upgrades heroes/skills automatically, with its own key and optional slot selection.
+- **Free Speedups**: Uses free speedups (no gems) whenever a timer is close enough to finish.
 
 ---
 
 ## Downloads
 
-- **MelonLoader (Nightly V0.7.2+)**: <https://github.com/LavaGang/MelonLoader/releases/latest>
+- **MelonLoader**: <https://github.com/LavaGang/MelonLoader/releases/latest>
 - **Latest Firebot Release**: <https://github.com/danilogmoura/firestone-bot/releases/latest>
 
 ---
 
 ## How to Use (Pre-built Release)
 
-If you want to use the pre-built mod (no source build), follow this full step-by-step guide.
+If you want to use the pre-built mod (no manual compilation), follow this step-by-step guide.
 
-### 1) Install MelonLoader (required)
+### 1) Install MelonLoader (Required)
 
 1. Download [MelonLoader V0.7.2+](https://github.com/LavaGang/MelonLoader/releases/latest).
 2. Run the MelonLoader installer.
@@ -66,7 +64,7 @@ If you want to use the pre-built mod (no source build), follow this full step-by
 
 Quick check: after installation, the game folder should contain MelonLoader-related files/folders (for example `MelonLoader`).
 
-### 2) Install Firebot files
+### 2) Install Firebot Files (Required)
 
 1. Download the latest Firebot package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) (example: `v0.2.7-alpha.zip`).
 2. Extract the zip contents into the Firestone root folder (same folder as `Firestone.exe`).
@@ -74,13 +72,13 @@ Quick check: after installation, the game folder should contain MelonLoader-rela
 
 The zip already includes the correct structure (`Mods`, `UserData`).
 
-### 3) First launch
+### 3) First Launch (Required)
 
 1. Start Firestone normally (through **Steam** or **Epic Games**).
 2. Wait for the game to fully load.
 3. Press **F7** to toggle Firebot on/off.
 
-### 4) How to update Firebot (next versions)
+### 4) How to Update Firebot (When Needed)
 
 When a new Firebot version is released, you do not need to reinstall everything.
 
@@ -89,17 +87,17 @@ When a new Firebot version is released, you do not need to reinstall everything.
 3. Replace only this file in your game folder: `Mods/firebot.dll`.
 4. Start the game once so Firebot can load the new version.
 
-If the new version includes additional config options, they will be added automatically to your existing `FirebotPreferences.cfg` on the first execution.
+If the new version includes additional configuration options, they will be added automatically to your existing `FirebotPreferences.cfg` on the first execution.
 
-To change these new options, follow the same safe flow used before: close the game, edit config, save, and open the game again.
+When you want to adjust these options, follow the safe configuration flow in section `5) Configure Firebot correctly`.
 
-### 5) Configure Firebot correctly (important)
+### 5) Configure Firebot Correctly (Required)
 
-The config file is:
+The configuration file is:
 
 `Firestone/UserData/FirebotPreferences.cfg`
 
-To ensure your config is applied safely, always use this sequence:
+To ensure your configuration is applied safely, always use this sequence:
 
 1. **Close the game completely**.
 2. Edit `FirebotPreferences.cfg`.
@@ -108,7 +106,7 @@ To ensure your config is applied safely, always use this sequence:
 
 If you change settings while the game is open, the new values may not be applied correctly.
 
-### 6) Using MelonLoader logs for troubleshooting
+### 6) Troubleshooting with MelonLoader Logs (Optional)
 
 - Main runtime log: `Firestone/MelonLoader/Latest.log`
 - Use this log if Firebot does not load, does not start with `F7`, or behaves unexpectedly.
@@ -116,15 +114,15 @@ If you change settings while the game is open, the new values may not be applied
 
 ---
 
-## CONFIG
+## Configuration
 
-The bot configuration file can be found at `Firestone/UserData/FirebotPreferences.cfg`.
+Configuration reference file: `Firestone/UserData/FirebotPreferences.cfg`.
 
-Default toggle key: **F7** (changeable via `shortcut_key`).
+For the safe editing workflow (close game -> edit -> reopen), follow section `5) Configure Firebot correctly`.
 
 For now, all configuration must be done directly in this file. A graphical configuration interface will be implemented in the future.
 
-Here is a list of the current config options (and their default values):
+Here is a list of the current configuration options (and their default values):
 
 ---
 
