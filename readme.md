@@ -55,13 +55,14 @@ If you want to use the pre-built mod (no source build), follow this full step-by
 4. When asked for the game executable, select your `Firestone.exe` file (inside your Firestone install folder).
 5. Finish installation and wait until the installer confirms success.
 
-**A) Game selection in installer**
+<p align="center">
+   <img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="40%" />
+   <img src="docs/melonloader-b.png" alt="MelonLoader installer - Enable Nightly builds" width="40%" />
+</p>
 
-<img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="360" />
-
-**B) Enable Nightly builds option**
-
-<img src="docs/melonloader-b.png" alt="MelonLoader installer - Enable Nightly builds" width="360" />
+<p align="center">
+   <sub>Left: game selection in installer | Right: keep <strong>Enable Nightly builds</strong> checked</sub>
+</p>
 
 Quick check: after installation, the game folder should contain MelonLoader-related files/folders (for example `MelonLoader`).
 
@@ -266,7 +267,9 @@ upgrade_target_slots = ""
 
 ## Example: Bot Info Log
 
-![Bot Info Log Example](docs/bot-log-example.png)
+<p align="center">
+   <img src="docs/bot-log-example.png" alt="Bot Info Log Example" width="80%" />
+</p>
 
 ---
 
