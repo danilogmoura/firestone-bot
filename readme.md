@@ -57,11 +57,11 @@ If you want to use the pre-built mod (no source build), follow this full step-by
 
 **A) Game selection in installer**
 
-<img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="420" />
+<img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="360" />
 
 **B) Enable Nightly builds option**
 
-<img src="docs/melonloader-b.png" alt="MelonLoader installer - Enable Nightly builds" width="420" />
+<img src="docs/melonloader-b.png" alt="MelonLoader installer - Enable Nightly builds" width="360" />
 
 Quick check: after installation, the game folder should contain MelonLoader-related files/folders (for example `MelonLoader`).
 
