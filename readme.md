@@ -5,6 +5,12 @@ Automation bot for Firestone Idle RPG, focused on automating repetitive tasks th
 
 Firebot runs in the background and supports any game language.
 
+## Quick Start
+
+1. Install [MelonLoader V0.7.2+](https://github.com/LavaGang/MelonLoader/releases/latest) in `Firestone.exe`.
+2. Download the latest Firebot release and extract it into the Firestone root folder.
+3. Launch the game and press `F7` to toggle Firebot.
+
 ---
 
 ## About
@@ -12,6 +18,10 @@ Firebot runs in the background and supports any game language.
 This project is a mod for Firestone Idle RPG using [MelonLoader](https://github.com/LavaGang/MelonLoader).
 
 > **Note:** Firebot is currently supported only on **Windows**. It works with Firestone installations from **Steam** and **Epic Games**. The mod works in **any game language**, at **any resolution**, and can run in the **background**.
+
+## Disclaimer: Not a Cheat
+
+Firebot **is not a cheat**. It does not modify game resources, grant unfair advantages, interfere with server logic, or alter game files. The bot only automates actions that a player could perform manually, without bypassing any security or protection mechanisms of the game.
 
 ---
 
@@ -41,7 +51,7 @@ This project is a mod for Firestone Idle RPG using [MelonLoader](https://github.
 
 ---
 
-## How to Use (Pre-built Release)
+## How to Use (Prebuilt Release)
 
 If you want to use the pre-built mod (no manual compilation), follow this step-by-step guide.
 
@@ -111,6 +121,12 @@ If you change settings while the game is open, the new values may not be applied
 - Main runtime log: `Firestone/MelonLoader/Latest.log`
 - Use this log if Firebot does not load, does not start with `F7`, or behaves unexpectedly.
 - In most cases, checking this file is the fastest way to identify installation or configuration issues.
+
+### Example Bot Info Log
+
+<p align="center">
+   <img src="docs/bot-log-example.png" alt="Bot Info Log Example" width="90%" />
+</p>
 
 ---
 
@@ -263,12 +279,6 @@ enabled = false
 upgrade_target_slots = ""
 ```
 
-## Example: Bot Info Log
-
-<p align="center">
-   <img src="docs/bot-log-example.png" alt="Bot Info Log Example" width="90%" />
-</p>
-
 ---
 
 ## Installation (From Source)
@@ -298,17 +308,13 @@ upgrade_target_slots = ""
 
 ---
 
+## Contributing
+
+Contributions are welcome! Please submit a pull request or open an issue for suggestions or improvements.
+
 ## Roadmap & Next Steps
 
-### v0.3.0 - Gameplay Expansion (Feature Update)
-
-*The big feature jump, utilizing the new structure created in previous versions.*
-
-- [x] **Feature:** Daily Rewards automation.
-- [x] **Feature:** Alchemist automation.
-- [ ] **Feature:** Liberation automation.
-
-### Future Plans (v0.4.0+)
+### Future Plans (v0.3.0+)
 
 - [ ] **UI:** Full in-game configuration interface (No more `.cfg` files needed).
 
@@ -327,14 +333,6 @@ Found a bug or have an idea for a new feature? Please open a ticket on our GitHu
 [**Open a New Issue**](https://github.com/danilogmoura/firebot/issues/new/choose)
 
 ---
-
-## Contributing
-
-Contributions are welcome! Please submit a pull request or open an issue for suggestions or improvements.
-
-## Disclaimer: Not a Cheat
-
-Firebot **is not a cheat**. It does not modify game resources, grant unfair advantages, interfere with server logic, or alter game files. The bot only automates actions that a player could perform manually, without bypassing any security or protection mechanisms of the game.
 
 ## Technical Details
 
