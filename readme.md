@@ -13,7 +13,7 @@ This bot aims to enhance the gaming experience by automating various tasks and p
 
 This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https://github.com/LavaGang/MelonLoader) **Nightly V0.7.2+**.
 
-> **Note:** Firebot is currently supported only on **Windows**. The mod works with Firestone Idle RPG in **any game language**, at **any resolution**, and can run in the **background**.
+> **Note:** Firebot is currently supported only on **Windows**. It works with Firestone installations from **Steam** and **Epic Games**. The mod works in **any game language**, at **any resolution**, and can run in the **background**.
 
 ---
 
@@ -45,17 +45,65 @@ This project is a mod for the game Firestone Idle RPG, using [MelonLoader](https
 
 ## How to Use (Pre-built Release)
 
-If you want to use the pre-built mod, follow these steps:
+If you want to use the pre-built mod (no source build), follow this full step-by-step guide.
 
-1. **Download** the latest release from the [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) page (e.g., `v0.2.7-alpha.zip`).
+### 1) Install MelonLoader (required)
 
-2. **Extract** the contents of the zip file into the root folder of Firestone Idle RPG (where the game executable is located).
-   - The zip file already contains the `Mods`, `UserData`, and `UserLibs` folders with all necessary files.
-   - If prompted, allow overwriting existing files.
-3. Make sure [MelonLoader Nightly V0.7.2+](https://github.com/LavaGang/MelonLoader) is installed in your game.
-4. Start the game normally. Firebot will be loaded automatically by MelonLoader.
+1. Download [MelonLoader V0.7.2+](https://github.com/LavaGang/MelonLoader/releases/latest).
+2. Run the MelonLoader installer.
+3. In the installer, keep **Enable Nightly builds** checked and select a `0.7.2-ci` (or newer) version.
+4. When asked for the game executable, select your `Firestone.exe` file (inside your Firestone install folder).
+5. Finish installation and wait until the installer confirms success.
 
-By default, press **F7** to start or stop the bot during gameplay.
+Quick check: after installation, the game folder should contain MelonLoader-related files/folders (for example `MelonLoader`).
+
+### 2) Install Firebot files
+
+1. Download the latest Firebot package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) (example: `v0.2.7-alpha.zip`).
+2. Extract the zip contents into the Firestone root folder (same folder as `Firestone.exe`).
+3. Allow overwrite if Windows asks.
+
+The zip already includes the correct structure (`Mods`, `UserData`).
+
+### 3) First launch
+
+1. Start Firestone normally (through **Steam** or **Epic Games**).
+2. Wait for the game to fully load.
+3. Press **F7** to toggle Firebot on/off.
+
+### 4) How to update Firebot (next versions)
+
+When a new Firebot version is released, you do not need to reinstall everything.
+
+1. **Close the game completely**.
+2. Download the new release package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest).
+3. Replace only this file in your game folder: `Mods/firebot.dll`.
+4. Start the game once so Firebot can load the new version.
+
+If the new version includes additional config options, they will be added automatically to your existing `FirebotPreferences.cfg` on the first execution.
+
+To change these new options, follow the same safe flow used before: close the game, edit config, save, and open the game again.
+
+### 5) Configure Firebot correctly (important)
+
+The config file is:
+
+`Firestone/UserData/FirebotPreferences.cfg`
+
+To ensure your config is applied safely, always use this sequence:
+
+1. **Close the game completely**.
+2. Edit `FirebotPreferences.cfg`.
+3. Save the file.
+4. Open the game again.
+
+If you change settings while the game is open, the new values may not be applied correctly.
+
+### 6) Using MelonLoader logs for troubleshooting
+
+- Main runtime log: `Firestone/MelonLoader/Latest.log`
+- Use this log if Firebot does not load, does not start with `F7`, or behaves unexpectedly.
+- In most cases, checking this file is the fastest way to identify installation or configuration issues.
 
 ---
 
