@@ -55,6 +55,14 @@ If you want to use the pre-built mod (no source build), follow this full step-by
 4. When asked for the game executable, select your `Firestone.exe` file (inside your Firestone install folder).
 5. Finish installation and wait until the installer confirms success.
 
+**A) Game selection in installer**
+
+<img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="420" />
+
+**B) Enable Nightly builds option**
+
+<img src="docs/melonloader-b.png" alt="MelonLoader installer - Enable Nightly builds" width="420" />
+
 Quick check: after installation, the game folder should contain MelonLoader-related files/folders (for example `MelonLoader`).
 
 ### 2) Install Firebot files
