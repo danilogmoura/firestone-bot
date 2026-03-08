@@ -23,6 +23,8 @@ This project is a mod for Firestone Idle RPG using [MelonLoader](https://github.
 
 Firebot **is not a cheat**. It does not modify game resources, grant unfair advantages, interfere with server logic, or alter game files. The bot only automates actions that a player could perform manually, without bypassing any security or protection mechanisms of the game.
 
+> **Transparency:** Firebot is open source, and its code is publicly available for review and audit.
+
 ---
 
 ## Features
