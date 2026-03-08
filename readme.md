@@ -268,7 +268,7 @@ upgrade_target_slots = ""
 ## Example: Bot Info Log
 
 <p align="center">
-   <img src="docs/bot-log-example.png" alt="Bot Info Log Example" width="80%" />
+   <img src="docs/bot-log-example.png" alt="Bot Info Log Example" width="90%" />
 </p>
 
 ---
