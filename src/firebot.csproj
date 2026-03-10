@@ -54,6 +54,9 @@
         <Reference Include="UnityEngine.UIModule">
             <HintPath>$(Il2CppAssembliesDir)\UnityEngine.UIModule.dll</HintPath>
         </Reference>
+        <Reference Include="Il2CppCoreASM">
+            <HintPath>$(Il2CppAssembliesDir)\Il2CppCoreASM.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="Build">
