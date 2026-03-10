@@ -132,7 +132,7 @@ If you change settings while the game is open, the new values may not be applied
 
 ### 7) If the Game Updates and Firebot Stops Working
 
-If the game changes version and Firebot does not work correctly, use one of the methods below.
+Use the methods below only if the game changes version and Firebot stops working.
 
 #### Method 1: Assembly Cache Cleanup
 
@@ -154,6 +154,7 @@ If the game changes version and Firebot does not work correctly, use one of the 
 5. Start the game again.
 
 Important: no matter which method you choose, always replace only `Mods/firebot.dll` to update Firebot.
+If Firebot is working normally, do not run these recovery methods.
 
 ---
 
