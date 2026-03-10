@@ -130,6 +130,31 @@ If you change settings while the game is open, the new values may not be applied
    <img src="docs/bot-log-example.png" alt="Bot Info Log Example" width="90%" />
 </p>
 
+### 7) If the Game Updates and Firebot Stops Working
+
+If the game changes version and Firebot does not work correctly, use one of the methods below.
+
+#### Method 1: Assembly Cache Cleanup
+
+1. Close the game completely.
+2. Go to your game folder and delete all contents inside `MelonLoader/Il2CppAssemblies`.
+3. In `MelonLoader/Dependencies/Il2CppAssemblyGenerator`, keep only:
+   - `Il2CppAssemblyGenerator.deps.json`
+   - `Il2CppAssemblyGenerator.dll`
+4. Delete `MelonLoader/Dependencies/AssemblyUnhollower` (if it exists).
+5. Start the game again.
+6. Replace only `Mods/firebot.dll` with the latest version.
+
+#### Method 2: Reinstall MelonLoader
+
+1. Close the game completely.
+2. Delete the `MelonLoader` folder from the game root.
+3. Reinstall MelonLoader as described in this README.
+4. Replace only `Mods/firebot.dll` with the latest version.
+5. Start the game again.
+
+Important: no matter which method you choose, always replace only `Mods/firebot.dll` to update Firebot.
+
 ---
 
 ## Configuration

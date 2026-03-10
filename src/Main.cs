@@ -5,7 +5,7 @@ using MelonLoader;
 using UnityEngine;
 using Main = Firebot.Main;
 
-[assembly: MelonInfo(typeof(Main), "Firebot", "0.1.0", "danilogmoura", "https://github.com/danilogmoura/firebot")]
+[assembly: MelonInfo(typeof(Main), "Firebot", "0.2.7-alpha.1", "danilogmoura", "https://github.com/danilogmoura/firebot")]
 [assembly: MelonGame]
 
 [assembly: MelonColor(255, 255, 0, 255)]
