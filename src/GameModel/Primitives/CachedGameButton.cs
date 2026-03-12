@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Firebot.GameModel.Base;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,6 +10,8 @@ namespace Firebot.GameModel.Primitives;
 
 public class CachedGameButton : GameButton
 {
+    private static readonly object WaitCacheSync = new();
+    private static readonly Dictionary<float, WaitForSeconds> WaitCache = new();
     private Transform _cachedRoot;
 
     public CachedGameButton(string path = null, GameElement parent = null, Transform transform = null)
@@ -82,7 +85,22 @@ public class CachedGameButton : GameButton
         else if (button != null)
             Debug($"[FAILED] Click ignored: Button disabled/non-interactable. Path: {Path}");
 
-        yield return new WaitForSeconds(interactionDelay);
+        yield return GetWaitForSeconds(interactionDelay);
+    }
+
+    private static WaitForSeconds GetWaitForSeconds(float seconds)
+    {
+        lock (WaitCacheSync)
+            if (WaitCache.TryGetValue(seconds, out var wait))
+                return wait;
+
+        var createdWait = new WaitForSeconds(seconds);
+
+        lock (WaitCacheSync)
+        {
+            WaitCache[seconds] = createdWait;
+            return createdWait;
+        }
     }
 
     public IEnumerator HoldButton(float maxSeconds = 3f)
