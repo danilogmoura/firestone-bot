@@ -28,6 +28,7 @@ public class Main : MelonMod
         BotManager.Initialize();
         AutoSkill.Initialize();
         AutoUpgrade.Initialize();
+        AutoResourceDrop.Initialize();
 
         LoggerInstance.Msg("Firebot System Initialized.");
     }
@@ -53,5 +54,6 @@ public class Main : MelonMod
 
         AutoSkill.Update();
         AutoUpgrade.Update();
+        AutoResourceDrop.Update();
     }
 }
