@@ -83,6 +83,27 @@ public static class Paths
                 public const string UpgradesBtn = Root + "/upgradesButtonUI";
             }
         }
+
+        public static class BattleResourceDropLoc
+        {
+            private const string Root = "battleRoot/battleMain/battleCanvas";
+
+            public const string MeteoriteHunterBtn = Root + "/MeteoriteHunter";
+
+            public const string MeteoriteHunterHunter = MeteoriteHunterBtn + "/hunter";
+
+            public const string CoworkerMeteoriteHunterBtn = Root + "/CoworkerMeteoriteHunter";
+
+            public const string CoworkerMeteoriteHunterHunter = CoworkerMeteoriteHunterBtn + "/hunter";
+
+            public const string DragonWithBeerBtn = Root + "/DragonWithBeer";
+
+            public const string DragonWithBeerHunter = DragonWithBeerBtn + "/dragon";
+
+            public const string FemaleDragonWithBeerBtn = Root + "/FemaleDragonWithBeer";
+
+            public const string FemaleDragonWithBeerHunter = FemaleDragonWithBeerBtn + "/femaleDragon";
+        }
     }
 
     public static class MenusLoc
@@ -110,6 +131,21 @@ public static class Paths
                     public const string ChangeLevelUpModeButton = Root + "/changeLevelUpModeButton";
 
                     public const string ChangeLevelUpModeBtnTxt = ChangeLevelUpModeButton + "/text";
+                }
+
+                public static class InventoryLoc
+                {
+                    public const string Root = CanvasLoc.Root + "/menus/Inventory";
+                 
+                    public const string CloseBtn = Root + "/closeButton";
+
+                    public const string ItemsList = Root + "/submenus/items/ScrollView/Viewport/Content";
+
+                    public const string MeteoriteItem = ItemsList + "/Meteorite";
+
+                    public const string BeerItem = ItemsList + "/Beer";
+
+                    public const string ItemQuantity = "/quantity";
                 }
             }
 
