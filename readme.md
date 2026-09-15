@@ -1,6 +1,8 @@
 
 # Firebot
 
+[![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?logo=discord&logoColor=white)](https://discord.gg/JB8RJAs6J3)
+
 Automation bot for Firestone Idle RPG, focused on automating repetitive tasks through MelonLoader.
 
 ## Quick Start
@@ -335,3 +337,11 @@ Found a bug or have an idea for a new feature? Please open a ticket on our GitHu
 3. Attach your **MelonLoader log** file if the game crashed or the bot failed (see [6) Troubleshooting with MelonLoader Logs](#6-troubleshooting-with-melonloader-logs-optional)).
 
 [**Open a New Issue**](https://github.com/danilogmoura/firestone-bot/issues/new/choose)
+
+---
+
+## Contact
+
+Questions, suggestions or anything else? Reach out on Discord:
+
+- **Discord server:** [discord.gg/JB8RJAs6J3](https://discord.gg/JB8RJAs6J3)
