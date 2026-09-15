@@ -166,10 +166,11 @@ public static class Paths
 
                 public static class MysteryBoxLoc
                 {
-                    public const string MysteryBoxBtn =
-                        RootSubMenus + "/valueBundle/Scroll View/Viewport/bundles/mysteryBox";
+                    private const string Root = RootSubMenus + "/extremeValueBundles/bundles/mysteryBox/Graphics";
 
-                    public const string NextRunTimeTxt = MysteryBoxBtn + "/Graphics/renewText";
+                    public const string MysteryBoxBtn = Root + "/purchaseButton";
+
+                    public const string NextRunTimeTxt = Root + "/renewText";
                 }
 
                 public static class CheckInLoc
@@ -188,10 +189,11 @@ public static class Paths
 
                 public const string CloseBtn = Root + "/closeButton";
 
-                public const string OraclesGift =
-                    Root + "/bg/submenus/valueBundles/Scroll View/Viewport/items/oraclesGift";
+                private const string OraclesGift = Root + "/bg/submenus/extremeValueBundles/items/oraclesGift/Graphics";
 
-                public const string OraclesGiftRenewTxt = OraclesGift + "/Graphics/renewText";
+                public const string OraclesGiftBtn = OraclesGift + "/purchaseButton/";
+
+                public const string OraclesGiftRenewTxt = OraclesGift + "/renewText";
             }
 
             public static class MapLoc

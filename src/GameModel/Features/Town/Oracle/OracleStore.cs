@@ -12,7 +12,7 @@ public static class OracleStore
 
     public static IEnumerator Close => new GameButton(Paths.MenusLoc.CanvasLoc.OracleStoreLoc.CloseBtn).Click();
 
-    public static IEnumerator ClaimGift => new GameButton(Paths.MenusLoc.CanvasLoc.OracleStoreLoc.OraclesGift).Click();
+    public static IEnumerator ClaimGift => new GameButton(Paths.MenusLoc.CanvasLoc.OracleStoreLoc.OraclesGiftBtn).Click();
 
     public static DateTime NextRunTime =>
         new GameText(Paths.MenusLoc.CanvasLoc.OracleStoreLoc.OraclesGiftRenewTxt).Time;

@@ -53,7 +53,7 @@ public static class AutoResourceDrop
 
         section.SaveToFile();
         _isInitialized = true;
-        Logger.Info($"{clazzName} configuration initialized.");
+        Logger.Debug($"{clazzName} configuration initialized.");
     }
 
 
@@ -76,7 +76,7 @@ public static class AutoResourceDrop
         ClickCounts.Clear();
         _isRunning = true;
         _autoResourceDropHandle = MelonCoroutines.Start(Loop());
-        Logger.Info($"{nameof(AutoResourceDrop)} started.");
+        Logger.Debug($"{nameof(AutoResourceDrop)} started.");
     }
 
     private static void Stop()
@@ -86,7 +86,7 @@ public static class AutoResourceDrop
         if (_autoResourceDropHandle != null) MelonCoroutines.Stop(_autoResourceDropHandle);
         _autoResourceDropHandle = null;
         foreach (var target in Targets) target.WasVisible = false;
-        Logger.Info($"{nameof(AutoResourceDrop)} stopped.");
+        Logger.Debug($"{nameof(AutoResourceDrop)} stopped.");
     }
 
     private static IEnumerator Loop()
@@ -110,7 +110,7 @@ public static class AutoResourceDrop
                 ClickCounts[target.ResourceId]++;
 
                 var timestamp = System.DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
-                Logger.Info($"[{timestamp}] Resource drop collected: {target.ResourceId} (count: {ClickCounts[target.ResourceId]})");
+                Logger.Debug($"[{timestamp}] Resource drop collected: {target.ResourceId} (count: {ClickCounts[target.ResourceId]})");
                 clickedAny = true;
             }
 
