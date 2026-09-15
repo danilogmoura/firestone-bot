@@ -28,25 +28,21 @@ public class AlchemistTask : BotTask
             $"\nValid IDs: 0=Dragon blood, 1=Strange dust, 2=Exotic coin. " +
             $"\nEnter comma-separated IDs (e.g. '0,1,2'). " +
             $"\nAny value other than 0, 1, or 2 will be ignored. " +
-            $"\nDefault: empty (no resources, bot selects any available resource). " +
+            $"\nDefault: empty. If no value is provided, the task will be disabled." +
             $"\nEXAMPLES: '0,1' = Use Dragon blood and Strange dust. '2' = Only use Exotic coin."
         );
     }
 
     private string[] GetResourceTypes()
     {
-        if (_resourceType == null)
+        if (_resourceType == null || string.IsNullOrWhiteSpace(_resourceType.Value))
         {
-            Debug("[INFO] Missing resource_type entry. No resources set.");
+            Debug("[INFO] Missing resource_type entry. No resources set. Task will be disabled.");
+            IsEnabled = false;
             return Array.Empty<string>();
         }
 
         var value = _resourceType.Value;
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            Debug("[INFO] Empty resource_type value. No resources set.");
-            return Array.Empty<string>();
-        }
 
         var validIds = new[] { "0", "1", "2" };
         var resources = value.Split(',')

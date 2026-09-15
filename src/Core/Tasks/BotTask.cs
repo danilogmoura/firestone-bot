@@ -27,7 +27,11 @@ public abstract class BotTask
 
     protected virtual string NotificationPath => null;
 
-    public bool IsEnabled => _enabledEntry != null && _enabledEntry.Value;
+    public bool IsEnabled
+    {
+        get => _enabledEntry?.Value ?? false;
+        protected set => _enabledEntry.Value = value;
+    }
 
     private GameElement NotificationElement
     {
