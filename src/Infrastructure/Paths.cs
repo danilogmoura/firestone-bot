@@ -67,7 +67,7 @@ public static class Paths
 
             public static class LeaderPanelLoc
             {
-                private const string Root = BottomSideUIDesktopLoc.Root + "/leaderPanel";
+                private const string Root = BottomSideUIDesktopLoc.Root + "/leaderPanel/abilitiesContainer";
 
                 public const string HotKeyOneBtn = Root + "/abilityBattle (0)";
 
