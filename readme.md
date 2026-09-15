@@ -3,13 +3,13 @@
 
 Automation bot for Firestone Idle RPG, focused on automating repetitive tasks through MelonLoader.
 
-Firebot runs in the background and supports any game language.
-
 ## Quick Start
 
-1. Install [MelonLoader V0.7.2+](https://github.com/LavaGang/MelonLoader/releases/latest) in `Firestone.exe`.
+1. Install [MelonLoader V0.7.3+](https://github.com/LavaGang/MelonLoader/releases/latest) in `Firestone.exe`.
 2. Download the latest Firebot release and extract it into the Firestone root folder.
 3. Launch the game and press `F7` to toggle Firebot.
+
+For the detailed step-by-step guide, see [How to Use (Prebuilt Release)](#how-to-use-prebuilt-release).
 
 ---
 
@@ -29,20 +29,22 @@ Firebot **is not a cheat**. It does not modify game resources, grant unfair adva
 
 ## Features
 
-- **Easy Start/Stop**: Turn the bot on or off during gameplay with a hotkey (default `F7`, `shortcut_key`). You can also auto-start and adjust bot timings with `auto_start`, `start_bot_delay`, `scan_interval`, `interaction_delay`, and `max_task_runtime`.
-- **Automatic Daily Rewards**: Collects daily rewards for you when they are available.
+- **Easy Start/Stop**: Toggles the bot on or off during gameplay with a hotkey (default `F7`), plus optional auto-start and timing controls.
+- **Automatic Daily Rewards**: Collects daily rewards when available.
 - **Engineer Collection**: Picks up ready Engineer tools automatically.
 - **Warfront Rewards**: Collects available Warfront campaign scroll rewards.
-- **Map Missions on Auto**: Collects finished missions and starts new ones with available squads. You can choose mission order with `mission_time_order` (`asc` or `desc`).
+- **Map Missions on Auto**: Collects finished missions and starts new ones with available squads.
 - **Expeditions on Auto**: Finishes and restarts expeditions automatically.
-- **Library Research Automation**: Starts and collects Firestone research, with optional priority order using `research_priority`.
+- **Library Research Automation**: Starts and collects Firestone research.
 - **Oracle Automation**: Collects completed rituals and starts new ones when possible.
-- **Guardian Training Automation**: Starts training in Magic Quarters automatically. You can choose the guardian with `guardian_index` and enable strange dust usage with `use_strange_dust`.
-- **Alchemist Automation**: Runs alchemist experiments and can focus on specific resources using `resource_type`.
-- **Free Pickaxe Claiming**: Claims free pickaxes automatically based on your preferred quantity with `pickaxe_claim_threshold`.
-- **AutoSkill Mode**: Uses leader skills automatically, with its own key (`[auto_skill].shortcut_key`) and combo setup (`combo_sequence`).
-- **AutoUpgrade Mode**: Upgrades heroes/skills automatically, with its own key (`[auto_upgrade].shortcut_key`) and optional slot selection (`upgrade_target_slots`).
-- **Free Speedups**: Uses free speedups (no gems) whenever a timer is close enough to finish, based on `free_speedup_seconds`.
+- **Guardian Training Automation**: Starts training in Magic Quarters automatically.
+- **Alchemist Automation**: Runs alchemist experiments and can focus on specific resources.
+- **Free Pickaxe Claiming**: Claims free pickaxes automatically.
+- **AutoSkill Mode**: Uses leader skills automatically, with its own hotkey (default `F8`) and combo sequence.
+- **AutoUpgrade Mode**: Upgrades heroes/skills automatically, with its own hotkey (default `F6`) and optional slot selection.
+- **Free Speedups**: Uses free speedups (no gems) whenever a timer is close to finishing.
+
+Every task can be enabled, disabled and tuned in [`FirebotPreferences.cfg`](#configuration).
 
 ---
 
@@ -59,11 +61,10 @@ If you want to use the pre-built mod (no manual compilation), follow this step-b
 
 ### 1) Install MelonLoader (Required)
 
-1. Download [MelonLoader V0.7.2+](https://github.com/LavaGang/MelonLoader/releases/latest).
+1. Download [MelonLoader V0.7.3+](https://github.com/LavaGang/MelonLoader/releases/latest).
 2. Run the MelonLoader installer.
-3. In the installer, keep **Enable Nightly builds** checked and select a `0.7.2-ci` (or newer) version.
-4. When asked for the game executable, select your `Firestone.exe` file (inside your Firestone install folder).
-5. Finish installation and wait until the installer confirms success.
+3. When asked for the game executable, select your `Firestone.exe` file (inside your Firestone install folder).
+4. Finish installation and wait until the installer confirms success.
 
 <p align="center">
    <img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="40%" />
@@ -78,7 +79,7 @@ Quick check: after installation, the game folder should contain MelonLoader-rela
 
 ### 2) Install Firebot Files (Required)
 
-1. Download the latest Firebot package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) (example: `v0.2.7-alpha.zip`).
+1. Download the latest Firebot package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) (example: `v0.2.8-alpha.zip`).
 2. Extract the zip contents into the Firestone root folder (same folder as `Firestone.exe`).
 3. Allow overwrite if Windows asks.
 
@@ -101,22 +102,14 @@ When a new Firebot version is released, you do not need to reinstall everything.
 
 If the new version includes additional configuration options, they will be added automatically to your existing `FirebotPreferences.cfg` on the first execution.
 
-When you want to adjust these options, follow the safe configuration flow in section `5) Configure Firebot correctly`.
-
 ### 5) Configure Firebot Correctly (Required)
 
-The configuration file is:
-
-`Firestone/UserData/FirebotPreferences.cfg`
-
-To ensure your configuration is applied safely, always use this sequence:
+Settings are only read when the game starts, so always use this sequence:
 
 1. **Close the game completely**.
-2. Edit `FirebotPreferences.cfg`.
+2. Edit `Firestone/UserData/FirebotPreferences.cfg`.
 3. Save the file.
 4. Open the game again.
-
-If you change settings while the game is open, the new values may not be applied correctly.
 
 ### 6) Troubleshooting with MelonLoader Logs (Optional)
 
@@ -124,7 +117,7 @@ If you change settings while the game is open, the new values may not be applied
 - Use this log if Firebot does not load, does not start with `F7`, or behaves unexpectedly.
 - In most cases, checking this file is the fastest way to identify installation or configuration issues.
 
-### Example Bot Info Log
+#### Example Bot Info Log
 
 <p align="center">
    <img src="docs/bot-log-example.png" alt="Bot Info Log Example" width="90%" />
@@ -134,24 +127,33 @@ If you change settings while the game is open, the new values may not be applied
 
 Use the methods below only if the game changes version and Firebot stops working.
 
-#### Method 1: Assembly Cache Cleanup
+#### Before You Start
 
 1. Close the game completely.
-2. Go to your game folder and delete all contents inside `MelonLoader/Il2CppAssemblies`.
-3. In `MelonLoader/Dependencies/Il2CppAssemblyGenerator`, keep only:
+2. Confirm your MelonLoader version is **V0.7.3 or newer**. If you are not sure which version is installed, follow Method 2 (clean reinstall).
+3. Back up `UserData/FirebotPreferences.cfg` if you customized it. Neither method below touches this file.
+4. In the `Mods` folder, keep only one `firebot.dll`. Delete old or duplicated copies from previous downloads (for example `firebot (1).dll` or `firebot.old.dll`).
+5. Optional: delete `MelonLoader/Latest.log` so the next launch generates a clean log for troubleshooting.
+
+#### Method 1: Assembly Cache Cleanup
+
+Starting from a closed game:
+
+1. Delete all contents inside `MelonLoader/Il2CppAssemblies`.
+2. In `MelonLoader/Dependencies/Il2CppAssemblyGenerator`, keep only:
    - `Il2CppAssemblyGenerator.deps.json`
    - `Il2CppAssemblyGenerator.dll`
-4. Delete `MelonLoader/Dependencies/AssemblyUnhollower` (if it exists).
-5. Start the game again.
-6. Replace only `Mods/firebot.dll` with the latest version.
+3. Delete `MelonLoader/Dependencies/AssemblyUnhollower` (if it exists).
+4. Start the game again.
 
 #### Method 2: Reinstall MelonLoader
 
-1. Close the game completely.
-2. Delete the `MelonLoader` folder from the game root.
-3. Reinstall MelonLoader as described in this README.
-4. Replace only `Mods/firebot.dll` with the latest version.
-5. Start the game again.
+Starting from a closed game:
+
+1. Delete the `MelonLoader` folder from the game root. This removes the old MelonLoader version, its generated assemblies and its logs.
+2. Reinstall MelonLoader **V0.7.3+** as described in this README.
+3. After reinstalling, delete `MelonLoader/Dependencies/AssemblyUnhollower` if it exists (leftover from older MelonLoader versions).
+4. Start the game again.
 
 Important: no matter which method you choose, always replace only `Mods/firebot.dll` to update Firebot.
 If Firebot is working normally, do not run these recovery methods.
@@ -160,13 +162,11 @@ If Firebot is working normally, do not run these recovery methods.
 
 ## Configuration
 
-Configuration reference file: `Firestone/UserData/FirebotPreferences.cfg`.
+All configuration is done in `Firestone/UserData/FirebotPreferences.cfg`, and the game must be closed while editing it (see [5) Configure Firebot Correctly](#5-configure-firebot-correctly-required)).
 
-For the safe editing workflow (close game -> edit -> reopen), follow section `5) Configure Firebot correctly`.
+In every `[task]` section, `enabled = false` disables that task, so it will be ignored during the execution loop.
 
-For now, all configuration must be done directly in this file. A graphical configuration interface will be implemented in the future.
-
-Here is a list of the current configuration options (and their default values):
+Current options and their default values:
 
 ---
 
@@ -197,31 +197,23 @@ shortcut_key = "F7"
 free_speedup_seconds = 170.0
 
 [alchemist]
-# Enables or disables the Alchemist automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 # ALCHEMIST EXPERIMENT RESOURCE CONFIGURATION. 
 # This setting controls which experiment resources are used. 
 # Valid IDs: 0=Dragon blood, 1=Strange dust, 2=Exotic coin. 
 # Enter comma-separated IDs (e.g. '0,1,2'). 
 # Any value other than 0, 1, or 2 will be ignored. 
-# Default: empty (no resources, bot selects any available resource). 
+# Default: empty. If no value is provided, the task will be disabled.
 # EXAMPLES: '0,1' = Use Dragon blood and Strange dust. '2' = Only use Exotic coin.
 resource_type = ""
 
 [daily_rewards]
-# Enables or disables the Daily Rewards automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 
 [engineer_tools]
-# Enables or disables the Engineer Tools automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 
 [firestone_research]
-# Enables or disables the Firestone Research automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 # FIRESTONE RESEARCH TALENT TREE PRIORITY CONFIGURATION. 
 # This setting controls which talents are researched first based on their tree position. 
@@ -242,8 +234,6 @@ enabled = false
 research_priority = ""
 
 [magic_quarters]
-# Enables or disables the Magic Quarters automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 # Select guardian index for training. Use 0-3. Default is 0.
 # 0=Vermilion, 1=Grace, 2=Ankaa, 3=Azhar
@@ -252,30 +242,20 @@ guardian_index = 0
 use_strange_dust = false
 
 [oracle]
-# Enables or disables the Oracle automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 
 [map_missions]
-# Enables or disables the Map Missions automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 # Sort missions by time required. Use 'asc' (shorter first) or 'desc' (longer first).
 mission_time_order = "desc"
 
 [warfront_campaign_loot]
-# Enables or disables the Warfront Campaign Loot automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 
 [expedition]
-# Enables or disables the Expedition automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 
 [free_pickaxes]
-# Enables or disables the Free Pickaxes automation task.
-# When disabled, this task will be ignored during the execution loop.
 enabled = false
 # Minimum number of free pickaxes required before claiming. Set to 1 to claim as soon as available, or up to 30 to wait for maximum. Default is 30 (wait for maximum).
 pickaxe_claim_threshold = 30
@@ -283,7 +263,6 @@ pickaxe_claim_threshold = 30
 [auto_skill]
 # The physical key used to manually toggle the AutoSkill execution state during gameplay. Default: F8.
 shortcut_key = "F8"
-# Enables or disables the AutoSkill automation task. When disabled, this task will be ignored during the execution loop. Default: false.
 enabled = false
 # Combo sequence as comma-separated numbers. Example: '1' will spam hotkey 1, '2,1,2' will execute hotkey 2, then 1, then 2, and repeat. Only values 1, 2, or 3 are valid. Default: 1.
 combo_sequence = "1"
@@ -291,7 +270,6 @@ combo_sequence = "1"
 [auto_upgrade]
 # The physical key used to manually toggle the AutoUpgrade execution state during gameplay. Default: F6.
 shortcut_key = "F6"
-# Enables or disables the AutoUpgrade automation task. When disabled, this task will be ignored during the execution loop. Default: false.
 enabled = false
 # AUTOUPGRADE TARGET SLOT CONFIGURATION. 
 # This setting controls which upgrade slots (heroes/skills) will be upgraded. 
@@ -320,7 +298,7 @@ upgrade_target_slots = ""
 2. Navigate to the project directory:
 
    ```bash
-   cd firebot
+   cd firestone-bot
    ```
 
 3. Configure the path to your Firestone Idle RPG game directory by editing the `src/Directory.Build.props` file if needed:
@@ -336,15 +314,13 @@ upgrade_target_slots = ""
 
 ---
 
-## Contributing
+## Contributing & Roadmap
 
 Contributions are welcome! Please submit a pull request or open an issue for suggestions or improvements.
 
-## Roadmap & Next Steps
-
 ### Future Plans (v0.3.0+)
 
-- [ ] **UI:** Full in-game configuration interface (No more `.cfg` files needed).
+- [ ] **UI:** Full in-game configuration interface (no more `.cfg` file editing).
 
 ---
 
@@ -356,14 +332,6 @@ Found a bug or have an idea for a new feature? Please open a ticket on our GitHu
 
 1. Check if the issue has already been reported.
 2. Ensure you are using the latest version of Firebot.
-3. Attach your **MelonLoader Log** file (`MelonLoader/Latest.log`) if the game crashed or the bot failed.
+3. Attach your **MelonLoader log** file if the game crashed or the bot failed (see [6) Troubleshooting with MelonLoader Logs](#6-troubleshooting-with-melonloader-logs-optional)).
 
-[**Open a New Issue**](https://github.com/danilogmoura/firebot/issues/new/choose)
-
----
-
-## Technical Details
-
-- Firebot is implemented as a mod using MelonLoader, enabling automation of repetitive tasks within the game client itself.
-- All actions performed by the bot simulate clicks and commands that a user would normally do, without modifying server data or circumventing security systems.
-- The code is open source and auditable, ensuring transparency about its operation.
+[**Open a New Issue**](https://github.com/danilogmoura/firestone-bot/issues/new/choose)
