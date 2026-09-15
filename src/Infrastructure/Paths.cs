@@ -399,7 +399,7 @@ public static class Paths
                     {
                         private const string Root = GuildShopLoc.Root + "/bg/submenus/supplies/items/freePickaxe";
 
-                        public const string ClaimBtn = Root;
+                        public const string ClaimBtn = Root + "/claimBg/purchaseButton";
 
                         public const string QuantityTxt = Root + "/claimBg/itemBg/itemQuantity";
 
