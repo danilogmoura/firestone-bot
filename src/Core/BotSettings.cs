@@ -15,10 +15,27 @@ public static class BotSettings
     private static MelonPreferences_Entry<float> _maxTaskRuntime;
     private static MelonPreferences_Entry<bool> _debugMode;
     private static MelonPreferences_Entry<KeyCode> _shortcutKey;
+    private static MelonPreferences_Entry<KeyCode> _panelKey;
+    private static MelonPreferences_Entry<KeyCode> _statusKey;
     private static MelonPreferences_Entry<float> _freeSpeedupSeconds;
 
+    // Valid ranges declared here, not scattered across the Clamp calls: the UI uses these exact same
+    // constants for the sliders, so it never offers a value the code would silently clamp away.
+    public const float StartBotDelayMin = 10.0f;
+    public const float StartBotDelayMax = 120.0f;
+    public const float ScanIntervalMin = 5.0f;
+    public const float ScanIntervalMax = 3600.0f;
+    public const float InteractionDelayMin = 0.5f;
+    public const float InteractionDelayMax = 5.0f;
+    public const float MaxTaskRuntimeMin = 10.0f;
+    public const float MaxTaskRuntimeMax = 3600.0f;
+    public const float FreeSpeedupSecondsMin = 0.0f;
+    public const float FreeSpeedupSecondsMax = 180.0f;
+
     private static string _configPath;
-    public static float FreeSpeedupSeconds => Mathf.Clamp(_freeSpeedupSeconds.Value, 0.0f, 180.0f);
+
+    public static float FreeSpeedupSeconds =>
+        Mathf.Clamp(_freeSpeedupSeconds.Value, FreeSpeedupSecondsMin, FreeSpeedupSecondsMax);
 
     public static string ConfigPath
     {
@@ -31,16 +48,32 @@ public static class BotSettings
 
     // Safe Properties
     public static bool AutoStart => _autoStart?.Value ?? false;
-    public static float StartBotDelay => Mathf.Clamp(_startBotDelay.Value, 10.0f, 120.0f);
-    public static float ScanInterval => Mathf.Clamp(_scanInterval.Value, 5.0f, 3600.0f);
-    public static float InteractionDelay => Mathf.Clamp(_interactionDelay.Value, 0.5f, 5.0f);
-    public static float MaxTaskRuntime => Mathf.Clamp(_maxTaskRuntime.Value, 10.0f, 3600.0f);
+    public static float StartBotDelay => Mathf.Clamp(_startBotDelay.Value, StartBotDelayMin, StartBotDelayMax);
+    public static float ScanInterval => Mathf.Clamp(_scanInterval.Value, ScanIntervalMin, ScanIntervalMax);
+    public static float InteractionDelay => Mathf.Clamp(_interactionDelay.Value, InteractionDelayMin, InteractionDelayMax);
+    public static float MaxTaskRuntime => Mathf.Clamp(_maxTaskRuntime.Value, MaxTaskRuntimeMin, MaxTaskRuntimeMax);
     public static bool DebugMode => _debugMode?.Value ?? false;
 
     public static KeyCode ShortcutKey =>
         Enum.IsDefined(typeof(KeyCode), _shortcutKey.Value) && _shortcutKey.Value != KeyCode.None
             ? _shortcutKey.Value
             : KeyCode.F7;
+
+    public static KeyCode PanelKey =>
+        Enum.IsDefined(typeof(KeyCode), _panelKey.Value) && _panelKey.Value != KeyCode.None
+            ? _panelKey.Value
+            : KeyCode.F1;
+
+    public static KeyCode StatusKey =>
+        Enum.IsDefined(typeof(KeyCode), _statusKey.Value) && _statusKey.Value != KeyCode.None
+            ? _statusKey.Value
+            : KeyCode.F2;
+
+    /// <summary>
+    ///     The firebot_settings category. It serves as the reference for the UI to identify which
+    ///     categories belong to this .cfg, since MelonLoader's category/file association is internal.
+    /// </summary>
+    internal static MelonPreferences_Category Category => _category;
 
     public static void Initialize()
     {
@@ -74,10 +107,16 @@ public static class BotSettings
         _shortcutKey = _category.CreateEntry("shortcut_key", KeyCode.F7, "Shortcut Key",
             "The physical key used to manually toggle the bot's execution state during gameplay.");
 
+        _panelKey = _category.CreateEntry("panel_key", KeyCode.F1, "Panel Key",
+            "The physical key used to open and close the in-game configuration panel.");
+
+        _statusKey = _category.CreateEntry("status_key", KeyCode.F2, "Status Key",
+            "The physical key used to open and close the task status screen.");
+
         _freeSpeedupSeconds = _category.CreateEntry(
             "free_speedup_seconds",
             170.0f,
-            "Free Speedup Threshold (seconds)",
+            "Free Speedup Threshold",
             "Some timers in the game can be sped up for free if the remaining time is below this threshold (default: 170 seconds = 2 minutes and 50 seconds). " +
             "The maximum allowed value is 180 seconds (3 minutes). " +
             "Set to 0 to disable free speedup. " +

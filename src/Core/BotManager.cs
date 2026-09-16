@@ -111,16 +111,27 @@ public static class BotManager
                 try
                 {
                     yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup before {readyTask.SectionTitle}");
-                    var stopwatch = Stopwatch.StartNew();
+
+                    // Stopwatch, completion line and table are all diagnostics: with debug off none of
+                    // them is needed, and the console stays quiet in normal use. The guard is single for
+                    // the whole block — and the stopwatch is only created when it is going to be read,
+                    // because Logger.Debug filters the write but not the cost of building the output.
+                    var stopwatch = Logger.IsDebugEnabled ? Stopwatch.StartNew() : null;
 
                     yield return RunSafe(readyTask.Execute(), $"Task {readyTask.SectionTitle}");
                     readyTask.LastRunTime = DateTime.Now;
 
-                    stopwatch.Stop();
+                    if (stopwatch != null)
+                    {
+                        stopwatch.Stop();
 
-                    Console.WriteLine();
-                    Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
-                    PrintTasksStatusTable();
+                        Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
+
+                        // The table is already live on the status screen (F2). The blank line is part of it.
+                        Console.WriteLine();
+                        PrintTasksStatusTable();
+                    }
+
                     yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
                 }
                 finally
@@ -172,6 +183,12 @@ public static class BotManager
         }
     }
 
+    /// <summary>
+    ///     Prints the status table to the console.
+    ///     It must only be called when <see cref="Logger.IsDebugEnabled" /> is true: the lines use
+    ///     <c>Info</c> on purpose, to preserve the box alignment instead of prefixing 13 lines with
+    ///     [DEBUG]. The caller is what guarantees the gate.
+    /// </summary>
     private static void PrintTasksStatusTable()
     {
         var now = DateTime.Now;
@@ -179,15 +196,40 @@ public static class BotManager
         Logger.Info("| Next Run            | Time Left   | Task                      | Status        | Last Run            |");
         Logger.Info("|---------------------|-------------|---------------------------|---------------|---------------------|");
 
+        // The rows come from the same place the in-game screen consumes; only the console layout is left here.
+        foreach (var row in GetStatusRows(now))
+            Logger.Info(
+                $"| {FormatConsoleDate(row.NextRun),-19} | {row.TimeLeft,-11} | {row.Name,-25} | {row.Status,-13} | {FormatConsoleDate(row.LastRun),-19} |");
+    }
+
+    private static string FormatConsoleDate(DateTime? value)
+        => value?.ToString("MM/dd/yyyy HH:mm:ss") ?? "-";
+
+    /// <summary>
+    ///     One row per task, ordered by next run.
+    ///     <paramref name="now" /> is a parameter rather than an internal DateTime.Now so the consumer can
+    ///     line up "Time Left" with its own timestamp, instead of each one taking a slightly different instant.
+    /// </summary>
+    internal static List<TaskStatusRow> GetStatusRows(DateTime now)
+    {
+        var rows = new List<TaskStatusRow>(Tasks.Count);
+        AppendStatusRows(rows, now);
+        return rows;
+    }
+
+    /// <summary>
+    ///     Fills an existing buffer, so consumers that refresh every second (the status screen) do not
+    ///     allocate a new list on every refresh.
+    /// </summary>
+    internal static void AppendStatusRows(List<TaskStatusRow> buffer, DateTime now)
+    {
         foreach (var t in Tasks.OrderBy(t => t.NextRunTime))
-        {
-            var status = GetTaskStatus(t);
-            var nextRun = t.IsEnabled ? t.NextRunTime.ToString("MM/dd/yyyy HH:mm:ss") : "-";
-            var lastRun = t.LastRunTime?.ToString("MM/dd/yyyy HH:mm:ss") ?? "-";
-            var name = t.SectionTitle;
-            var timeLeft = TimeParser.FormatFriendlyDuration(t.NextRunTime - now);
-            Logger.Info($"| {nextRun,-19} | {timeLeft,-11} | {name,-25} | {status,-13} | {lastRun,-19} |");
-        }
+            buffer.Add(new TaskStatusRow(
+                t.SectionTitle,
+                GetTaskStatus(t),
+                TimeParser.FormatFriendlyDuration(t.NextRunTime - now),
+                t.IsEnabled ? t.NextRunTime : (DateTime?)null,
+                t.LastRunTime));
     }
 
     private static string GetTaskStatus(BotTask t)

@@ -43,8 +43,8 @@ public class MagicQuartersTask : BotTask
         _guardianIndex = category.CreateEntry(
             "guardian_index",
             0,
-            "Guardian Index",
-            "Select guardian index for training. Use 0-3. Default is 0.\n" +
+            "Guardian",
+            "Select guardian for training. Use 0-3. Default is 0.\n" +
             "0=Vermilion, 1=Grace, 2=Ankaa, 3=Azhar"
         );
 

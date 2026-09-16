@@ -22,7 +22,7 @@ public class AlchemistTask : BotTask
         _resourceType = category.CreateEntry(
             "resource_type",
             "",
-            "Experiment Resources",
+            "Resources",
             $"ALCHEMIST EXPERIMENT RESOURCE CONFIGURATION. " +
             $"\nThis setting controls which experiment resources are used. " +
             $"\nValid IDs: 0=Dragon blood, 1=Strange dust, 2=Exotic coin. " +
