@@ -30,6 +30,12 @@ public static class AutoUpgrade
 
     private static bool IsEnabled => _isEnabled?.Value ?? false;
 
+    /// <summary>
+    ///     Armed and actually running. The pause during a task's execution (UpgradeLoop) is ignored on
+    ///     purpose: it is frequent and would make the indicator flicker.
+    /// </summary>
+    public static bool IsActive => IsEnabled && _isRunning;
+
     private static bool IsShortcutDisabled => _shortcutKey?.Value == KeyCode.None;
 
     private static KeyCode ShortcutKey =>
@@ -158,6 +164,11 @@ public static class AutoUpgrade
         }
 
         if (IsShortcutDisabled) return;
+
+        // Its own hotkey, being recorded, belongs to the capture and not to this action: pressing it to
+        // bind it must not also start or stop AutoUpgrade (see HotkeyGate).
+        if (HotkeyGate.IsCapturing) return;
+
         if (!Input.GetKeyDown(ShortcutKey)) return;
 
         if (_isRunning)
