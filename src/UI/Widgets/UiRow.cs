@@ -128,7 +128,7 @@ internal sealed class ReadOnlyRow : UiRow
     {
         BuildLabel();
 
-        var text = UiFactory.CreateLabel(RowRect, config.Entry.BoxedValue?.ToString() ?? "-",
+        var text = UiFactory.CreateLabel(RowRect, config.Entry.BoxedValue?.ToString() ?? "(not set)",
             UiTheme.HintFontSize, UiTheme.TextMuted, TextAlignmentOptions.Right);
 
         var rect = text.rectTransform;

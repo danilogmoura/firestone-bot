@@ -50,10 +50,16 @@ public abstract class BotTask
         if (_enabledEntry != null) return;
 
         var sectionId = SectionTitle.Replace(" ", "_").ToLowerInvariant();
-        _category = MelonPreferences.CreateCategory(sectionId, $"{SectionTitle} Settings");
+
+        // The display name is what the panel shows; the .cfg stores only the identifier. So it carries no
+        // "Settings" suffix — the window is already the bot's settings, and the section header is what
+        // names the feature.
+        _category = MelonPreferences.CreateCategory(sectionId, SectionTitle);
         _category.SetFilePath(configPath);
 
-        _enabledEntry = _category.CreateEntry("enabled", false, "Enable Task",
+        // Named after the task rather than a generic "Enable Task": the row can then be read on its own,
+        // without the section header above it.
+        _enabledEntry = _category.CreateEntry("enabled", false, $"Enable {SectionTitle}",
             $"Enables or disables the {SectionTitle} automation task." +
             $"\nWhen disabled, this task will be ignored during the execution loop.");
 

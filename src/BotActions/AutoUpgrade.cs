@@ -51,7 +51,9 @@ public static class AutoUpgrade
         var clazzName = StringUtils.Humanize(nameof(AutoUpgrade));
         var sectionId = clazzName.Replace(" ", "_").ToLowerInvariant();
 
-        var section = MelonPreferences.CreateCategory(sectionId, $"{clazzName} Settings");
+        // The display name is the panel's, and it is the plain class name the settings themselves use.
+        // The identifier keeps coming from clazzName ('auto_upgrade') because that is the .cfg key.
+        var section = MelonPreferences.CreateCategory(sectionId, nameof(AutoUpgrade));
         section.SetFilePath(BotSettings.ConfigPath);
 
         _shortcutKey = section.CreateEntry(

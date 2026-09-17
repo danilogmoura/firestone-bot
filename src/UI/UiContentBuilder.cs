@@ -44,6 +44,12 @@ internal static class UiContentBuilder
     private static readonly List<bool> Expanded = new();
     private static readonly List<TMP_Text> Markers = new();
 
+    /// <summary>
+    ///     Text that did not fit the description box, already reported. The panel is rebuilt on every scene
+    ///     change while the problem is in the declaration, not in the build.
+    /// </summary>
+    private static readonly HashSet<string> ReportedLongTexts = new();
+
     // Description under the cursor. The key is the row's InstanceID: the Il2CppInterop wrappers have
     // no stable hash by reference, so comparing Transform inside a dictionary would not work.
     private static readonly Dictionary<int, Detail> Details = new();
@@ -87,7 +93,7 @@ internal static class UiContentBuilder
 
             for (var i = 0; i < group.Entries.Count; i++)
             {
-                AddRow(group.Entries[i], section);
+                AddRow(group.Entries[i], section, group.Title);
                 rowCount++;
             }
         }
@@ -131,7 +137,7 @@ internal static class UiContentBuilder
         });
     }
 
-    private static void AddRow(ConfigEntry config, int section)
+    private static void AddRow(ConfigEntry config, int section, string sectionTitle)
     {
         var background = UiFactory.CreateImage($"row_{config.Entry.Identifier}", _rows, UiTheme.Row, true);
         UiRow.Create(config, background.rectTransform);
@@ -151,11 +157,16 @@ internal static class UiContentBuilder
         colors.fadeDuration = 0.06f;
         button.colors = colors;
 
-        var label = config.Label;
-        var description = config.Description;
-        button.onClick.AddListener((Action)(() => _describe?.Invoke(label, description)));
+        // The panel text, not the .cfg one: what the file stores is the comment MelonLoader writes, and it
+        // is written for the file. The box holds about three lines and cuts the rest.
+        var description = config.PanelText;
+        ReportLongText(config, description);
 
-        Details[background.gameObject.GetInstanceID()] = new Detail(config.Label, config.Description);
+        // The title is the section the row belongs to and not the setting name: the name is already on the
+        // row, while the section header may be scrolled far above by the time the box is read.
+        button.onClick.AddListener((Action)(() => _describe?.Invoke(sectionTitle, description)));
+
+        Details[background.gameObject.GetInstanceID()] = new Detail(sectionTitle, description);
 
         Blocks.Add(new Block
         {
@@ -163,6 +174,28 @@ internal static class UiContentBuilder
             Height = UiTheme.RowHeight,
             Section = section
         });
+    }
+
+    /// <summary>
+    ///     Warns about a text the description box cannot show in full. The box truncates with an ellipsis,
+    ///     which is silent by nature: the chip rows already warn when their options overflow the column, and
+    ///     this is the same check for the text — an entry listed here needs an entry in
+    ///     ConfigRegistry.PanelTexts.
+    /// </summary>
+    private static void ReportLongText(ConfigEntry config, string text)
+    {
+        if (!ReportedLongTexts.Add(config.Key)) return;
+
+        // Wrapped the way the box wraps: the newlines are explicit, the rest is the estimate.
+        var lines = 0;
+        foreach (var segment in text.Split('\n'))
+            lines += Mathf.Max(1, Mathf.CeilToInt(segment.Length / UiTheme.DetailCharsPerLine));
+
+        if (lines <= UiTheme.DetailBodyLines) return;
+
+        Logger.Warning(
+            $"[UI] '{config.Key}': {text.Length} chars need about {lines} lines but the description box " +
+            $"shows {UiTheme.DetailBodyLines}. Declare a shorter text in ConfigRegistry.PanelTexts.");
     }
 
     private static void ToggleSection(int section)

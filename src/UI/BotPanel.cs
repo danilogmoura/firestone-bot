@@ -21,6 +21,9 @@ public static class BotPanel
     private const int SortingOrder = 9999;
     private const string DetailHint = "Hover or click an option to see its description.";
 
+    /// <summary>Title of the description box while nothing is being described.</summary>
+    private const string DetailTitle = "Description";
+
     private static UiWindow _window;
     private static RectTransform _rows;
     private static TMP_Text _detailTitle;
@@ -71,7 +74,10 @@ public static class BotPanel
         // CanvasScaler rescales the tree on its own — nothing needs rebuilding.
         if (_window != null && _window.IsAlive && _builtForHeight != Screen.height) ApplyScale();
 
-        if (_isOpen) UiContentBuilder.Poll();
+        if (!_isOpen) return;
+
+        UiContentBuilder.Poll();
+        UiBadges.Refresh();
     }
 
     private static void ApplyScale()
@@ -105,10 +111,22 @@ public static class BotPanel
         _window.SetActive(true);
         _isOpen = true;
 
+        ResetDetail();
+
         // Without an EventSystem the GraphicRaycaster runs but nobody feeds it input: clicks never
         // arrive. We never create an EventSystem — the game's is the one in charge.
         if (EventSystem.current == null)
             Logger.Warning("[UI] No EventSystem found in the scene: panel buttons will not receive clicks.");
+    }
+
+    /// <summary>
+    ///     Puts the description box back to its hint. While the panel is open the last description stays on
+    ///     screen on purpose — a long text has to be readable — so opening and closing the panel is what
+    ///     returns the box to the state that tells a new user the box is there at all.
+    /// </summary>
+    private static void ResetDetail()
+    {
+        SetDetail(DetailTitle, DetailHint);
     }
 
     public static void Close()
@@ -121,6 +139,8 @@ public static class BotPanel
 
         _window?.SetActive(false);
         _isOpen = false;
+
+        ResetDetail();
     }
 
     // ---- Construction ----
@@ -135,6 +155,7 @@ public static class BotPanel
             Close, UiTheme.DetailHeight + UiTheme.DetailGap);
         _builtForHeight = Screen.height;
 
+        UiBadges.Build(_window.Header);
         BuildDetailBox(_window.Window);
 
         var rows = BuildScrollView(_window.Window);
@@ -156,7 +177,7 @@ public static class BotPanel
         var box = UiFactory.CreateImage("detail", frame.transform, UiTheme.Detail, false);
         UiFactory.Stretch(box.rectTransform, UiTheme.DetailBorderWidth);
 
-        _detailTitle = UiFactory.CreateLabel(box.transform, "Description", UiTheme.DetailTitleFontSize,
+        _detailTitle = UiFactory.CreateLabel(box.transform, DetailTitle, UiTheme.DetailTitleFontSize,
             UiTheme.Accent, TextAlignmentOptions.TopLeft);
         var titleRect = _detailTitle.rectTransform;
         titleRect.anchorMin = new Vector2(0f, 1f);
@@ -190,7 +211,7 @@ public static class BotPanel
         content.anchorMax = Vector2.one;
         content.offsetMin = new Vector2(UiTheme.Padding,
             UiTheme.Padding + UiTheme.DetailHeight + UiTheme.DetailGap);
-        content.offsetMax = new Vector2(-UiTheme.Padding, -UiTheme.HeaderHeight);
+        content.offsetMax = new Vector2(-UiTheme.Padding, -(UiTheme.HeaderHeight + UiTheme.ContentTopGap));
 
         var scroll = content.gameObject.AddComponent<ScrollRect>();
         scroll.horizontal = false;

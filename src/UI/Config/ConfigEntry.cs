@@ -80,15 +80,17 @@ internal sealed class ChoiceSet
 /// </summary>
 internal sealed class ConfigEntry
 {
+    private readonly string _panelText;
     private readonly PropertyInfo _valueProperty;
 
     public ConfigEntry(MelonPreferences_Category category, MelonPreferences_Entry entry, NumberRange range,
-        ChoiceSet choiceSet = null, bool comboSteps = false)
+        ChoiceSet choiceSet = null, bool comboSteps = false, string panelText = null)
     {
         Category = category;
         Entry = entry;
         Range = range;
         Choices = choiceSet?.Choices ?? Array.Empty<ConfigChoice>();
+        _panelText = panelText;
 
         var declaredType = DeclaredTypeOf(entry);
         ValueType = declaredType;
@@ -141,6 +143,17 @@ internal sealed class ConfigEntry
 
     /// <summary>Text MelonLoader stores as a comment in the .cfg — the tasks use real "\n" breaks.</summary>
     public string Description => Entry.Description ?? string.Empty;
+
+    /// <summary>
+    ///     Text the panel's description box shows.
+    ///     <para>
+    ///         The two surfaces have different room: the .cfg comment can be as long as the setting needs,
+    ///         while the description box holds about three lines and cuts the rest with an ellipsis. The
+    ///         text for the panel is declared per entry in ConfigRegistry.PanelTexts, and an entry without
+    ///         one falls back to the file text — which is fine for the settings whose description is short.
+    ///     </para>
+    /// </summary>
+    public string PanelText => string.IsNullOrWhiteSpace(_panelText) ? Description : _panelText;
 
     public bool ReadBool() => ReadRaw() is bool value && value;
 
