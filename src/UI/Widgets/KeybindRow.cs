@@ -196,7 +196,7 @@ internal sealed class KeybindRow : UiRow
         if (_listening != null) _listening.StopListening();
 
         _listening = this;
-        _value.text = "press...";
+        _value.text = "Press a key...";
 
         // The text color, not the background: Selectable's ColorTint would override the image
         // on hover.

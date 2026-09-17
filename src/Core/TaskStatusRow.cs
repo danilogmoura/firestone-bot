@@ -23,7 +23,29 @@ internal readonly struct TaskStatusRow
 
     public string Name { get; }
 
-    /// <summary>Disabled, Notification, Ready or Waiting — precedence defined in BotManager.</summary>
+    /// <summary>
+    ///     Cell text for "there is nothing here". One definition, because the console and the status screen
+    ///     both print it and neither should drift.
+    /// </summary>
+    public const string NoValue = "-";
+
+    // ---- Status names ----
+    // Constants rather than literals: the manager decides the status and the status screen matches on it to
+    // pick a colour. As literals, renaming one side silently downgraded the other to "idle".
+
+    public const string Disabled = "Disabled";
+
+    /// <summary>
+    ///     The task has something waiting to be clicked in the game. The internal name for it is
+    ///     "notification", which says nothing to someone reading the table.
+    /// </summary>
+    public const string Popup = "Popup";
+
+    public const string Ready = "Ready";
+
+    public const string Waiting = "Waiting";
+
+    /// <summary>Disabled, Popup, Ready or Waiting — precedence defined in BotManager.</summary>
     public string Status { get; }
 
     /// <summary>

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Firebot.BotActions;
 using Firebot.Core;
 using Il2CppTMPro;
 using UnityEngine;
@@ -29,9 +28,6 @@ public static class BotStatusScreen
     private const float RefreshInterval = 1f;
 
     private static readonly string[] ColumnTitles = { "Task", "Status", "Time Left", "Next Run", "Last Run" };
-
-    private static readonly string[] BadgeNames = { "Bot", "AutoSkill", "AutoUpgrade" };
-    private static readonly Image[] BadgeDots = new Image[BadgeNames.Length];
 
     // Task +20%, Next Run +10% and Time Left +20% against the first version. Status and Last Run keep
     // the pixel width they already had — which is why the window widened again (StatusWindowWidth).
@@ -141,61 +137,22 @@ public static class BotStatusScreen
         var snapshot = BotManager.GetStatusRows(DateTime.Now);
 
         // The window follows the number of tasks, with a ceiling. Above the ceiling the content scrolls.
+        // At least one row is reserved so the empty-list message has somewhere to sit: with the real count
+        // the window would be shorter than the message it has to show.
         var body = UiTheme.StatusColumnHeaderHeight + UiTheme.RowSpacing
-                   + snapshot.Count * (UiTheme.StatusRowHeight + UiTheme.RowSpacing);
-        var height = Mathf.Min(UiTheme.HeaderHeight + body + 2f * UiTheme.Padding, UiTheme.StatusMaxHeight);
+                   + Mathf.Max(snapshot.Count, 1) * (UiTheme.StatusRowHeight + UiTheme.RowSpacing);
+        var height = Mathf.Min(UiTheme.HeaderHeight + UiTheme.ContentTopGap + body + 2f * UiTheme.Padding,
+            UiTheme.StatusMaxHeight);
 
-        _window = UiWindow.Create(RootName, Title, UiTheme.StatusWindowWidth, height, SortingOrder, Close);
+        // The title names the key that closes it, so the window does not have to be discovered.
+        var title = $"{Title}";
+
+        _window = UiWindow.Create(RootName, title, UiTheme.StatusWindowWidth, height, SortingOrder, Close);
         _builtForHeight = Screen.height;
 
-        BuildBadges(_window.Header);
+        UiBadges.Build(_window.Header);
         BuildTable(_window.Content, snapshot.Count);
         Refresh();
-    }
-
-    /// <summary>
-    ///     State indicators in the header, to the right of the title and before the close button.
-    ///     Equal-width columns keep the spacing predictable without a LayoutGroup. The name is fixed;
-    ///     what changes at runtime is only the circle's color.
-    /// </summary>
-    private static void BuildBadges(RectTransform header)
-    {
-        var area = UiFactory.CreateNode("badges", header);
-        area.anchorMin = new Vector2(1f, 0f);
-        area.anchorMax = new Vector2(1f, 1f);
-        area.pivot = new Vector2(1f, 0.5f);
-        area.sizeDelta = new Vector2(UiTheme.HeaderBadgeWidth, 0f);
-        area.anchoredPosition = new Vector2(-(UiTheme.CloseButtonSize + 2f * UiTheme.CloseButtonMargin), 0f);
-
-        var step = 1f / BadgeNames.Length;
-        var textLeft = UiTheme.BadgeDotInset + UiTheme.BadgeDotSize + UiTheme.BadgeDotGap;
-
-        for (var i = 0; i < BadgeNames.Length; i++)
-        {
-            var column = UiFactory.CreateNode($"badge{i}", area);
-            column.anchorMin = new Vector2(i * step, 0f);
-            column.anchorMax = new Vector2((i + 1) * step, 1f);
-            column.offsetMin = Vector2.zero;
-            column.offsetMax = Vector2.zero;
-
-            var dot = UiFactory.CreateImage("dot", column, UiTheme.Danger, false, UiTheme.CircleSprite);
-            var dotRect = dot.rectTransform;
-            dotRect.anchorMin = new Vector2(0f, 0.5f);
-            dotRect.anchorMax = new Vector2(0f, 0.5f);
-            dotRect.pivot = new Vector2(0f, 0.5f);
-            dotRect.sizeDelta = new Vector2(UiTheme.BadgeDotSize, UiTheme.BadgeDotSize);
-            dotRect.anchoredPosition = new Vector2(UiTheme.BadgeDotInset, 0f);
-
-            var label = UiFactory.CreateLabel(column, BadgeNames[i], UiTheme.BadgeFontSize, UiTheme.Text,
-                TextAlignmentOptions.Left);
-            var labelRect = label.rectTransform;
-            labelRect.anchorMin = Vector2.zero;
-            labelRect.anchorMax = Vector2.one;
-            labelRect.offsetMin = new Vector2(textLeft, 0f);
-            labelRect.offsetMax = new Vector2(-UiTheme.BadgeDotGap, 0f);
-
-            BadgeDots[i] = dot;
-        }
     }
 
     private static void BuildTable(RectTransform content, int rowCount)
@@ -242,6 +199,18 @@ public static class BotStatusScreen
             y += UiTheme.StatusRowHeight + UiTheme.RowSpacing;
         }
 
+        // With no task loaded — the screen can be opened before the bot is started — the table would be a
+        // column header over nothing, which reads as a build failure rather than as an empty list.
+        if (rowCount == 0)
+        {
+            var empty = UiFactory.CreateLabel(_rows, "No tasks loaded.", UiTheme.HintFontSize,
+                UiTheme.TextMuted, TextAlignmentOptions.Center);
+            UiFactory.PlaceTop(empty.rectTransform, y, UiTheme.StatusRowHeight);
+
+            _rows.sizeDelta = new Vector2(0f, y + UiTheme.StatusRowHeight);
+            return;
+        }
+
         _rows.sizeDelta = new Vector2(0f, Mathf.Max(0f, y - UiTheme.RowSpacing));
     }
 
@@ -282,7 +251,7 @@ public static class BotStatusScreen
         Buffer.Clear();
         BotManager.AppendStatusRows(Buffer, DateTime.Now);
 
-        RefreshBadges();
+        UiBadges.Refresh();
 
         for (var i = 0; i < Cells.Count; i++)
         {
@@ -310,27 +279,10 @@ public static class BotStatusScreen
         if (label.text != value) label.text = value;
     }
 
-    private static void RefreshBadges()
-    {
-        SetBadge(0, BotManager.IsRunning);
-        SetBadge(1, AutoSkill.IsActive);
-        SetBadge(2, AutoUpgrade.IsActive);
-    }
-
-    /// <summary>The indicator's name is fixed; only the circle's color changes at runtime.</summary>
-    private static void SetBadge(int index, bool on)
-    {
-        var dot = BadgeDots[index];
-        if (dot == null) return;
-
-        var color = on ? UiTheme.StateOn : UiTheme.Danger;
-        if (dot.color != color) dot.color = color;
-    }
-
-    /// <summary>Today shows only the time; another day shows the date. The console table uses the full format.</summary>
+    /// <summary>Today shows only the time; another day shows the date.</summary>
     private static string FormatCompact(DateTime? value)
     {
-        if (value == null) return "-";
+        if (value == null) return TaskStatusRow.NoValue;
 
         var moment = value.Value;
         return moment.Date == DateTime.Today ? moment.ToString("HH:mm:ss") : moment.ToString("dd/MM HH:mm");
@@ -338,5 +290,5 @@ public static class BotStatusScreen
 
     /// <summary>What is actionable stands out; what is idle stays dim.</summary>
     private static Color StatusColor(string status)
-        => status == "Ready" || status == "Notification" ? UiTheme.Accent : UiTheme.TextMuted;
+        => status == TaskStatusRow.Ready || status == TaskStatusRow.Popup ? UiTheme.Accent : UiTheme.TextMuted;
 }

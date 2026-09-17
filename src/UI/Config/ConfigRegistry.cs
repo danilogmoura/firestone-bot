@@ -134,6 +134,65 @@ internal static class ConfigRegistry
         "auto_skill/combo_sequence"
     };
 
+    /// <summary>
+    ///     Text shown in the panel's description box, for the entries whose .cfg description does not fit it.
+    ///     <para>
+    ///         The description of an entry is the comment MelonLoader writes in the file, so it is written
+    ///         for the file: it can carry the full manual, examples included. The box holds roughly three
+    ///         lines and truncates the rest with an ellipsis, which means the useful tail — the examples —
+    ///         was the part being cut. Declaring the panel text here keeps each surface in its own format,
+    ///         and the file stays exactly as it was.
+    ///     </para>
+    /// </summary>
+    private static readonly Dictionary<string, string> PanelTexts = new()
+    {
+        // Settings
+        ["firebot_settings/start_bot_delay"] =
+            "Cooldown in seconds before the bot starts.\n" +
+            "Keeps it from acting while Unity is still loading the first scene.\n" +
+            "Allowed range: 10 to 120.",
+
+        ["firebot_settings/scan_interval"] =
+            "Seconds between each verification cycle of the bot.\n" +
+            "Lower is more responsive and costs more FPS.\n" +
+            "Allowed range: 5 to 3600.",
+
+        ["firebot_settings/interaction_delay"] =
+            "Delay in seconds between individual UI interactions.\n" +
+            "Gives the game time to process a command before the next one.\n" +
+            "Allowed range: 0.5 to 5.",
+
+        ["firebot_settings/free_speedup_seconds"] =
+            "Timers below this many seconds can be sped up for free (no gems).\n" +
+            "0 disables it; the game caps it at 180 (3 minutes).\n" +
+            "Affects research, missions, experiments and map reset.",
+
+        // Tasks
+        ["alchemist/resource_type"] =
+            "HOW TO USE: Toggle which resources an experiment may use.\n" +
+            "'Dragon blood' = 0, 'Strange dust' = 1, 'Exotic coin' = 2.\n" +
+            "No resource marked disables the task.",
+
+        ["firestone_research/research_priority"] =
+            "HOW TO USE: Type the talent ids in research order, comma-separated.\n" +
+            "Ids 1-16 (top to bottom per tree); unavailable ids are skipped.\n" +
+            "Empty lets the bot pick any available talent.",
+
+        ["free_pickaxes/pickaxe_claim_threshold"] =
+            "Claim only when at least this many free pickaxes are stored.\n" +
+            "Set 1 to claim as soon as one is available, or 30 to wait for the maximum.",
+
+        ["auto_skill/combo_sequence"] =
+            "HOW TO USE: +1/+2/+3 append steps, Undo removes, Clear empties.\n" +
+            "Steps play in order and repeat forever: 1, 2, 3 only, max 10.\n" +
+            "An empty sequence plays nothing.",
+
+        ["auto_upgrade/upgrade_target_slots"] =
+            "HOW TO USE: Toggle the buttons to pick which slots are upgraded.\n" +
+            "'Specials' = slot 0, 'Guardian' = slot 1, '1'-'5' = heroes 1-5.\n" +
+            "Mark all 7 to upgrade every slot; empty also means all."
+    };
+
     /// <summary>Reads the sections of our file, in the order MelonLoader registered them.</summary>
     public static List<ConfigGroup> Read()
     {
@@ -179,6 +238,7 @@ internal static class ConfigRegistry
         ReportUnmatched(SingleChoices.Keys, nameof(SingleChoices));
         ReportUnmatched(MultiChoices.Keys, nameof(MultiChoices));
         ReportUnmatched(ComboSteps, nameof(ComboSteps));
+        ReportUnmatched(PanelTexts.Keys, nameof(PanelTexts));
     }
 
     private static void ReportUnmatched(IEnumerable<string> declared, string table)
@@ -273,6 +333,10 @@ internal static class ConfigRegistry
     private static bool IsComboSteps(MelonPreferences_Category category, MelonPreferences_Entry entry)
         => ComboSteps.Contains($"{category.Identifier}/{entry.Identifier}");
 
+    /// <summary>Text the panel shows for the entry, or null to fall back to the .cfg description.</summary>
+    private static string ResolvePanelText(MelonPreferences_Category category, MelonPreferences_Entry entry)
+        => PanelTexts.TryGetValue($"{category.Identifier}/{entry.Identifier}", out var text) ? text : null;
+
     private static List<ConfigEntry> ReadEntries(MelonPreferences_Category category)
     {
         var result = new List<ConfigEntry>();
@@ -287,7 +351,8 @@ internal static class ConfigRegistry
 
             var declared = ConfigEntry.DeclaredTypeOf(entry);
             var config = new ConfigEntry(category, entry, ResolveRange(category, entry, declared),
-                ResolveChoices(category, entry, declared), IsComboSteps(category, entry));
+                ResolveChoices(category, entry, declared), IsComboSteps(category, entry),
+                ResolvePanelText(category, entry));
 
             SeenKeys.Add(config.Key);
             result.Add(config);

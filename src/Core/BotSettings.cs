@@ -77,7 +77,8 @@ public static class BotSettings
 
     public static void Initialize()
     {
-        _category = MelonPreferences.CreateCategory("firebot_settings", "Firebot Settings");
+        // "General", not "Firebot Settings": the panel window is already titled Firebot.
+        _category = MelonPreferences.CreateCategory("firebot_settings", "General");
         _category.SetFilePath(ConfigPath);
 
         _autoStart = _category.CreateEntry("auto_start", false, "Auto Start",

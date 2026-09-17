@@ -64,7 +64,7 @@ internal sealed class UiWindow
         content.anchorMin = Vector2.zero;
         content.anchorMax = Vector2.one;
         content.offsetMin = new Vector2(UiTheme.Padding, UiTheme.Padding + contentBottomInset);
-        content.offsetMax = new Vector2(-UiTheme.Padding, -UiTheme.HeaderHeight);
+        content.offsetMax = new Vector2(-UiTheme.Padding, -(UiTheme.HeaderHeight + UiTheme.ContentTopGap));
 
         return new UiWindow(root, window.transform, header, content);
     }

@@ -52,7 +52,9 @@ public static class AutoSkill
         var clazzName = StringUtils.Humanize(nameof(AutoSkill));
         var sectionId = clazzName.Replace(" ", "_").ToLowerInvariant();
 
-        var section = MelonPreferences.CreateCategory(sectionId, $"{clazzName} Settings");
+        // The display name is the panel's, and it is the plain class name the settings themselves use.
+        // The identifier keeps coming from clazzName ('auto_skill') because that is the .cfg key.
+        var section = MelonPreferences.CreateCategory(sectionId, nameof(AutoSkill));
         section.SetFilePath(BotSettings.ConfigPath);
 
         _shortcutKey = section.CreateEntry(

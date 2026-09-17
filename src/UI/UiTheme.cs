@@ -23,7 +23,19 @@ internal static class UiTheme
     // moving the layout to two columns.
     public const float WindowWidth = 833f;
     public const float WindowHeight = 972f;
-    public const float HeaderHeight = 76f;
+
+    /// <summary>
+    ///     Top band, with the title on the left and the state indicators on the right. Kept close to the height
+    ///     the title needs: every pixel here is one the content does not get.
+    /// </summary>
+    public const float HeaderHeight = 64f;
+
+    /// <summary>
+    ///     Breathing room between the header and the first block of content. Without it the first section or
+    ///     the column header sits flush against the band above, which reads as a layout that ran out of room.
+    /// </summary>
+    public const float ContentTopGap = 12f;
+
     public const float HeaderInsetX = 21f;
 
     // Distance from the button to the right edge of the header. Horizontal only: the vertical
@@ -58,6 +70,19 @@ internal static class UiTheme
 
     /// <summary>Where the description body starts, measured from the top of the box.</summary>
     public const float DetailBodyTop = DetailInsetTop + DetailTitleHeight + DetailTitleToBody;
+
+    /// <summary>Height the description body actually has to work with.</summary>
+    public const float DetailBodyHeight = DetailHeight - DetailBodyTop - DetailInsetBottom;
+
+    /// <summary>Lines the body holds. 1.2 is TMP's line spacing at its default setting.</summary>
+    public const int DetailBodyLines = (int)(DetailBodyHeight / (DetailFontSize * 1.2f));
+
+    /// <summary>
+    ///     Characters per line, derived from the box width and the font size. Used only to warn: the cut
+    ///     itself is TMP's, and this estimate exists so a text that will not fit stops being silent.
+    /// </summary>
+    public const float DetailCharsPerLine =
+        (WindowWidth - 2f * Padding - 2f * DetailBorderWidth - 2f * DetailInsetX) / (DetailFontSize * ChipCharRatio);
 
     public const float Padding = 14f;
     public const float RowHeight = 52f;

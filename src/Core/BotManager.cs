@@ -125,7 +125,7 @@ public static class BotManager
                     {
                         stopwatch.Stop();
 
-                        Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:MM/dd/yyyy HH:mm:ss}");
+                        Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:dd/MM/yyyy HH:mm:ss}");
 
                         // The table is already live on the status screen (F2). The blank line is part of it.
                         Console.WriteLine();
@@ -192,18 +192,21 @@ public static class BotManager
     private static void PrintTasksStatusTable()
     {
         var now = DateTime.Now;
-        Logger.Info($"[Bot Status] Task Table - {now:MM/dd/yyyy HH:mm:ss}");
-        Logger.Info("| Next Run            | Time Left   | Task                      | Status        | Last Run            |");
-        Logger.Info("|---------------------|-------------|---------------------------|---------------|---------------------|");
+        Logger.Info($"[Bot Status] Task Table - {now:dd/MM/yyyy HH:mm:ss}");
+
+        // Same column order as the in-game screen, so a log line and a screenshot can be read side by side.
+        Logger.Info("| Task                      | Status        | Time Left   | Next Run            | Last Run            |");
+        Logger.Info("|---------------------------|---------------|-------------|---------------------|---------------------|");
 
         // The rows come from the same place the in-game screen consumes; only the console layout is left here.
         foreach (var row in GetStatusRows(now))
             Logger.Info(
-                $"| {FormatConsoleDate(row.NextRun),-19} | {row.TimeLeft,-11} | {row.Name,-25} | {row.Status,-13} | {FormatConsoleDate(row.LastRun),-19} |");
+                $"| {row.Name,-25} | {row.Status,-13} | {row.TimeLeft,-11} | {FormatConsoleDate(row.NextRun),-19} | {FormatConsoleDate(row.LastRun),-19} |");
     }
 
+    /// <summary>Day first, the same convention the status screen prints.</summary>
     private static string FormatConsoleDate(DateTime? value)
-        => value?.ToString("MM/dd/yyyy HH:mm:ss") ?? "-";
+        => value?.ToString("dd/MM/yyyy HH:mm:ss") ?? TaskStatusRow.NoValue;
 
     /// <summary>
     ///     One row per task, ordered by next run.
@@ -227,15 +230,18 @@ public static class BotManager
             buffer.Add(new TaskStatusRow(
                 t.SectionTitle,
                 GetTaskStatus(t),
-                TimeParser.FormatFriendlyDuration(t.NextRunTime - now),
+                // A disabled task has no next run that matters, so it has no time left either. Without this
+                // the subtraction runs anyway — from DateTime.MinValue for a task that never ran — and the
+                // column shows "0s" beside an empty Next Run.
+                t.IsEnabled ? TimeParser.FormatFriendlyDuration(t.NextRunTime - now) : TaskStatusRow.NoValue,
                 t.IsEnabled ? t.NextRunTime : (DateTime?)null,
                 t.LastRunTime));
     }
 
     private static string GetTaskStatus(BotTask t)
     {
-        if (!t.IsEnabled) return "Disabled";
-        if (t.IsNotificationVisible()) return "Notification";
-        return t.IsReady() ? "Ready" : "Waiting";
+        if (!t.IsEnabled) return TaskStatusRow.Disabled;
+        if (t.IsNotificationVisible()) return TaskStatusRow.Popup;
+        return t.IsReady() ? TaskStatusRow.Ready : TaskStatusRow.Waiting;
     }
 }
