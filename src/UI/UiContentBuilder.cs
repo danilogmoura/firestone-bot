@@ -79,9 +79,9 @@ internal static class UiContentBuilder
             var group = groups[g];
             var section = Expanded.Count;
 
-            // The first section in the file is firebot_settings (created before everything else at
-            // boot), so it is the one that opens by default.
-            Expanded.Add(g == 0);
+            // Every section starts closed. The panel then opens as a short list of 13 headers and the user
+            // expands what they came for, instead of scrolling past 32 settings to reach it.
+            Expanded.Add(false);
 
             AddSectionHeader(group, section);
 
