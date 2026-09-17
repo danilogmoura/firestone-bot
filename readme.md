@@ -9,7 +9,7 @@ Automation bot for Firestone Idle RPG, focused on automating repetitive tasks th
 
 1. Install [MelonLoader V0.7.3+](https://github.com/LavaGang/MelonLoader/releases/latest) in `Firestone.exe`.
 2. Download the latest Firebot release and extract it into the Firestone root folder.
-3. Launch the game and press `F7` to toggle Firebot.
+3. Launch the game and press `F7` to toggle Firebot. Press `F1` for the settings panel and `F2` for the task status.
 
 For the detailed step-by-step guide, see [How to Use (Prebuilt Release)](#how-to-use-prebuilt-release).
 
@@ -32,6 +32,8 @@ Firebot **is not a cheat**. It does not modify game resources, grant unfair adva
 ## Features
 
 - **Easy Start/Stop**: Toggles the bot on or off during gameplay with a hotkey (default `F7`), plus optional auto-start and timing controls.
+- **In-Game Settings Panel**: Every task can be enabled, disabled and tuned from inside the game, with its own hotkey (default `F1`). No file editing, and the changes are saved as you make them.
+- **Task Status Screen**: One row per task with its state, time left, next run and last run, shown on its own screen (default `F2`) instead of read from a log.
 - **Automatic Daily Rewards**: Collects daily rewards when available.
 - **Engineer Collection**: Picks up ready Engineer tools automatically.
 - **Warfront Rewards**: Collects available Warfront campaign scroll rewards.
@@ -46,7 +48,7 @@ Firebot **is not a cheat**. It does not modify game resources, grant unfair adva
 - **AutoUpgrade Mode**: Upgrades heroes/skills automatically, with its own hotkey (default `F6`) and optional slot selection.
 - **Free Speedups**: Uses free speedups (no gems) whenever a timer is close to finishing.
 
-Every task can be enabled, disabled and tuned in [`FirebotPreferences.cfg`](#configuration).
+Every task can be enabled, disabled and tuned in the [in-game panel](#5-configure-firebot-required). The [`FirebotPreferences.cfg`](#configuration) file holds the same settings for those who prefer to edit it directly.
 
 ---
 
@@ -69,8 +71,9 @@ If you want to use the pre-built mod (no manual compilation), follow this step-b
 4. Finish installation and wait until the installer confirms success.
 
 <p align="center">
-   <img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="40%" />
-   <img src="docs/melonloader-b.png" alt="MelonLoader installer - Enable Nightly builds" width="40%" />
+   <img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="20%" />
+      &nbsp;&nbsp;
+   <img src="docs/melonloader-b.png" alt="MelonLoader installer - Enable Nightly builds" width="20%" />
 </p>
 
 <p align="center">
@@ -81,7 +84,7 @@ Quick check: after installation, the game folder should contain MelonLoader-rela
 
 ### 2) Install Firebot Files (Required)
 
-1. Download the latest Firebot package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) (example: `v0.2.8-alpha.zip`).
+1. Download the latest Firebot package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) (example: `v0.3.0-alpha.1.zip`).
 2. Extract the zip contents into the Firestone root folder (same folder as `Firestone.exe`).
 3. Allow overwrite if Windows asks.
 
@@ -104,9 +107,25 @@ When a new Firebot version is released, you do not need to reinstall everything.
 
 If the new version includes additional configuration options, they will be added automatically to your existing `FirebotPreferences.cfg` on the first execution.
 
-### 5) Configure Firebot Correctly (Required)
+### 5) Configure Firebot (Required)
 
-Settings are only read when the game starts, so always use this sequence:
+**Recommended: the in-game panel.** Press `F1` during gameplay. Every setting is there: sections start collapsed, so the window opens as a short list of headers, options are buttons instead of free text, and the description of whatever the cursor is over appears in the box at the bottom of the window.
+
+<p align="center">
+   <img src="docs/panel.png" alt="Firebot settings panel (F1)" width="30%" />
+   &nbsp;&nbsp;
+   <img src="docs/status.png" alt="Firebot task status screen (F2)" width="30%" />
+</p>
+
+<p align="center">
+   <sub>Left: the settings panel (F1) | Right: the task status screen (F2)</sub>
+</p>
+
+What the panel writes goes straight into `FirebotPreferences.cfg`, so the file always reflects what is on screen.
+
+**Optional: editing the file.**
+
+> **Disclaimer:** editing `FirebotPreferences.cfg` by hand is still supported, and it is the practical choice for keeping your settings under version control or for copying them between machines. It is no longer the recommended path, though, and it comes with two costs: the game has to be closed while you edit — a setting changed in the panel rewrites the file — and the values are only read on the next launch. Nothing validates what you type, so a typo can silently drop an option; see [Configuration](#configuration) for the accepted values of each entry.
 
 1. **Close the game completely**.
 2. Edit `Firestone/UserData/FirebotPreferences.cfg`.
@@ -119,11 +138,7 @@ Settings are only read when the game starts, so always use this sequence:
 - Use this log if Firebot does not load, does not start with `F7`, or behaves unexpectedly.
 - In most cases, checking this file is the fastest way to identify installation or configuration issues.
 
-#### Example Bot Info Log
-
-<p align="center">
-   <img src="docs/bot-log-example.png" alt="Bot Info Log Example" width="90%" />
-</p>
+To check what the bot itself is doing, use the status screen (`F2`) rather than the log.
 
 ### 7) If the Game Updates and Firebot Stops Working
 
@@ -164,128 +179,35 @@ If Firebot is working normally, do not run these recovery methods.
 
 ## Configuration
 
-All configuration is done in `Firestone/UserData/FirebotPreferences.cfg`, and the game must be closed while editing it (see [5) Configure Firebot Correctly](#5-configure-firebot-correctly-required)).
+Settings live in `Firestone/UserData/FirebotPreferences.cfg`, and the [in-game panel](#5-configure-firebot-required) writes to that same file.
 
-In every `[task]` section, `enabled = false` disables that task, so it will be ignored during the execution loop.
+> **Disclaimer:** the panel is the recommended way to change any setting. Editing the file by hand is supported, but do it with the game closed — the panel rewrites the file whenever a setting changes, so a change made while the game is running overwrites what you typed outside.
 
-Current options and their default values:
+### When to edit the file
 
----
+The panel covers the everyday cases. Opening the file is worth it when you want to:
+
+- keep your settings under version control, or copy them to another machine;
+- configure Firebot before its first launch;
+- recover a setting by hand when the game does not open.
+
+Remember that the file is read on the next launch, so a change takes effect when you reopen the game.
+
+### Format
 
 ```toml
-[firebot_settings]
-# Determines if the bot logic should be initialized and started automatically upon game launch.
-auto_start = false
-# The initial cooldown (in seconds) before the bot begins execution.
-# Useful for preventing conflicts while Unity is still loading the initial scene.
-# Clamped between 10.0 and 120.0 seconds.
-start_bot_delay = 10.0
-# The interval (in seconds) between each BotManager verification cycle.
-# Lower values make the bot more responsive but may impact FPS performance.
-# Clamped between 5.0 and 3600.0 seconds.
-scan_interval = 5.0
-# The delay (in seconds) between individual UI interactions (clicks, transitions).
-# Ensures the game processes the command before the next action is taken. 
-# Clamped between 0.5 and 5.0 seconds.
-interaction_delay = 1.0
-# Maximum time (in seconds) a single task is allowed to run before it is aborted.
-# Clamped between 10.0 and 3600.0 seconds.
-max_task_runtime = 120.0
-# Enables verbose logging and StackTrace display in the console for easier bug identification.
-debug_mode = false
-# The physical key used to manually toggle the bot's execution state during gameplay.
-shortcut_key = "F7"
-# Some timers in the game can be sped up for free if the remaining time is below this threshold (default: 170 seconds = 2 minutes and 50 seconds). The maximum allowed value is 180 seconds (3 minutes). Set to 0 to disable free speedup. Adjust this value to account for lag or future game changes. Affects firestone researches, missions, experiments, and map reset timers. If the remaining time is less than or equal to this value, the speedup is free (no gems required).
-free_speedup_seconds = 170.0
+[firebot_settings]      # global settings
+shortcut_key = "F7"     # bot on/off hotkey; "None" frees the key
 
-[alchemist]
-enabled = false
-# ALCHEMIST EXPERIMENT RESOURCE CONFIGURATION. 
-# This setting controls which experiment resources are used. 
-# Valid IDs: 0=Dragon blood, 1=Strange dust, 2=Exotic coin. 
-# Enter comma-separated IDs (e.g. '0,1,2'). 
-# Any value other than 0, 1, or 2 will be ignored. 
-# Default: empty. If no value is provided, the task will be disabled.
-# EXAMPLES: '0,1' = Use Dragon blood and Strange dust. '2' = Only use Exotic coin.
-resource_type = ""
-
-[daily_rewards]
-enabled = false
-
-[engineer_tools]
-enabled = false
-
-[firestone_research]
-enabled = false
-# FIRESTONE RESEARCH TALENT TREE PRIORITY CONFIGURATION. 
-# This setting controls which talents are researched first based on their tree position. 
-# TALENT IDs ARE ASSIGNED BY INDEX (ordered top to bottom, left to right within each tree screen). 
-# Valid IDs for user input range from 1 to 16. 
-# You may specify any combination of IDs from 1 to 16, in any order you prefer. The bot will follow the exact order you provide. 
-# TREE I EXAMPLE - ID 1=Attribute damage, ID 2=Attribute health, ID 3=Attribute armor, ID 4=Fist fight, ID 5=Guardian power, ID 6=Projectiles, 
-# ID 7=Raining gold, ID 8=Critical loot Bonus, ID 9=Critical loot Chance, ID 10=Weaklings, ID 11=Expose Weakness, 
-# ID 12=Medal of honor, ID 13=Firestone Finder, ID 14=Trainer Skills, ID 15=Skip wave, ID 16=Expeditioner. 
-# HOW TO USE: Enter comma-separated IDs in priority order (integers between 1-16). The bot will research talents in the exact sequence provided. 
-# If a priority talent is unavailable (locked/completed), the bot will try the next priority. 
-# If all priorities are unavailable or if this field is empty, the bot will select any available talent automatically. 
-# EXAMPLES: '2,1,4' = Research Attribute health first, then Attribute damage, then Fist fight. 
-# '7,8,9' = Research Raining gold first, then Critical loot Bonus, then Critical loot Chance. 
-# '13' = Only research Firestone Finder, fallback to any available if completed. 
-# '5,12,1,16,3,8,10,2,14,7,4,15,6,13,9,11' = Example using all 16 IDs in a random order, each ID only once. 
-# Default: empty (no priority, bot selects any available talent)
-research_priority = ""
-
-[magic_quarters]
-enabled = false
-# Select guardian index for training. Use 0-3. Default is 0.
-# 0=Vermilion, 1=Grace, 2=Ankaa, 3=Azhar
-guardian_index = 0
-# Use 'Strange Dust' for training. Default is false.
-use_strange_dust = false
-
-[oracle]
-enabled = false
-
-[map_missions]
-enabled = false
-# Sort missions by time required. Use 'asc' (shorter first) or 'desc' (longer first).
-mission_time_order = "desc"
-
-[warfront_campaign_loot]
-enabled = false
-
-[expedition]
-enabled = false
-
-[free_pickaxes]
-enabled = false
-# Minimum number of free pickaxes required before claiming. Set to 1 to claim as soon as available, or up to 30 to wait for maximum. Default is 30 (wait for maximum).
-pickaxe_claim_threshold = 30
-
-[auto_skill]
-# The physical key used to manually toggle the AutoSkill execution state during gameplay. Default: F8.
-shortcut_key = "F8"
-enabled = false
-# Combo sequence as comma-separated numbers. Example: '1' will spam hotkey 1, '2,1,2' will execute hotkey 2, then 1, then 2, and repeat. Only values 1, 2, or 3 are valid. Default: 1.
-combo_sequence = "1"
-
-[auto_upgrade]
-# The physical key used to manually toggle the AutoUpgrade execution state during gameplay. Default: F6.
-shortcut_key = "F6"
-enabled = false
-# AUTOUPGRADE TARGET SLOT CONFIGURATION. 
-# This setting controls which upgrade slots (heroes/skills) will be upgraded. 
-# SLOT IDs ARE ZERO-BASED and range from 0 to 6. 
-# ORIENTATION: Slot numbering follows the list from top to bottom. 
-# SLOT MAP: 0 = Base upgrade, 1 = Guardian, 2 to 6 = Heroes. 
-# TASK PRIORITY: Main bot tasks always have priority over AutoUpgrade. 
-# AUTO PAUSE/RESUME: When a main task is approaching, AutoUpgrade pauses about 30 seconds before that task runs, allows the task to execute, and then resumes automatically. 
-# HOW TO USE: Enter comma-separated slot IDs to select the targets to upgrade. 
-# EXAMPLES: '0,6' = only slots 0 and 6 will be upgraded. '3,1,5' = only slots 3, 1 and 5. 
-# If empty, AutoUpgrade will upgrade all visible slots. 
-# Invalid values are ignored.
-upgrade_target_slots = ""
+[alchemist]             # one section per task
+enabled = true          # false = the task is skipped in the execution loop
+resource_type = "0,1"   # comma-separated ids; empty = the task's default
 ```
+
+- **The file documents itself.** The description of every option is written as a comment right above it, examples included, so the keys and their accepted values are always one line away and always current. The panel shows the short version of that same text, because the box at the bottom of the window holds about three lines — what does not fit there stays in the file.
+- **Section names differ between the two surfaces.** The panel names a section after the feature it belongs to (`General`, `AutoSkill`, `Alchemist`), while the file keeps the identifier it always had (`[firebot_settings]`, `[auto_skill]`, `[alchemist]`). Renaming a section in the panel never renames it in the file, so an existing configuration keeps working.
+- **A missing entry is added on the next launch**, which is how an older file keeps working after an update. There is no need to delete the file to get the new options.
+- **An invalid value is never fatal.** The option is dropped and the task falls back to its default; the task that needs a value to know what to do, such as the alchemist resources, disables itself rather than guessing.
 
 ---
 
@@ -316,13 +238,9 @@ upgrade_target_slots = ""
 
 ---
 
-## Contributing & Roadmap
+## Contributing
 
 Contributions are welcome! Please submit a pull request or open an issue for suggestions or improvements.
-
-### Future Plans (v0.3.0+)
-
-- [ ] **UI:** Full in-game configuration interface (no more `.cfg` file editing).
 
 ---
 
