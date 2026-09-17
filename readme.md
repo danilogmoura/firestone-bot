@@ -71,9 +71,9 @@ If you want to use the pre-built mod (no manual compilation), follow this step-b
 4. Finish installation and wait until the installer confirms success.
 
 <p align="center">
-   <img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="20%" />
+   <img src="docs/molonloader-a.png" alt="MelonLoader installer - game selection" width="30%" />
       &nbsp;&nbsp;
-   <img src="docs/melonloader-b.png" alt="MelonLoader installer - Enable Nightly builds" width="20%" />
+   <img src="docs/melonloader-b.png" alt="MelonLoader installer - Enable Nightly builds" width="30%" />
 </p>
 
 <p align="center">
@@ -112,9 +112,9 @@ If the new version includes additional configuration options, they will be added
 **Recommended: the in-game panel.** Press `F1` during gameplay. Every setting is there: sections start collapsed, so the window opens as a short list of headers, options are buttons instead of free text, and the description of whatever the cursor is over appears in the box at the bottom of the window.
 
 <p align="center">
-   <img src="docs/panel.png" alt="Firebot settings panel (F1)" width="30%" />
+   <img src="docs/panel.png" alt="Firebot settings panel (F1)" width="50%" />
    &nbsp;&nbsp;
-   <img src="docs/status.png" alt="Firebot task status screen (F2)" width="30%" />
+   <img src="docs/status.png" alt="Firebot task status screen (F2)" width="50%" />
 </p>
 
 <p align="center">
