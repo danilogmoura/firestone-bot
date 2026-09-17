@@ -112,9 +112,9 @@ If the new version includes additional configuration options, they will be added
 **Recommended: the in-game panel.** Press `F1` during gameplay. Every setting is there: sections start collapsed, so the window opens as a short list of headers, options are buttons instead of free text, and the description of whatever the cursor is over appears in the box at the bottom of the window.
 
 <p align="center">
-   <img src="docs/panel.png" alt="Firebot settings panel (F1)" width="50%" />
+   <img src="docs/panel.png" alt="Firebot settings panel (F1)" width="45%" />
    &nbsp;&nbsp;
-   <img src="docs/status.png" alt="Firebot task status screen (F2)" width="50%" />
+   <img src="docs/status.png" alt="Firebot task status screen (F2)" width="45%" />
 </p>
 
 <p align="center">
