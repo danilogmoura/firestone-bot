@@ -26,7 +26,7 @@ public class MapMissionsTask : BotTask
         _timeOrder = category.CreateEntry(
             "mission_time_order",
             "desc",
-            "Mission Time Order",
+            "Priority",
             "Sort missions by time required. Use 'asc' (shorter first) or 'desc' (longer first)."
         );
     }

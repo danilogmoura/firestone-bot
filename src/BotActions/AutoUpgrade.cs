@@ -18,6 +18,7 @@ public static class AutoUpgrade
     private const float HoldPerButtonSeconds = 0.5f;
     private const float GapBetweenButtonsSeconds = 0.5f;
     private const float IdlePollSeconds = 0.5f;
+
     private static readonly WaitForSeconds GapBetweenButtonsWait = new(GapBetweenButtonsSeconds);
     private static readonly WaitForSeconds IdlePollWait = new(IdlePollSeconds);
     private static readonly List<CachedGameButton> ButtonsBuffer = new();
@@ -70,16 +71,20 @@ public static class AutoUpgrade
         _upgradeTargetSlots = section.CreateEntry(
             "upgrade_target_slots",
             "",
-            "Upgrade Target Slots",
+            "Upgrade Slots",
             "AUTOUPGRADE TARGET SLOT CONFIGURATION. " +
             "\nThis setting controls which upgrade slots (heroes/skills) will be upgraded. " +
             "\nSLOT IDs ARE ZERO-BASED and range from 0 to 6. " +
             "\nORIENTATION: Slot numbering follows the list from top to bottom. " +
-            "\nSLOT MAP: 0 = Base upgrade, 1 = Guardian, 2 to 6 = Heroes. " +
+            "\nSLOT MAP: 0 = Specials, 1 = Guardian, 2 to 6 = Heroes 1 to 5. " +
             "\nTASK PRIORITY: Main bot tasks always have priority over AutoUpgrade. " +
             "\nAUTO PAUSE/RESUME: When a main task is approaching, AutoUpgrade pauses about 30 seconds before that task runs, allows the task to execute, and then resumes automatically. " +
-            "\nHOW TO USE: Enter comma-separated slot IDs to select the targets to upgrade. " +
-            "\nEXAMPLES: '0,6' = only slots 0 and 6 will be upgraded. '3,1,5' = only slots 3, 1 and 5. " +
+            "\nHOW TO USE: In the panel, toggle the buttons to pick the targets. 'Specials' = slot 0, " +
+            "'Guardian' = slot 1 and '1' to '5' = slots 2 to 6. " +
+            "\nThe same choice is stored as comma-separated slot IDs, and the .cfg order is the order they are " +
+            "upgraded. The panel writes it in ascending order. " +
+            "\nEXAMPLES: '0,6' = only Specials and Hero 5. '3,1,5' = only slots 3, 1 and 5. " +
+            "\nTo upgrade every slot, mark all of them ('0,1,2,3,4,5,6'). " +
             "\nIf empty, AutoUpgrade will upgrade all visible slots. " +
             "\nInvalid values are ignored."
         );

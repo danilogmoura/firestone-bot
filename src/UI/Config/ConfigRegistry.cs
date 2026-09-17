@@ -108,6 +108,19 @@ internal static class ConfigRegistry
             new ConfigChoice("0", "Dragon blood"),
             new ConfigChoice("1", "Strange dust"),
             new ConfigChoice("2", "Exotic coin")
+        },
+
+        // The id is the zero-based slot the .cfg stores; the label is the name the game shows for that
+        // slot. Both are declared here because the file keeps its own format.
+        ["auto_upgrade/upgrade_target_slots"] = new[]
+        {
+            new ConfigChoice("0", "Specials"),
+            new ConfigChoice("1", "Guardian"),
+            new ConfigChoice("2", "1"),
+            new ConfigChoice("3", "2"),
+            new ConfigChoice("4", "3"),
+            new ConfigChoice("5", "4"),
+            new ConfigChoice("6", "5")
         }
     };
 
