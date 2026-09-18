@@ -85,7 +85,7 @@ Quick check: after installation, the game folder should contain MelonLoader-rela
 
 ### 2) Install Firebot Files (Required)
 
-1. Download the latest Firebot package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) (example: `v0.3.0-alpha.1.zip`).
+1. Download the latest Firebot package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) (example: `v0.4.0-alpha.1.zip`).
 2. Extract the zip contents into the Firestone root folder (same folder as `Firestone.exe`).
 3. Allow overwrite if Windows asks.
 
