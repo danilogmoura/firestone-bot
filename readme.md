@@ -29,13 +29,14 @@ Firebot is an automation bot mod for Firestone Idle RPG, built with MelonLoader.
 - **Windows** only.
 - Firestone installed via **Steam** or **Epic Games**.
 - **MelonLoader V0.7.3 or higher** — older versions are not compatible and will cause errors.
-- Works in any game language, any resolution, and can run in the background.
+- Works in any game language and any resolution.
+- Keeps running when the game window is in the background or minimized, so you can do other things while it runs. The game must stay open.
 
 ---
 
-## Installation
-
 ### 1) Install MelonLoader
+
+MelonLoader is a mod loader for Unity games. It is what allows Firebot to load into Firestone. It is open source and maintained by [LavaGang](https://github.com/LavaGang/MelonLoader).
 
 1. Download the installer: [direct download](https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.Installer.exe) or from the [releases page](https://github.com/LavaGang/MelonLoader/releases/latest) (click **Assets** → `MelonLoader.Installer.exe`).
 2. Run the installer.
