@@ -39,8 +39,8 @@ public static class Watchdog
     ///         Measured in game with all 10 tasks running: 3 to 27 probes per sweep, 0.2 to 0.7ms of main thread,
     ///         one frame each. The only outlier was the first sweep after a start — 13.7ms of first lookups and
     ///         warm-up — and the running average settled at 1.0ms. That is why the sweep was left as it was: three
-    ///         passes cost under 1% of a frame, and skipping the empty ones would save about 0.3ms of the safety
-    ///         net that closes what the game leaves open.
+    ///         passes cost between one and four percent of a 60 fps frame, and skipping the empty ones would save
+    ///         about 0.3ms of the safety net that closes what the game leaves open.
     ///     </para>
     ///     <para>
     ///         The counters stay on outside debug mode — two increments and two timestamp reads per probe, against
