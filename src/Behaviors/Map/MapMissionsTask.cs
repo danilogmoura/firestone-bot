@@ -98,14 +98,17 @@ public class MapMissionsTask : BotTask
         {
             yield return mission.Select();
 
+            // Compared raw. The free speedup offset is the moment the game lets this progress finish for free,
+            // so it belongs to the answer and not to the comparison: applied per step, it compared a shifted
+            // value against an unshifted one and could keep a later mission as the earliest of the batch.
             var progress = MissionPreview.NextRunTime;
             if (!earliest.HasValue || progress < earliest.Value)
-                earliest = progress.AddSeconds(-BotSettings.FreeSpeedupSeconds);
+                earliest = progress;
 
             yield return MissionPreview.Close;
         }
 
-        setEarliest(earliest);
+        setEarliest(earliest?.AddSeconds(-BotSettings.FreeSpeedupSeconds));
     }
 
     private bool IsAscending()
