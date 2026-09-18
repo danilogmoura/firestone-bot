@@ -222,29 +222,54 @@ public static class AutoUpgrade
             }
 
             if (wasPaused) wasPaused = false;
-            if (!Upgrades.IsVisible)
-            {
-                yield return new GameButton(Paths.BattleLoc.BottomSideUIDesktopLoc.MenuButtonsLoc.UpgradesBtn).Click();
-                yield return Upgrades.SetUpgradeLevel();
-                yield return IdlePollWait;
-            }
 
-            var buttons = Buttons();
-            if (buttons.Count == 0)
-            {
-                yield return null;
-                continue;
-            }
-
-            foreach (var buyUpgradeBtn in buttons)
-            {
-                if (BotManager.ShouldPauseAutoUpgrade()) break;
-
-                Logger.Debug($"Name: {buyUpgradeBtn.Name}, IsVisible: {buyUpgradeBtn.IsVisible()}");
-                yield return buyUpgradeBtn.HoldButton(HoldPerButtonSeconds);
-                yield return GapBetweenButtonsWait;
-            }
+            // Driven through the guard: one step throwing used to kill this coroutine with _isRunning still true,
+            // leaving the badge claiming "on" with nothing behind it.
+            yield return CoroutineGuard.Run(UpgradeCycle(), "[AutoUpgrade] cycle", AbortAfterFailure);
         }
+    }
+
+    /// <summary>One pass over the upgrade buttons. The pause is checked outside, in the loop that owns it.</summary>
+    private static IEnumerator UpgradeCycle()
+    {
+        if (!Upgrades.IsVisible)
+        {
+            yield return new GameButton(Paths.BattleLoc.BottomSideUIDesktopLoc.MenuButtonsLoc.UpgradesBtn).Click();
+            yield return Upgrades.SetUpgradeLevel();
+            yield return IdlePollWait;
+        }
+
+        var buttons = Buttons();
+        if (buttons.Count == 0)
+        {
+            yield return null;
+            yield break;
+        }
+
+        foreach (var buyUpgradeBtn in buttons)
+        {
+            if (BotManager.ShouldPauseAutoUpgrade()) break;
+
+            Logger.Debug($"Name: {buyUpgradeBtn.Name}, IsVisible: {buyUpgradeBtn.IsVisible()}");
+            yield return buyUpgradeBtn.HoldButton(HoldPerButtonSeconds);
+            yield return GapBetweenButtonsWait;
+        }
+    }
+
+    /// <summary>
+    ///     What the guard does when a step throws: the coroutine is already ending, so the state that drives the
+    ///     badge and the hotkey is corrected here instead of through <see cref="Stop" />, which would be stopping
+    ///     this coroutine from the inside.
+    /// </summary>
+    private static void AbortAfterFailure()
+    {
+        _isRunning = false;
+        _autoUpgradeRoutineHandle = null;
+
+        // Stop() promises the upgrades menu is not left open, and the loop that would have closed it is gone.
+        // Starting a coroutine here is safe, unlike stopping this one from the inside.
+        MelonCoroutines.Start(CloseUpgradesMenu());
+        Logger.Warning("[AutoUpgrade] Stopped after the error above.");
     }
 
     private static IEnumerator CloseUpgradesMenu()
