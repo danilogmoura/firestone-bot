@@ -213,7 +213,8 @@ public static class BotManager
                 _lastStepAt = DateTime.Now;
                 try
                 {
-                    yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup before {readyTask.SectionTitle}");
+                    yield return RunSafe(Watchdog.ForceClearAll($"before {readyTask.SectionTitle}"),
+                        $"Watchdog cleanup before {readyTask.SectionTitle}");
 
                     // Stopwatch, completion line and table are all diagnostics: with debug off none of
                     // them is needed, and the console stays quiet in normal use. The guard is single for
@@ -245,7 +246,8 @@ public static class BotManager
                         }
                     }
 
-                    yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
+                    yield return RunSafe(Watchdog.ForceClearAll($"after {readyTask.SectionTitle}"),
+                        $"Watchdog cleanup after {readyTask.SectionTitle}");
                 }
                 finally
                 {
