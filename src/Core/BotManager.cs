@@ -15,14 +15,79 @@ namespace Firebot.Core;
 public static class BotManager
 {
     private const double AutoUpgradeMinExecutionWindowSeconds = 30d;
+
+    /// <summary>
+    ///     Slack over the configured scan interval before the scheduler counts as not having woken up. A frame
+    ///     can be late, and a wait is rounded up to one, but a scan half a minute past its due time is a stopped
+    ///     clock rather than a slow frame.
+    /// </summary>
+    private const double ScanWakeGraceSeconds = 30d;
+
     private static readonly List<BotTask> Tasks = new();
     private static object _botRoutineHandle;
     private static bool _shouldPauseAutoUpgrade;
     private static BotTask _executingTask;
+    private static DateTime _lastStepAt;
+
+    /// <summary>
+    ///     When the loop's sleep is due to end, or <see cref="DateTime.MaxValue" /> while it is not asleep — the
+    ///     value it also starts at, before the first scan.
+    /// </summary>
+    private static DateTime _nextScanDueAt = DateTime.MaxValue;
+
+    private static bool _scanWakeWarned;
     public static bool IsRunning { get; private set; }
     private static bool IsTaskExecuting { get; set; }
 
     public static bool ShouldPauseAutoUpgrade() => IsRunning && (_shouldPauseAutoUpgrade || IsTaskExecuting);
+
+    /// <summary>
+    ///     Stops the bot when the task it is running has stopped advancing, and reports a scan that never came
+    ///     back.
+    ///     <para>
+    ///         <see cref="RunSafe" /> times out between the steps of the routine it drives, so a task that
+    ///         never comes back from a step it handed to Unity — a nested coroutine looping on itself, such
+    ///         as clicking a button that never stops being clickable — is invisible to it: the timeout is
+    ///         never reached, the scan never returns, no other task ever runs, and the auto upgrade stays
+    ///         paused because a task is still marked as executing. Nothing in the log says why.
+    ///     </para>
+    ///     <para>
+    ///         This runs from <c>OnUpdate</c> instead of from a coroutine, which is what lets it see that
+    ///         case at all, and it keeps ticking while every wait in the mod is stuck on scaled time.
+    ///         Stopping is the way out: it drops the scheduler, and the nested routine goes with it. A
+    ///         legitimate execution never trips it — the longest single wait in the mod is
+    ///         <c>InteractionDelay</c>, a few seconds, against a limit measured in minutes.
+    ///     </para>
+    /// </summary>
+    public static void WatchForStall()
+    {
+        if (!IsRunning) return;
+
+        if (IsTaskExecuting)
+        {
+            var stalledFor = DateTime.Now - _lastStepAt;
+            if (stalledFor <= TimeSpan.FromSeconds(MaxTaskRuntime)) return;
+
+            var task = _executingTask?.SectionTitle ?? "A task";
+            Logger.Error($"[FAILED] {task} has not advanced for {stalledFor.TotalSeconds:0}s " +
+                         $"(limit {MaxTaskRuntime:0}s). Stopping the bot.");
+            Stop();
+            return;
+        }
+
+        // While the loop is asleep, a scan that never comes back is the game clock stopped rather than the bot
+        // stuck: the wait is scaled time, so timeScale == 0 never resumes it, and the mod goes quiet while the
+        // bot still reads as running. Warned and not stopped on purpose — this one heals itself when the clock
+        // returns, and stopping would end a session the user did not ask to end. Once per sleep, so it
+        // explains the silence without filling the log with it.
+        var lateBy = DateTime.Now - _nextScanDueAt;
+        if (lateBy <= TimeSpan.FromSeconds(ScanWakeGraceSeconds) || _scanWakeWarned) return;
+
+        _scanWakeWarned = true;
+        Logger.Warning($"[Bot] The scan has not resumed for {lateBy.TotalSeconds:0}s " +
+                       $"(interval {ScanInterval:0}s). Nothing is scheduled until it does — most likely the " +
+                       "game clock is stopped.");
+    }
 
     public static void Initialize()
     {
@@ -57,6 +122,12 @@ public static class BotManager
 
         IsRunning = true;
         _shouldPauseAutoUpgrade = false;
+
+        // The loop has not slept yet. A due time left over from a previous run would read as a scan that never
+        // came back — during the auto start delay, which is not a scan wait at all.
+        _nextScanDueAt = DateTime.MaxValue;
+        _scanWakeWarned = false;
+
         _botRoutineHandle = MelonCoroutines.Start(BotSchedulerLoop());
         Logger.Info($"Started. Tasks loaded: {Tasks.Count(t => t.IsEnabled)}");
     }
@@ -81,42 +152,65 @@ public static class BotManager
 
         while (IsRunning)
         {
+            // Awake, so a pause already reported can be reported again on the next one.
+            _scanWakeWarned = false;
+
             BotTask notificationTask = null;
             BotTask readyTask = null;
-            var earliest = DateTime.MaxValue;
-            var nextEnabledTaskRun = DateTime.MaxValue;
 
-            foreach (var task in Tasks)
+            // The scan is the one part of the loop nothing else guards. What a task throws is caught by RunSafe,
+            // but an exception here — a game lookup failing while the UI is mid-rebuild, say — would end the
+            // coroutine and, with it, the session: the bot would read as running with nothing ever scheduled
+            // again, which is the same silence the stall checks exist to break. It is also the synchronous
+            // part, and that is what makes it catchable: yield return is not allowed in a try that has a catch.
+            try
             {
-                // A task locked by level is enabled but cannot run. Counting its next run — MinValue, for one
-                // that never ran — would leave the auto upgrade thinking a task is always about to fire, and
-                // it would never resume while the lock lasts.
-                if (task.IsEnabled && !task.IsLevelLocked && task.NextRunTime < nextEnabledTaskRun)
-                    nextEnabledTaskRun = task.NextRunTime;
+                var earliest = DateTime.MaxValue;
+                var nextEnabledTaskRun = DateTime.MaxValue;
 
-                if (notificationTask == null && task.IsNotificationVisible())
+                foreach (var task in Tasks)
                 {
-                    notificationTask = task;
-                    continue;
+                    // A task locked by level is enabled but cannot run. Counting its next run — MinValue, for
+                    // one that never ran — would leave the auto upgrade thinking a task is always about to
+                    // fire, and it would never resume while the lock lasts.
+                    if (task.IsEnabled && !task.IsLevelLocked && task.NextRunTime < nextEnabledTaskRun)
+                        nextEnabledTaskRun = task.NextRunTime;
+
+                    if (notificationTask == null && task.IsNotificationVisible())
+                    {
+                        notificationTask = task;
+                        continue;
+                    }
+
+                    if (!task.IsReady()) continue;
+                    if (task.NextRunTime >= earliest) continue;
+
+                    earliest = task.NextRunTime;
+                    readyTask = task;
                 }
 
-                if (!task.IsReady()) continue;
-                if (task.NextRunTime >= earliest) continue;
+                if (notificationTask != null) readyTask = notificationTask;
 
-                earliest = task.NextRunTime;
-                readyTask = task;
+                var hasNearTask = nextEnabledTaskRun != DateTime.MaxValue &&
+                                  (nextEnabledTaskRun - DateTime.Now).TotalSeconds <=
+                                  AutoUpgradeMinExecutionWindowSeconds;
+                _shouldPauseAutoUpgrade = notificationTask != null || readyTask != null || hasNearTask;
             }
+            catch (Exception e)
+            {
+                Logger.Error($"[FAILED] The scan threw: {e.GetType().Name} - {e.Message}. Stopping the bot.");
 
-            if (notificationTask != null) readyTask = notificationTask;
-
-            var hasNearTask = nextEnabledTaskRun != DateTime.MaxValue &&
-                              (nextEnabledTaskRun - DateTime.Now).TotalSeconds <= AutoUpgradeMinExecutionWindowSeconds;
-            _shouldPauseAutoUpgrade = notificationTask != null || readyTask != null || hasNearTask;
+                // Cleared here rather than through Stop(): that stops this very coroutine from the inside. Ending
+                // the loop and lowering the flag is the same state, reached without re-entering MelonCoroutines.
+                IsRunning = false;
+                yield break;
+            }
 
             if (readyTask != null)
             {
                 IsTaskExecuting = true;
                 _executingTask = readyTask;
+                _lastStepAt = DateTime.Now;
                 try
                 {
                     yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup before {readyTask.SectionTitle}");
@@ -134,11 +228,21 @@ public static class BotManager
                     {
                         stopwatch.Stop();
 
-                        Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:dd/MM/yyyy HH:mm:ss}");
+                        // Diagnostics are not allowed to end the session either: with debug off none of this
+                        // runs, and the console is the one writing the table, not the bot.
+                        try
+                        {
+                            Logger.Info($"[Task] {readyTask.SectionTitle} finished in {stopwatch.Elapsed.TotalSeconds:0.###}s | Next: {readyTask.NextRunTime:dd/MM/yyyy HH:mm:ss}");
 
-                        // The table is already live on the status screen (F2). The blank line is part of it.
-                        Console.WriteLine();
-                        PrintTasksStatusTable();
+                            // The table is already live on the status screen (F2). The blank line is part of it.
+                            Console.WriteLine();
+                            PrintTasksStatusTable();
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Error($"[FAILED] Reporting {readyTask.SectionTitle} threw: " +
+                                         $"{e.GetType().Name} - {e.Message}");
+                        }
                     }
 
                     yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup after {readyTask.SectionTitle}");
@@ -150,6 +254,10 @@ public static class BotManager
                 }
             }
 
+            // The wait is scaled time, so this is the one moment where a stopped game clock shows. Armed
+            // around the wait alone: WatchForStall reads it as "asleep past its due", and while the loop is
+            // working there is no sleep to be late for.
+            _nextScanDueAt = DateTime.Now + TimeSpan.FromSeconds(ScanInterval);
             yield return new WaitForSeconds(ScanInterval);
         }
     }
@@ -189,6 +297,12 @@ public static class BotManager
             }
 
             if (!movedNext) yield break;
+
+            // The routine produced a step, so the execution as a whole is alive: WatchForStall reads this.
+            // It is the only signal that survives a step which never returns — the timeout above is checked
+            // between steps, so that step is exactly the one it cannot see.
+            _lastStepAt = DateTime.Now;
+
             yield return current;
         }
     }
