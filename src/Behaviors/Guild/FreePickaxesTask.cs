@@ -10,7 +10,9 @@ public class FreePickaxesTask : BotTask
 {
     private MelonPreferences_Entry<int> _pickaxeClaimThreshold;
 
-    public int PickaxeClaimThreshold => _pickaxeClaimThreshold?.Value ?? 1;
+    private int PickaxeClaimThreshold => _pickaxeClaimThreshold?.Value ?? 1;
+
+    public override int MinimumLevel => LevelRequirements.FreePickaxes;
 
     protected override void OnConfigure(MelonPreferences_Category category)
     {

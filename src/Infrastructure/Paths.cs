@@ -54,13 +54,6 @@ public static class Paths
             public const string CheckInBtn = Root + "/CheckIn";
         }
 
-        public static class PlayerAvatarLoc
-        {
-            private const string Root = BattleLoc.Root + "/topLeftSideUI/playerAvatar";
-
-            public const string CharacterLevel = Root + "/characterLevelBg/characterLevel";
-        }
-
         public static class BottomSideUIDesktopLoc
         {
             private const string Root = BattleLoc.Root + "/bottomSideUIDesktop";

@@ -8,6 +8,8 @@ namespace Firebot.Behaviors.Map;
 
 public class WarfrontCampaignLootTask : BotTask
 {
+    public override int MinimumLevel => LevelRequirements.WarfrontCampaign;
+
     public override IEnumerator Execute()
     {
         yield return Notifications.WarfrontCampaign;

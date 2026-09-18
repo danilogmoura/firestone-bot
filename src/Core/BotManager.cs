@@ -18,6 +18,7 @@ public static class BotManager
     private static readonly List<BotTask> Tasks = new();
     private static object _botRoutineHandle;
     private static bool _shouldPauseAutoUpgrade;
+    private static BotTask _executingTask;
     public static bool IsRunning { get; private set; }
     private static bool IsTaskExecuting { get; set; }
 
@@ -66,6 +67,10 @@ public static class BotManager
         IsRunning = false;
         IsTaskExecuting = false;
         _shouldPauseAutoUpgrade = false;
+
+        // Stopping a coroutine does not run its finally, so the task pinned to the top of the table has to be
+        // released here too.
+        _executingTask = null;
         if (_botRoutineHandle != null) MelonCoroutines.Stop(_botRoutineHandle);
         Logger.Info("Stopped.");
     }
@@ -83,7 +88,10 @@ public static class BotManager
 
             foreach (var task in Tasks)
             {
-                if (task.IsEnabled && task.NextRunTime < nextEnabledTaskRun)
+                // A task locked by level is enabled but cannot run. Counting its next run — MinValue, for one
+                // that never ran — would leave the auto upgrade thinking a task is always about to fire, and
+                // it would never resume while the lock lasts.
+                if (task.IsEnabled && !task.IsLevelLocked && task.NextRunTime < nextEnabledTaskRun)
                     nextEnabledTaskRun = task.NextRunTime;
 
                 if (notificationTask == null && task.IsNotificationVisible())
@@ -108,6 +116,7 @@ public static class BotManager
             if (readyTask != null)
             {
                 IsTaskExecuting = true;
+                _executingTask = readyTask;
                 try
                 {
                     yield return RunSafe(Watchdog.ForceClearAll(), $"Watchdog cleanup before {readyTask.SectionTitle}");
@@ -137,6 +146,7 @@ public static class BotManager
                 finally
                 {
                     IsTaskExecuting = false;
+                    _executingTask = null;
                 }
             }
 
@@ -209,7 +219,8 @@ public static class BotManager
         => value?.ToString("dd/MM/yyyy HH:mm:ss") ?? TaskStatusRow.NoValue;
 
     /// <summary>
-    ///     One row per task, ordered by next run.
+    ///     One row per task: the one being executed first, then the ones with a next run, and last the ones
+    ///     that cannot run — disabled, or waiting for a level.
     ///     <paramref name="now" /> is a parameter rather than an internal DateTime.Now so the consumer can
     ///     line up "Time Left" with its own timestamp, instead of each one taking a slightly different instant.
     /// </summary>
@@ -226,21 +237,40 @@ public static class BotManager
     /// </summary>
     internal static void AppendStatusRows(List<TaskStatusRow> buffer, DateTime now)
     {
-        foreach (var t in Tasks.OrderBy(t => t.NextRunTime))
+        // Three groups: the task being executed (what the user is watching), the tasks that have a next run,
+        // and the ones that cannot run — disabled, or locked until a level. The last group shows nothing but
+        // "-", and its NextRunTime is MinValue in every row, so ordering by next run alone put exactly the
+        // rows with nothing to say at the top of the table. Name breaks the tie inside a group: MinValue ties
+        // would otherwise be decided by the order the tasks happen to be loaded in.
+        foreach (var t in Tasks
+                     .OrderBy(t => t == _executingTask ? 0 : HasPendingRun(t) ? 1 : 2)
+                     .ThenBy(t => t.NextRunTime)
+                     .ThenBy(t => t.SectionTitle))
+        {
+            var hasPendingRun = HasPendingRun(t);
+
             buffer.Add(new TaskStatusRow(
                 t.SectionTitle,
                 GetTaskStatus(t),
-                // A disabled task has no next run that matters, so it has no time left either. Without this
-                // the subtraction runs anyway — from DateTime.MinValue for a task that never ran — and the
-                // column shows "0s" beside an empty Next Run.
-                t.IsEnabled ? TimeParser.FormatFriendlyDuration(t.NextRunTime - now) : TaskStatusRow.NoValue,
-                t.IsEnabled ? t.NextRunTime : (DateTime?)null,
+                // A task without a next run has no time left either. Without this the subtraction runs anyway
+                // — from DateTime.MinValue for a task that never ran — and the column shows "0s" beside an
+                // empty Next Run.
+                hasPendingRun ? TimeParser.FormatFriendlyDuration(t.NextRunTime - now) : TaskStatusRow.NoValue,
+                hasPendingRun ? t.NextRunTime : (DateTime?)null,
                 t.LastRunTime));
+        }
     }
+
+    /// <summary>
+    ///     Whether the task has a next run worth showing. Disabled is the user's choice and a level lock is the
+    ///     game's; in neither case can the task run now, so neither has a next run or a time left.
+    /// </summary>
+    private static bool HasPendingRun(BotTask t) => t.IsEnabled && !t.IsLevelLocked;
 
     private static string GetTaskStatus(BotTask t)
     {
         if (!t.IsEnabled) return TaskStatusRow.Disabled;
+        if (t.IsLevelLocked) return TaskStatusRow.LevelLocked;
         if (t.IsNotificationVisible()) return TaskStatusRow.Popup;
         return t.IsReady() ? TaskStatusRow.Ready : TaskStatusRow.Waiting;
     }
