@@ -210,7 +210,7 @@ public static class Watchdog
 
                 if (!visible) continue;
 
-                Logger.Info($"[Watchdog] Closing popup: {path}");
+                Logger.Debug($"[Watchdog] Closing popup: {path}");
                 meter.Closing();
 
                 var beforeClick = Stopwatch.GetTimestamp();
