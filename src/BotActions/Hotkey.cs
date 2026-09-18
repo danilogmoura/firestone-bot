@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -83,11 +84,30 @@ public class Hotkey
                 _warnedUnclickable = false;
             }
 
-            var pointer = new PointerEventData(EventSystem.current)
+            // Checked the way HoldButton checks it: a scene change can leave this null, and a click that throws
+            // here would take the whole combo with it.
+            var eventSystem = EventSystem.current;
+            if (eventSystem == null)
+            {
+                Logger.Debug($"[FAILED] Click ignored: no EventSystem. Path: {Path}");
+                yield break;
+            }
+
+            var pointer = new PointerEventData(eventSystem)
             {
                 button = PointerEventData.InputButton.Left
             };
-            ExecuteEvents.Execute(target, pointer, ExecuteEvents.pointerClickHandler);
+
+            // Caught here rather than left to the guard around the combo: a listener of the game throwing on this
+            // one click should cost a step, not the feature. Synchronous block, so the catch is allowed.
+            try
+            {
+                ExecuteEvents.Execute(target, pointer, ExecuteEvents.pointerClickHandler);
+            }
+            catch (Exception e)
+            {
+                Logger.Warning($"[FAILED] Click threw: {e.GetType().Name} - {e.Message}. Path: {Path}");
+            }
         }
         else
             Logger.Debug($"GameObject not found at path: {Path}");

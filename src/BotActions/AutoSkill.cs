@@ -275,8 +275,32 @@ public static class AutoSkill
                 yield break;
             }
 
-            foreach (var hotkey in _comboHotkeys)
-                yield return hotkey?.Click();
+            // Driven through the guard: a step that throws stops the combo and says so, instead of killing this
+            // coroutine with the flag still set, which would leave the badge claiming "on" until the hotkey was
+            // pressed twice.
+            yield return CoroutineGuard.Run(PlayCombo(), "[AutoSkill] combo", AbortAfterFailure);
         }
+    }
+
+    /// <summary>
+    ///     One pass over the sequence. The list is read here, and not in the loop, so the swap made by
+    ///     <see cref="SyncSequence" /> lands between cycles rather than in the middle of one.
+    /// </summary>
+    private static IEnumerator PlayCombo()
+    {
+        foreach (var hotkey in _comboHotkeys)
+            yield return hotkey?.Click();
+    }
+
+    /// <summary>
+    ///     What the guard does when a step throws: the coroutine is already ending, so the state that drives the
+    ///     badge and the hotkey is corrected here instead of through <see cref="Stop" />, which would be stopping
+    ///     this coroutine from the inside.
+    /// </summary>
+    private static void AbortAfterFailure()
+    {
+        _isRunning = false;
+        _autoSkillRoutineHandle = null;
+        Logger.Warning("[AutoSkill] Stopped after the error above.");
     }
 }
