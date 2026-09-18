@@ -3,6 +3,14 @@ using MelonLoader.Logging;
 
 namespace Firebot.Core;
 
+/// <summary>
+///     The mod's log. One rule decides the level, and it is what keeps a normal session readable:
+///     <see cref="Info" /> carries only errors, changes to the files on disk, and the start or stop of the bot and
+///     of its actions. Everything that describes work in progress — task tables, panel contents, sweep
+///     measurements, why a task is being held back — belongs in <see cref="Debug" />, which prints nothing unless
+///     <see cref="IsDebugEnabled" /> says so. <see cref="Warning" /> and <see cref="Error" /> are for what the user
+///     may have to act on, whether or not it stopped something.
+/// </summary>
 public static class Logger
 {
     private static readonly MelonLogger.Instance Melon = new("Firebot", ColorARGB.Cyan);

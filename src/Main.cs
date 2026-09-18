@@ -77,7 +77,7 @@ public class Main : MelonMod
         {
             // Without this, pressing the hotkey while loading looks like the mod died: the key simply
             // does nothing and there is nothing in the log explaining why.
-            LoggerInstance.Warning("[UI] Hotkey ignored: the game scene is not loaded yet.");
+            Logger.Warning("[UI] Hotkey ignored: the game scene is not loaded yet.");
         }
 
         AutoSkill.Update();

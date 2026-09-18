@@ -99,7 +99,7 @@ internal static class UiContentBuilder
         }
 
         Relayout();
-        Logger.Info($"[UI] Panel content: {groups.Count} section(s), {rowCount} setting(s).");
+        Logger.Debug($"[UI] Panel content: {groups.Count} section(s), {rowCount} setting(s).");
     }
 
     private static void AddSectionHeader(ConfigGroup group, int section)
