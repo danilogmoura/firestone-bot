@@ -225,6 +225,9 @@ public static class BotManager
                     yield return RunSafe(readyTask.Execute(), $"Task {readyTask.SectionTitle}");
                     readyTask.LastRunTime = DateTime.Now;
 
+                    // The task owns its schedule, so it also owns the promise of leaving one behind.
+                    readyTask.EnsureScheduled();
+
                     if (stopwatch != null)
                     {
                         stopwatch.Stop();
@@ -386,7 +389,7 @@ public static class BotManager
     private static string GetTaskStatus(BotTask t)
     {
         if (!t.IsEnabled) return TaskStatusRow.Disabled;
-        if (t.IsLevelLocked) return TaskStatusRow.LevelLocked;
+        if (t.IsLevelLocked) return TaskStatusRow.Locked(t.MinimumLevel);
         if (t.IsNotificationVisible()) return TaskStatusRow.Popup;
         return t.IsReady() ? TaskStatusRow.Ready : TaskStatusRow.Waiting;
     }

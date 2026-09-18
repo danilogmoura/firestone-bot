@@ -36,10 +36,11 @@ internal readonly struct TaskStatusRow
     public const string Disabled = "Disabled";
 
     /// <summary>
-    ///     The feature behind the task is not unlocked yet. The task is still enabled and scheduled; the game
-    ///     has nothing to click, so showing "Waiting" would read as a fault when it is the game's own gate.
+    ///     The feature behind the task has not been unlocked yet, with the level the game asks for. The number is
+    ///     the point: this row is what the user looks at, and "locked" alone does not say what to wait for. Kept
+    ///     as short as it reads, because the column cuts.
     /// </summary>
-    public const string LevelLocked = "LevelLocked";
+    public static string Locked(int level) => $"Locked ({level})";
 
     /// <summary>
     ///     The task has something waiting to be clicked in the game. The internal name for it is
@@ -51,7 +52,7 @@ internal readonly struct TaskStatusRow
 
     public const string Waiting = "Waiting";
 
-    /// <summary>Disabled, LevelLocked, Popup, Ready or Waiting — precedence defined in BotManager.</summary>
+    /// <summary>Disabled, Locked, Popup, Ready or Waiting — precedence defined in BotManager.</summary>
     public string Status { get; }
 
     /// <summary>
