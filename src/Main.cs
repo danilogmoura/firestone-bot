@@ -66,6 +66,10 @@ public class Main : MelonMod
 
         if (_isGameReady)
         {
+            // Before the windows: a stalled task is stopped here, and the status screen then shows the bot as
+            // stopped instead of as busy for one more refresh.
+            BotManager.WatchForStall();
+
             BotPanel.Tick();
             BotStatusScreen.Tick();
         }
