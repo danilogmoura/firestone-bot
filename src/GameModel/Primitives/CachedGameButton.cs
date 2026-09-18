@@ -101,8 +101,10 @@ public class CachedGameButton : GameButton
 
         ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerDownHandler);
 
-        var startTime = Time.time;
-        while (button != null && button.enabled && button.interactable && Time.time - startTime < maxSeconds)
+        // Unscaled time, unlike the waits around it: this is a deadline, not pacing. On Time.time, a stopped
+        // game clock would leave it under its limit forever and the hold would never end.
+        var startTime = Time.unscaledTime;
+        while (button != null && button.enabled && button.interactable && Time.unscaledTime - startTime < maxSeconds)
             yield return null;
     }
 }

@@ -4,9 +4,10 @@ namespace Firebot.Core.Tasks;
 ///     Character level each automation needs before the game offers the feature it drives.
 ///     <para>
 ///         One table instead of a number per task: the requirement belongs to the feature, and when the game
-///         changes an unlock level this is the single line to edit. A task whose requirement is not known
-///         stays at <see cref="None" /> rather than guessing — guessing is what makes a task click a menu
-///         that does not exist yet.
+///         changes an unlock level this is the single line to edit. The five automations that are available
+///         from level 1 sit at <see cref="None" /> — a statement about the game, not an unfilled placeholder —
+///         and a task whose feature needs a level must say so here, because the runtime check is what keeps it
+///         from clicking a menu the game has not created yet.
 ///     </para>
 /// </summary>
 public static class LevelRequirements
