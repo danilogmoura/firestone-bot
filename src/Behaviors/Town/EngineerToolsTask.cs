@@ -10,6 +10,8 @@ public class EngineerToolsTask : BotTask
 {
     protected override string NotificationPath => Paths.BattleLoc.NotificationsLoc.EngineerBtn;
 
+    public override int MinimumLevel => LevelRequirements.EngineerTools;
+
     public override IEnumerator Execute()
     {
         yield return Notifications.Engineer;

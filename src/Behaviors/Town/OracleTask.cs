@@ -10,6 +10,8 @@ public class OracleTask : BotTask
 {
     protected override string NotificationPath => Paths.BattleLoc.NotificationsLoc.OracleRitualsBtn;
 
+    public override int MinimumLevel => LevelRequirements.Oracle;
+
     public override IEnumerator Execute()
     {
         yield return Notifications.OracleRituals;

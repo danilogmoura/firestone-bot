@@ -29,9 +29,11 @@ public static class BotStatusScreen
 
     private static readonly string[] ColumnTitles = { "Task", "Status", "Time Left", "Next Run", "Last Run" };
 
-    // Task +20%, Next Run +10% and Time Left +20% against the first version. Status and Last Run keep
-    // the pixel width they already had — which is why the window widened again (StatusWindowWidth).
-    private static readonly float[] ColumnRatios = { 0.325f, 0.144f, 0.152f, 0.197f, 0.182f };
+    // Proportions, not pixels. Task is sized on the longest name ("Warfront Campaign Loot"), Status on the
+    // longest value ("LevelLocked") plus the gap that keeps it from reading as glued to Time Left, Time Left
+    // on the widest duration it prints ("12h 11m 19s") and Next Run on "dd/MM HH:mm". Last Run prints the
+    // same format as Next Run and takes what is left.
+    private static readonly float[] ColumnRatios = { 0.325f, 0.158f, 0.152f, 0.197f, 0.168f };
 
     /// <summary>Buffer reused between refreshes: once per second with no new list allocated.</summary>
     private static readonly List<TaskStatusRow> Buffer = new();

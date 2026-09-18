@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Firebot.Core;
 using Firebot.Core.Tasks;
 using Firebot.GameModel.Features.Town.Oracle;
 using Firebot.GameModel.Shared;
@@ -9,7 +10,6 @@ namespace Firebot.Behaviors.Town;
 public class DailyRewardsTask : BotTask
 {
     private const float MenuOpenDelay = 2f;
-    private const int MinimumLevelForOracleGift = 200;
 
     public override IEnumerator Execute()
     {
@@ -25,13 +25,16 @@ public class DailyRewardsTask : BotTask
         NextRunTime = Store.CheckInNextRunTime;
         yield return Store.Close;
 
-        if (PlayerAvatar.CharacterLevel >= MinimumLevelForOracleGift)
-        {
-            yield return Notifications.OraclesGift;
-            yield return new WaitForSeconds(MenuOpenDelay);
-            yield return OracleStore.ClaimGift;
-            NextRunTime = OracleStore.NextRunTime;
-            yield return OracleStore.Close;
-        }
+        // Fail-closed here, unlike BotTask.IsLevelLocked: the Oracle gift is a bonus on top of the check-in,
+        // and the menu only exists at LevelRequirements.Oracle — with no level read there is no reason to
+        // trust that it is there.
+        if (!PlayerStats.TryGetCharacterLevel(out var level) || level < LevelRequirements.Oracle)
+            yield break;
+
+        yield return Notifications.OraclesGift;
+        yield return new WaitForSeconds(MenuOpenDelay);
+        yield return OracleStore.ClaimGift;
+        NextRunTime = OracleStore.NextRunTime;
+        yield return OracleStore.Close;
     }
 }

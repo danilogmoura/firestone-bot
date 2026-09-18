@@ -15,6 +15,8 @@ public class AlchemistTask : BotTask
     private MelonPreferences_Entry<string> _resourceType;
     protected override string NotificationPath => Paths.BattleLoc.NotificationsLoc.ExperimentsBtn;
 
+    public override int MinimumLevel => LevelRequirements.Alchemist;
+
     protected override void OnConfigure(MelonPreferences_Category category)
     {
         if (_resourceType != null) return;

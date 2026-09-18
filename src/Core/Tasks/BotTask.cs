@@ -13,6 +13,8 @@ public abstract class BotTask
     private MelonPreferences_Category _category;
     private MelonPreferences_Entry<bool> _enabledEntry;
     private GameElement _notificationElement;
+    private bool _levelLockLogged;
+    private bool _levelWaitLogged;
 
     protected BotTask()
     {
@@ -22,6 +24,12 @@ public abstract class BotTask
     public string SectionTitle => Humanize(GetType().Name);
 
     public DateTime NextRunTime { get; protected set; } = DateTime.MinValue;
+
+    /// <summary>
+    ///     Character level the feature behind this task needs. <see cref="LevelRequirements.None" /> — the
+    ///     default — means the feature is available from the start, and costs no game lookup.
+    /// </summary>
+    public virtual int MinimumLevel => LevelRequirements.None;
 
     public DateTime? LastRunTime { get; set; }
 
@@ -69,10 +77,66 @@ public abstract class BotTask
 
     protected virtual void OnConfigure(MelonPreferences_Category category) { }
 
-    public bool IsReady()
-        => IsNotificationVisible() || (IsEnabled && DateTime.Now >= NextRunTime);
+    /// <summary>
+    ///     True while the game does not offer this task's feature yet, or while the level is not known.
+    ///     <para>
+    ///         The unknown case is a lock on purpose, but only for a task that asked for a level: running the
+    ///         task would click a menu that may not exist yet, which is what breaks the flow. A task with no
+    ///         requirement returns on the first line and never looks at the level.
+    ///     </para>
+    ///     <para>
+    ///         Nothing is written back to the settings. The user's "enabled" is theirs; this is a runtime
+    ///         condition, and it clears itself the moment the level arrives — including for the level
+    ///         requirement the character has not reached yet.
+    ///     </para>
+    /// </summary>
+    public bool IsLevelLocked
+    {
+        get
+        {
+            if (MinimumLevel <= LevelRequirements.None) return false;
 
+            if (!PlayerStats.TryGetCharacterLevel(out var level))
+            {
+                if (!_levelWaitLogged)
+                {
+                    _levelWaitLogged = true;
+                    Debug($"Level not read yet; holding off (needs {MinimumLevel}).");
+                }
+
+                return true;
+            }
+
+            _levelWaitLogged = false;
+
+            if (level >= MinimumLevel)
+            {
+                _levelLockLogged = false;
+                return false;
+            }
+
+            if (!_levelLockLogged)
+            {
+                _levelLockLogged = true;
+                Logger.Info($"[{SectionTitle}] Locked until level {MinimumLevel}. Character is at {level}.");
+            }
+
+            return true;
+        }
+    }
+
+    public bool IsReady()
+        => !IsLevelLocked && (IsNotificationVisibleCore() || (IsEnabled && DateTime.Now >= NextRunTime));
+
+    /// <summary>
+    ///     The check the scheduler makes before it even looks at readiness: a popup can be clicked from here,
+    ///     so the level guard has to be in front of it too.
+    /// </summary>
     public bool IsNotificationVisible()
+        => !IsLevelLocked && IsNotificationVisibleCore();
+
+    /// <summary>The level is looked up once per call through the guards above, not once per branch.</summary>
+    private bool IsNotificationVisibleCore()
         => IsEnabled && NotificationElement != null && NotificationElement.IsVisible();
 
     public abstract IEnumerator Execute();
