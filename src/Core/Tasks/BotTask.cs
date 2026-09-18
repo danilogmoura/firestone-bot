@@ -15,6 +15,7 @@ public abstract class BotTask
     private GameElement _notificationElement;
     private bool _levelLockLogged;
     private bool _levelWaitLogged;
+    private bool _unscheduledRunReported;
 
     protected BotTask()
     {
@@ -69,7 +70,8 @@ public abstract class BotTask
         // without the section header above it.
         _enabledEntry = _category.CreateEntry("enabled", false, $"Enable {SectionTitle}",
             $"Enables or disables the {SectionTitle} automation task." +
-            $"\nWhen disabled, this task will be ignored during the execution loop.");
+            $"\nWhen disabled, this task will be ignored during the execution loop." +
+            LevelRequirementNote);
 
         OnConfigure(_category);
         _category.SaveToFile();
@@ -125,6 +127,16 @@ public abstract class BotTask
         }
     }
 
+    /// <summary>
+    ///     One more line on the task's own toggle when the game only offers the feature later, and nothing at all
+    ///     for a task that is available from the start. The panel shows this text as the row's description, so the
+    ///     requirement sits exactly where the user turns the task on — and it must stay inside the three lines
+    ///     that box holds.
+    /// </summary>
+    private string LevelRequirementNote => MinimumLevel <= LevelRequirements.None
+        ? string.Empty
+        : $"\nHeld back until the character is level {MinimumLevel}.";
+
     public bool IsReady()
         => !IsLevelLocked && (IsNotificationVisibleCore() || (IsEnabled && DateTime.Now >= NextRunTime));
 
@@ -140,6 +152,26 @@ public abstract class BotTask
         => IsEnabled && NotificationElement != null && NotificationElement.IsVisible();
 
     public abstract IEnumerator Execute();
+
+    /// <summary>
+    ///     Called by the manager after a run. A task that returns without scheduling itself leaves
+    ///     <see cref="NextRunTime" /> at <see cref="DateTime.MinValue" /> — the earliest value there is — so from
+    ///     then on it would win the scan every time and the other tasks would never get a turn, with nothing in
+    ///     the log to explain why. The time is nudged forward here instead, and the mistake reported once.
+    /// </summary>
+    public void EnsureScheduled()
+    {
+        if (NextRunTime != DateTime.MinValue) return;
+
+        var backoff = BotSettings.ScanInterval;
+        NextRunTime = DateTime.Now.AddSeconds(backoff);
+
+        if (_unscheduledRunReported) return;
+
+        _unscheduledRunReported = true;
+        Logger.Warning($"[FAILED] {SectionTitle} finished without scheduling its next run; " +
+                       $"backing off {backoff:0}s instead of running on every scan.");
+    }
 
     protected void Debug(string message, [CallerMemberName] string member = "", [CallerLineNumber] int line = 0)
         => Logger.Debug($"[{_className}::{member}:{line}] {message}");
