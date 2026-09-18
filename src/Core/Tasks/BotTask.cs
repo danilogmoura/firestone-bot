@@ -118,7 +118,7 @@ public abstract class BotTask
             if (!_levelLockLogged)
             {
                 _levelLockLogged = true;
-                Logger.Info($"[{SectionTitle}] Locked until level {MinimumLevel}. Character is at {level}.");
+                Logger.Debug($"[{SectionTitle}] Locked until level {MinimumLevel}. Character is at {level}.");
             }
 
             return true;
