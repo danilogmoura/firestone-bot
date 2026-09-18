@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Firebot.Core;
+using Logger = Firebot.Core.Logger;
 
 namespace Firebot.Utilities;
 
@@ -69,7 +70,7 @@ public static class TimeParser
     {
         var duration = Parse(raw);
         var multiplied = TimeSpan.FromTicks((long)(duration.Ticks * multiplier));
-        
+
         Logger.Debug($"Raw: '{raw}' -> Parsed: {duration} -> Multiplied: {multiplied} -> Date: {DateTime.Now.Add(multiplied):HH:mm:ss}");
 
         return duration == TimeSpan.Zero
