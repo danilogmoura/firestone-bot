@@ -55,8 +55,12 @@ Every task can be enabled, disabled and tuned in the [in-game panel](#5-configur
 
 ## Downloads
 
-- **MelonLoader**: <https://github.com/LavaGang/MelonLoader/releases/latest>
-- **Latest Firebot Release**: <https://github.com/danilogmoura/firestone-bot/releases/latest>
+Both files come from GitHub, and **you never need a GitHub account or any Git tool** to do it. On a release page the ready-to-use files are listed under a collapsible bar called **Assets**, below the release notes; that bar is where every file below lives.
+
+- **MelonLoader**: [releases page](https://github.com/LavaGang/MelonLoader/releases/latest) · [direct installer download](https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.Installer.exe)
+- **Firebot**: [releases page](https://github.com/danilogmoura/firestone-bot/releases/latest)
+
+> **Never download the source code.** Inside every **Assets** list, the rows named `Source code (zip)` and `Source code (tar.gz)` are the project's code, not the mod or the installer — scroll past them. The green `Code` button leads to that same source code, but it exists only on the repository's home page: **if you can already see the `Assets` list, you are in the right place and never need that button.**
 
 ---
 
@@ -66,9 +70,11 @@ If you want to use the pre-built mod (no manual compilation), follow this step-b
 
 ### 1) Install MelonLoader (Required)
 
-1. Download [MelonLoader V0.7.3+](https://github.com/LavaGang/MelonLoader/releases/latest).
-2. Run the MelonLoader installer.
-3. When asked for the game executable, select your `Firestone.exe` file (inside your Firestone install folder).
+1. Download the **MelonLoader installer**:
+   - open the [MelonLoader releases page](https://github.com/LavaGang/MelonLoader/releases/latest) — it opens directly on the newest version — click **Assets** and download `MelonLoader.Installer.exe`; or
+   - [download it directly](https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.Installer.exe), which always gives you the newest version.
+2. Run the installer you just downloaded. It is a single `.exe`; there is nothing to install beforehand.
+3. When asked for the game executable, select your `Firestone.exe` file (in your Firestone folder — see [Finding your Firestone Folder](#finding-your-firestone-folder)).
 4. Finish installation and wait until the installer confirms success.
 
 <p align="center">
@@ -85,11 +91,12 @@ Quick check: after installation, the game folder should contain MelonLoader-rela
 
 ### 2) Install Firebot Files (Required)
 
-1. Download the latest Firebot package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest) (example: `v0.4.0-alpha.1.zip`).
-2. Extract the zip contents into the Firestone root folder (same folder as `Firestone.exe`).
-3. Allow overwrite if Windows asks.
+1. Open the [Firebot releases page](https://github.com/danilogmoura/firestone-bot/releases/latest). The newest version is at the top, with its notes.
+2. Click the **Assets** bar to unfold the file list, and download the `.zip` named after the version (example: `0.4.0-alpha.1.zip`).
+3. Extract the zip contents into the Firestone root folder — the same folder as `Firestone.exe` (see [Finding your Firestone Folder](#finding-your-firestone-folder)): right-click the `.zip` → **Extract All...** → paste the folder path → **Extract**.
+4. Allow overwrite if Windows asks.
 
-The zip already includes the correct structure (`Mods`, `UserData`).
+The zip already includes the correct structure (`Mods`, `UserData`), so extracting it in the right place is all it takes. Afterwards the game folder contains `Mods/firebot.dll`, which is the mod itself.
 
 ### 3) First Launch (Required)
 
@@ -102,8 +109,8 @@ The zip already includes the correct structure (`Mods`, `UserData`).
 When a new Firebot version is released, you do not need to reinstall everything.
 
 1. **Close the game completely**.
-2. Download the new release package from [Releases](https://github.com/danilogmoura/firestone-bot/releases/latest).
-3. Replace only this file in your game folder: `Mods/firebot.dll`.
+2. On the [Firebot releases page](https://github.com/danilogmoura/firestone-bot/releases/latest), click **Assets** and download the `.zip` of the new version.
+3. Take `Mods/firebot.dll` from inside that zip and replace it in your game folder, overwriting the old one.
 4. Start the game once so Firebot can load the new version.
 
 If the new version includes additional configuration options, they will be added automatically to your existing `FirebotPreferences.cfg` on the first execution.
@@ -175,6 +182,15 @@ Starting from a closed game:
 
 Important: no matter which method you choose, always replace only `Mods/firebot.dll` to update Firebot.
 If Firebot is working normally, do not run these recovery methods.
+
+### Finding your Firestone Folder
+
+MelonLoader, the Firebot zip and the `Mods/firebot.dll` of an update all go to the folder that contains `Firestone.exe`. To open it without hunting through the disk:
+
+- **Steam:** right-click Firestone in your library → **Manage** → **Browse local files**.
+- **Epic Games:** in the **Library**, click the `...` on the Firestone card → **Manage** → **Open install location**.
+
+The folder you want is the one containing `Firestone.exe`: that is where the MelonLoader installer points and where the Firebot zip is extracted.
 
 ---
 
