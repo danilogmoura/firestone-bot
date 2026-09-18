@@ -34,6 +34,7 @@ Firebot **is not a cheat**. It does not modify game resources, grant unfair adva
 - **Easy Start/Stop**: Toggles the bot on or off during gameplay with a hotkey (default `F7`), plus optional auto-start and timing controls.
 - **In-Game Settings Panel**: Every task can be enabled, disabled and tuned from inside the game, with its own hotkey (default `F1`). No file editing, and the changes are saved as you make them.
 - **Task Status Screen**: One row per task with its state, time left, next run and last run, shown on its own screen (default `F2`) instead of read from a log.
+- **Level-Aware Tasks**: A task whose feature the game has not unlocked yet is held back, shown as `LevelLocked` on the status screen, and starts on its own once the character reaches the level it needs.
 - **Automatic Daily Rewards**: Collects daily rewards when available.
 - **Engineer Collection**: Picks up ready Engineer tools automatically.
 - **Warfront Rewards**: Collects available Warfront campaign scroll rewards.
@@ -208,6 +209,7 @@ resource_type = "0,1"   # comma-separated ids; empty = the task's default
 - **Section names differ between the two surfaces.** The panel names a section after the feature it belongs to (`General`, `AutoSkill`, `Alchemist`), while the file keeps the identifier it always had (`[firebot_settings]`, `[auto_skill]`, `[alchemist]`). Renaming a section in the panel never renames it in the file, so an existing configuration keeps working.
 - **A missing entry is added on the next launch**, which is how an older file keeps working after an update. There is no need to delete the file to get the new options.
 - **An invalid value is never fatal.** The option is dropped and the task falls back to its default; the task that needs a value to know what to do, such as the alchemist resources, disables itself rather than guessing.
+- **A task can be enabled and still not run.** Features the game only offers later are held back until then — Engineer tools and Free Pickaxes at level 50, Alchemist at 120, Oracle at 200 — and everything else is available from level 1. This is a runtime condition and not a setting: the bot never rewrites your `enabled`, the status screen shows `LevelLocked`, and the task resumes by itself when the level arrives.
 
 ---
 

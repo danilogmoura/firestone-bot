@@ -17,14 +17,6 @@ public class GameText : GameElement
     public DateTime TimeMultiplier(double multiplier = 1) =>
         TimeParser.ParseExpectedTime(GetParsedText(), multiplier: multiplier);
 
-    public int GetParsedInt(int fallback = 0)
-    {
-        var parsedText = GetParsedText();
-        return int.TryParse(parsedText, NumberStyles.Integer, CultureInfo.InvariantCulture, out var value)
-            ? value
-            : fallback;
-    }
-
     public double GetParsedDouble(double fallback = 0)
     {
         var parsedText = GetParsedText();
