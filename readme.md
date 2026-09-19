@@ -1,7 +1,5 @@
 # Firebot
 
-[![Discord](https://img.shields.io/badge/Discord-Join%20Server-5865F2?logo=discord&logoColor=white)](https://discord.gg/JB8RJAs6J3)
-
 Automation bot mod for Firestone Idle RPG, using MelonLoader.
 
 > **Just want to play?** Install [MelonLoader V0.7.3+](https://github.com/LavaGang/MelonLoader/releases/latest), extract the Firebot zip into your game folder, launch the game, press `F1` to configure the bot, then press `F7` to toggle it on.
@@ -139,13 +137,6 @@ No. Cache cleanup is only for when the **game** updates and Firebot stops workin
 
 **The log looks shorter than before. Is that a bug?**
 No. That is the new rule. Turn on **Debug Mode** if you want the detailed log back.
-
----
-
-## Help
-
-- **Discord:** [discord.gg/JB8RJAs6J3](https://discord.gg/JB8RJAs6J3)
-- **Bug reports / feature requests:** [open an issue](https://github.com/danilogmoura/firestone-bot/issues/new/choose)
 
 ---
 
