@@ -11,6 +11,7 @@ packages/
 ## --- IDE Specific Files (Rider, VS Code, Visual Studio) ---
 .idea/
 .vscode/
+.github/
 *.iml
 *.suo
 _ReSharper.Caches/
