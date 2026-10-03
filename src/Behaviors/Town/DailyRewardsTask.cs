@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Firebot.Core;
 using Firebot.Core.Tasks;
 using Firebot.GameModel.Features.Town.Oracle;
@@ -25,7 +26,11 @@ public class DailyRewardsTask : BotTask
         NextRunTime = Store.CheckInNextRunTime;
         yield return Store.Close;
 
-        if (PlayerStats.TryGetCharacterLevel(out var level) && level >= LevelRequirements.ScarabGameShop)
+        if (!PlayerStats.TryGetCharacterLevel(out var level))
+        {
+            NextRunTime = DateTime.Now.AddSeconds(BotSettings.ScanInterval);
+        }
+        else if (level >= LevelRequirements.ScarabGameShop)
         {
             yield return Notifications.ScarabGameShopFreeToken;
             yield return new WaitForSeconds(MenuOpenDelay);
