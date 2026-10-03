@@ -46,10 +46,10 @@ public class AlchemistTask : BotTask
 
         var value = _resourceType.Value;
 
-        var validIds = new[] { "0", "1", "2" };
         var resources = value.Split(',')
             .Select(x => x.Trim())
-            .Where(x => validIds.Contains(x))
+            .Where(x => Experiments.ValidResourceIds.Contains(x))
+            .Distinct()
             .ToArray();
 
         if (resources.Length != 0) return resources;
@@ -63,11 +63,33 @@ public class AlchemistTask : BotTask
         yield return Notifications.Experiments;
 
         yield return new WaitForSeconds(3);
-        var resources = GetResourceTypes();
         var experiments = new Experiments();
-        yield return experiments.Claim(resources);
+        var resources = GetResourceTypes();
+        yield return experiments.Claim();
+
+        var startableResources = resources
+            .Where(resource =>
+            {
+                var quantity = experiments.ResourceQuantity(resource);
+                if (quantity > 0) return true;
+
+                Debug($"[INFO] Resource '{resource}' is unavailable ({quantity:0.##}). " +
+                      "Skipping new experiment start.");
+                return false;
+            })
+            .ToArray();
+
+        if (startableResources.Length == 0)
+        {
+            NextRunTime = DateTime.Now.AddHours(1);
+            Debug("[INFO] No configured resources are available for a new experiment. " +
+                  "Retrying resource check in one hour.");
+            yield return Alchemist.Close;
+            yield break;
+        }
+
         yield return new WaitForSeconds(1);
-        yield return experiments.Start(resources);
+        yield return experiments.Start(startableResources);
         NextRunTime = experiments.NextRunTime(resources);
         yield return Alchemist.Close;
     }

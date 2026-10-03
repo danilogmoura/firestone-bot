@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using Firebot.GameModel.Base;
 using Firebot.Utilities;
 using Il2CppTMPro;
@@ -20,13 +21,12 @@ public class GameText : GameElement
     public double GetParsedDouble(double fallback = 0)
     {
         var parsedText = GetParsedText();
+        var digits = new string(parsedText.Where(character => character is >= '0' and <= '9').ToArray());
 
-        if (double.TryParse(parsedText, NumberStyles.Float, CultureInfo.InvariantCulture, out var invariantValue))
+        if (double.TryParse(digits, NumberStyles.None, CultureInfo.InvariantCulture, out var invariantValue))
             return invariantValue;
 
-        return double.TryParse(parsedText, NumberStyles.Float, CultureInfo.CurrentCulture, out var currentCultureValue)
-            ? currentCultureValue
-            : fallback;
+        return fallback;
     }
 
     public string GetParsedText()

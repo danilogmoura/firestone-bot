@@ -363,6 +363,17 @@ public static class Paths
 
                     public const string CloseBtn = Root + "/closeButton";
 
+                    public static class CountersLoc
+                    {
+                        private const string Root = AlchemistLoc.Root + "/counters";
+
+                        public const string DragonBloodQuantity = Root + "/currencyInteraction (DragonBlood)/quantity";
+
+                        public const string StrangeDustQuantity = Root + "/currencyInteraction (StrangeDust)/quantity";
+
+                        public const string ExoticCoinQuantity = Root + "/currencyInteraction (ExoticCoin)/quantity";
+                    }
+
                     public static class ExperimentsLoc
                     {
                         public const string Root = AlchemistLoc.Root + "/submenus/bg/experimentsSubmenu/experiments";
