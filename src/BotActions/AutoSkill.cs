@@ -87,7 +87,7 @@ public static class AutoSkill
         _isInitialized = true;
 
         ParseComboSequence();
-        Logger.Info("AutoSkill configuration initialized.");
+        Logger.Debug("AutoSkill configuration initialized.");
     }
 
     /// <summary>

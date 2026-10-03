@@ -37,7 +37,7 @@ public static class BotPanel
 
     public static void Initialize()
     {
-        Logger.Info($"[UI] Panel ready. Press {BotSettings.PanelKey} to toggle it.");
+        Logger.Debug($"[UI] Panel ready. Press {BotSettings.PanelKey} to toggle it.");
     }
 
     /// <summary>

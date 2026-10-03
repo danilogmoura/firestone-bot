@@ -93,7 +93,7 @@ public static class AutoUpgrade
 
         section.SaveToFile();
         _isInitialized = true;
-        Logger.Info("AutoUpgrade configuration initialized.");
+        Logger.Debug("AutoUpgrade configuration initialized.");
     }
 
     private static List<CachedGameButton> Buttons()
@@ -194,7 +194,7 @@ public static class AutoUpgrade
         if (_isRunning) return;
         _isRunning = true;
         _autoUpgradeRoutineHandle = MelonCoroutines.Start(UpgradeLoop());
-        Logger.Info("AutoUpgrade started.");
+        Logger.Debug("AutoUpgrade started.");
     }
 
     private static void Stop()

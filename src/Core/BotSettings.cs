@@ -126,6 +126,6 @@ public static class BotSettings
             "If the remaining time is less than or equal to this value, the speedup is free (no gems required)."
         );
         _category.SaveToFile();
-        Logger.Info($"System Initialized. Configuration: {ConfigPath}");
+        Logger.Debug($"System Initialized. Configuration: {ConfigPath}");
     }
 }

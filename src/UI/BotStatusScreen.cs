@@ -55,7 +55,7 @@ public static class BotStatusScreen
 
     public static void Initialize()
     {
-        Logger.Info($"[UI] Status screen ready. Press {ToggleKey} to toggle it.");
+        Logger.Debug($"[UI] Status screen ready. Press {ToggleKey} to toggle it.");
     }
 
     /// <summary>The scene destroys the objects; here we only drop the references. Rebuilds on the next open.</summary>
