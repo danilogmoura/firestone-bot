@@ -26,11 +26,11 @@ public class DailyRewardsTask : BotTask
         NextRunTime = Store.CheckInNextRunTime;
         yield return Store.Close;
 
-        if (!PlayerStats.TryGetCharacterLevel(out var level))
+        if (!PlayerStats.TryGetCharacterLevel(out var scarabLevel))
         {
             NextRunTime = DateTime.Now.AddSeconds(BotSettings.ScanInterval);
         }
-        else if (level >= LevelRequirements.ScarabGameShop)
+        else if (scarabLevel >= LevelRequirements.ScarabGameShop)
         {
             yield return Notifications.ScarabGameShopFreeToken;
             yield return new WaitForSeconds(MenuOpenDelay);
