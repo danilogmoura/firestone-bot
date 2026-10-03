@@ -26,3 +26,5 @@ Reports/
 
 ## --- Source Files (No Modifications) ---
 src/Utilities/Polyfills.cs
+
+.analyzer/
