@@ -14,7 +14,7 @@ public class Hotkey
     ///     hidden while a task holds a menu open — so the wait only has to end eventually; without a deadline,
     ///     a button that never becomes clickable holds the combo forever, in silence.
     /// </summary>
-    private const float ButtonWaitSeconds = 15f;
+    private const float ButtonWaitSeconds = 60f;
 
     private GameObject _cachedGameObject;
     private bool _warnedUnclickable;
@@ -74,8 +74,8 @@ public class Hotkey
                     if (!_warnedUnclickable)
                     {
                         _warnedUnclickable = true;
-                        Logger.Warning($"[Hotkey] Skipped: the button was still not clickable after " +
-                                       $"{ButtonWaitSeconds:0}s. Path: {Path}");
+                        Logger.Debug($"[Hotkey] Skipped: the button was still not clickable after " +
+                                     $"{ButtonWaitSeconds:0}s. Path: {Path}");
                     }
 
                     yield break;
