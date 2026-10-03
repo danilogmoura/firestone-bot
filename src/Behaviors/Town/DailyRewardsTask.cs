@@ -26,11 +26,13 @@ public class DailyRewardsTask : BotTask
         NextRunTime = Store.CheckInNextRunTime;
         yield return Store.Close;
 
-        if (!PlayerStats.TryGetCharacterLevel(out var scarabLevel))
+        if (!PlayerStats.TryGetCharacterLevel(out var level))
         {
             NextRunTime = DateTime.Now.AddSeconds(BotSettings.ScanInterval);
+            yield break;
         }
-        else if (scarabLevel >= LevelRequirements.ScarabGameShop)
+
+        if (level >= LevelRequirements.ScarabGameShop)
         {
             yield return Notifications.ScarabGameShopFreeToken;
             yield return new WaitForSeconds(MenuOpenDelay);
@@ -42,7 +44,7 @@ public class DailyRewardsTask : BotTask
         // Fail-closed here, unlike BotTask.IsLevelLocked: the Oracle gift is a bonus on top of the check-in,
         // and the menu only exists at LevelRequirements.Oracle — with no level read there is no reason to
         // trust that it is there.
-        if (!PlayerStats.TryGetCharacterLevel(out var level) || level < LevelRequirements.Oracle)
+        if (level < LevelRequirements.Oracle)
             yield break;
 
         yield return Notifications.OraclesGift;
