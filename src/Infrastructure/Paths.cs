@@ -52,6 +52,8 @@ public static class Paths
             public const string MysteryBoxBtn = Root + "/MysteryBox";
 
             public const string CheckInBtn = Root + "/CheckIn";
+
+            public const string ScarabGameShopFreeTokenBtn = Root + "/ScarabGameShopFreeToken";
         }
 
         public static class BottomSideUIDesktopLoc
@@ -138,6 +140,19 @@ public static class Paths
 
                     public const string NextRunTimeTxt = Root + "/textHolder/timer";
                 }
+            }
+
+            public static class ScarabGameShopLoc
+            {
+                private const string Root = CanvasLoc.Root + "/popups/ScarabGameShop";
+
+                public const string CloseBtn = Root + "/bg/closeButton";
+
+                public const string ClaimFreeTokenBtn =
+                    Root + "/bg/submenus/sale/items/scarabGameShopFreeTokenInteraction/claimBg/purchaseButton";
+
+                public const string NextRunTimeTxt =
+                    Root + "/bg/submenuButtons/sale/timeLeftBg/timeLeft";
             }
 
             public static class OracleStoreLoc

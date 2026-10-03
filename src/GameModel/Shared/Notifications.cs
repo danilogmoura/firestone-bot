@@ -44,4 +44,7 @@ public static class Notifications
 
     public static IEnumerator CheckIn =>
         new GameNotificationButton(Paths.BattleLoc.NotificationsLoc.CheckInBtn).Click();
+
+    public static IEnumerator ScarabGameShopFreeToken =>
+        new GameNotificationButton(Paths.BattleLoc.NotificationsLoc.ScarabGameShopFreeTokenBtn).Click();
 }

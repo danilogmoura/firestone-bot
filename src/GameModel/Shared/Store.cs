@@ -21,4 +21,13 @@ public static class Store
 
     public static DateTime MysteryBoxNextRunTime =>
         new GameText(Paths.MenusLoc.CanvasLoc.StoreLoc.MysteryBoxLoc.NextRunTimeTxt).Time;
+
+    public static IEnumerator ClaimScarabGameShopFreeToken =>
+        new GameButton(Paths.MenusLoc.CanvasLoc.ScarabGameShopLoc.ClaimFreeTokenBtn).Click();
+
+    public static DateTime ScarabGameShopFreeTokenNextRunTime =>
+        new GameText(Paths.MenusLoc.CanvasLoc.ScarabGameShopLoc.NextRunTimeTxt).Time;
+
+    public static IEnumerator CloseScarabGameShop =>
+        new GameButton(Paths.MenusLoc.CanvasLoc.ScarabGameShopLoc.CloseBtn).Click();
 }
