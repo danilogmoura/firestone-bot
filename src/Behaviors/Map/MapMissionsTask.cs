@@ -60,7 +60,7 @@ public class MapMissionsTask : BotTask
             if (MissionPreview.IsNotEnoughSquads)
             {
                 yield return MissionPreview.Close;
-                break;
+                continue;
             }
 
             yield return MissionPreview.StartMission;
