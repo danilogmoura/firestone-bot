@@ -24,6 +24,8 @@ public static class LevelRequirements
 
     public const int WarfrontCampaign = 50;
 
+    public const int ScarabGameShop = 60;
+
     public const int Alchemist = 120;
 
     public const int Oracle = 200;
