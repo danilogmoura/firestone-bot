@@ -340,13 +340,13 @@ public static class Paths
                     public static class PreviewLoc
                     {
                         private const string Root = PopupsLoc.Root + "/FirestoneResearchPreview";
+ 
+                        public const string UnlockedTxt = Root + "/bg/unlocked";
 
-                        public const string UnlockedTxt = Root + "/bg/innerBg/unlocked";
-
-                        public const string MaxedTxt = Root + "/bg/innerBg/maxed";
+                        public const string MaxedTxt = Root + "/bg/maxed";
 
                         public const string ActivateBtn =
-                            Root + "/bg/innerBg/unlocked/buttonHolder/researchActivateButton";
+                            Root + "/bg/unlocked/buttonHolder/researchActivateButton";
                     }
                 }
 
